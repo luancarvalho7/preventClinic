@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormData } from '../types/form';
 import { formConfig, findStepById, getFirstStep } from '../formConfig';
 import ResultsPage from './ResultsPage';
 
 // localStorage key for form data
 const FORM_DATA_STORAGE_KEY = 'prevent-quiz-responses';
+
+// Webhook URL for form submissions
+const WEBHOOK_URL = 'https://n8nsemfila.iatom.site/webhook/6bd7af0d-aa3e-4c08-83a7-514d49e9fb73';
 
 // Helper functions for localStorage
 const saveFormDataToStorage = (data: FormData) => {
@@ -39,7 +42,8 @@ export default function FormNavigation() {
   const [currentStepId, setCurrentStepId] = useState<string>(getFirstStep().id);
   const [history, setHistory] = useState<string[]>([]); // Track visited steps for back navigation
   const [isComplete, setIsComplete] = useState(false);
-  
+  const [userEmail, setUserEmail] = useState<string>('');
+
   // Dynamic sub-flow state for hormone therapy
   const [isDynamicSubFlowActive, setIsDynamicSubFlowActive] = useState(false);
   const [dynamicMedicationQueue, setDynamicMedicationQueue] = useState<string[]>([]);
@@ -49,6 +53,42 @@ export default function FormNavigation() {
 
   // Development state
   const [showDevNavigation, setShowDevNavigation] = useState(false);
+
+  // Get email from URL parameters
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('email');
+    if (email) {
+      setUserEmail(email);
+    }
+  }, []);
+
+  // Send form data to webhook
+  const sendFormDataToWebhook = async (finalFormData: FormData) => {
+    try {
+      const payload = {
+        email: userEmail,
+        formData: finalFormData,
+        submittedAt: new Date().toISOString()
+      };
+
+      const response = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        console.log('Form data sent successfully to webhook');
+      } else {
+        console.error('Failed to send form data to webhook:', response.status);
+      }
+    } catch (error) {
+      console.error('Error sending form data to webhook:', error);
+    }
+  };
 
   // Get current step configuration
   const getCurrentStep = () => {
@@ -84,7 +124,8 @@ export default function FormNavigation() {
         // Initialize dynamic sub-flow
         startDynamicSubFlow(updatedFormData);
       } else if (nextStepId === null) {
-        // Form is complete
+        // Form is complete - send data to webhook
+        sendFormDataToWebhook(updatedFormData);
         setIsComplete(true);
       } else {
         // Navigate to next step
