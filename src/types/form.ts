@@ -1,48 +1,63 @@
 export interface FormData {
-  age?: string;
-  sex?: string;
-  heightUnit?: 'feet' | 'inches' | 'centimeters';
-  heightFeet?: string;
-  heightInches?: string;
-  heightTotalInches?: string;
-  heightCentimeters?: string;
-  weight?: string;
-  weightChange?: string;
-  pregnancyStatus?: string;
-  hormoneTherapy?: string;
-  ht1Medications?: string[];
-  htMedications?: {
-    [medicationName: string]: {
-      method?: string;
-      duration?: string;
-      doseChange?: string;
-    };
-  };
-  walkingActivity?: string;
-  sleepHours?: string;
-  sleepSchedule?: string;
-  snoringStatus?: string;
-  stairsCapacity?: string;
-  liftingCapability?: string;
-  stressLevel?: string;
-  alcoholConsumption?: string;
-  eatingHabits?: string;
-  medicalConditions?: string[];
-  familyHistory?: string[];
-  lonelinessFactors?: string[];
-  [key: string]: any; // Allow for additional fields as we add more questions
+  birthDate?: string;
+  maritalStatus?: string;
+  hasDependents?: string;
+  dependentsCount?: string;
+  livingWith?: string;
+  currentProfession?: string;
+  mainIncomeSource?: string;
+  workRegime?: string;
+  hasSecondaryIncome?: string;
+  secondaryIncomeSource?: string;
+  secondaryWorkRegime?: string;
+  grossIncome?: string;
+  netIncome?: string;
+  incomeVariability?: string;
+  incomeVariabilityDetails?: string;
+  hasPassiveIncome?: string;
+  otherIncome?: string;
+  hasExpenseControl?: string;
+  monthlyExpenses?: string;
+  surplusAction?: string;
+  deficitAction?: string;
+  hasDebts?: string;
+  debtTypes?: string[];
+  totalDebtAmount?: string;
+  averageInterestRate?: string;
+  hasOverdueDebts?: string;
+  triedRenegotiation?: string;
+  hasEmergencyFund?: string;
+  emergencyFundMonths?: string;
+  emergencyFundLocation?: string;
+  alreadyInvests?: string;
+  investmentTypes?: string;
+  monthlyInvestment?: string;
+  investmentGoal?: string;
+  retirementIncome?: string;
+  hasVehicle?: string;
+  vehicleDetails?: string;
+  hasProperty?: string;
+  propertyDetails?: string;
+  otherAssets?: string;
+  goals12Months?: string;
+  goals5Years?: string;
+  topPriority?: string;
+  goalImpact?: string;
+  changeCommitment?: string;
+  consultingGoals?: string[];
+  successDefinition?: string;
+  [key: string]: any;
 }
 
 export interface FormStep {
   id: string;
   component: React.ComponentType<FormStepProps>;
-  nextStepLogic: (formData: FormData) => string | null; // null means form is complete
+  nextStepLogic: (formData: FormData) => string | null;
   prevStepId?: string | ((formData: FormData, history: string[]) => string | null);
-  title?: string; // Optional title for debugging/admin purposes
+  title?: string;
 }
 
 export interface FormStepProps {
   onContinue: (data: any) => void;
   formData?: FormData;
-  currentMedication?: string; // For dynamic sub-flow questions
 }
