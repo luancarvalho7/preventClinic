@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FormData } from '../types/form';
 import { formConfig, findStepById, getFirstStep } from '../formConfig';
-import LoadingPage from './LoadingPage';
 import ResultsPage from './ResultsPage';
 
 // localStorage key for form data
@@ -40,7 +39,6 @@ export default function FormNavigation() {
   const [currentStepId, setCurrentStepId] = useState<string>(getFirstStep().id);
   const [history, setHistory] = useState<string[]>([]); // Track visited steps for back navigation
   const [isComplete, setIsComplete] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   
   // Dynamic sub-flow state for hormone therapy
   const [isDynamicSubFlowActive, setIsDynamicSubFlowActive] = useState(false);
@@ -87,8 +85,7 @@ export default function FormNavigation() {
         startDynamicSubFlow(updatedFormData);
       } else if (nextStepId === null) {
         // Form is complete
-        setIsLoading(true);
-        // The loading page will call setIsComplete when done
+        setIsComplete(true);
       } else {
         // Navigate to next step
         const nextStep = findStepById(nextStepId);
@@ -163,19 +160,8 @@ export default function FormNavigation() {
     }
   };
 
-  // Handle completion of loading animation
-  const handleLoadingComplete = () => {
-    setIsLoading(false);
-    setIsComplete(true);
-    console.log('Complete form data:', formData);
-  };
-
   // Handle back navigation
   const handleBack = () => {
-    if (isLoading) {
-      // Don't allow back navigation during loading
-      return;
-    }
     
     if (isComplete) {
       // If we're on the complete screen, go back to last step
@@ -230,7 +216,7 @@ export default function FormNavigation() {
 
   // Check if back button should be shown
   const canGoBack = () => {
-    return (history.length > 0 || isComplete || (isDynamicSubFlowActive && dynamicHistory.length > 0)) && !isLoading;
+    return (history.length > 0 || isComplete || (isDynamicSubFlowActive && dynamicHistory.length > 0));
   };
 
   // Development helper function to jump to any step
@@ -290,15 +276,6 @@ export default function FormNavigation() {
 
   // Render the current step component
   const renderCurrentStep = () => {
-    if (isLoading) {
-      return (
-        <LoadingPage 
-          formData={formData} 
-          onComplete={handleLoadingComplete}
-        />
-      );
-    }
-    
     if (isComplete) {
       return <ResultsPage formData={formData} onBack={handleBack} />;
     }
