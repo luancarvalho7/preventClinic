@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FormData } from '../types/form';
 import { formConfig, findStepById, getFirstStep } from '../formConfig';
 import ResultsPage from './ResultsPage';
+import { supabase } from '../lib/supabase';
 
 // localStorage key for form data
 const FORM_DATA_STORAGE_KEY = 'prevent-quiz-responses';
@@ -63,15 +64,17 @@ export default function FormNavigation() {
     }
   }, []);
 
-  // Send form data to webhook
+  // Send form data to webhook and save to database
   const sendFormDataToWebhook = async (finalFormData: FormData) => {
-    try {
-      const payload = {
-        email: userEmail,
-        formData: finalFormData,
-        submittedAt: new Date().toISOString()
-      };
+    const submittedAt = new Date().toISOString();
 
+    const payload = {
+      email: userEmail,
+      formData: finalFormData,
+      submittedAt
+    };
+
+    try {
       const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: {
@@ -87,6 +90,24 @@ export default function FormNavigation() {
       }
     } catch (error) {
       console.error('Error sending form data to webhook:', error);
+    }
+
+    try {
+      const { error } = await supabase
+        .from('form_responses')
+        .insert({
+          email: userEmail,
+          responses: finalFormData,
+          submitted_at: submittedAt
+        });
+
+      if (error) {
+        console.error('Failed to save form data to database:', error);
+      } else {
+        console.log('Form data saved successfully to database');
+      }
+    } catch (error) {
+      console.error('Error saving form data to database:', error);
     }
   };
 
