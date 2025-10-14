@@ -107,7 +107,4 @@ CREATE POLICY "Users can read own submissions"
   USING (email = auth.jwt() ->> 'email');
 
 -- Optional: Create index on email for faster lookups
-CREATE INDEX IF NOT EXISTS idx_form_submissions_email ON public.form_submissions(email);
-
--- Optional: Create index on submittedAt for date range queries
-CREATE INDEX IF NOT EXISTS idx_form_submissions_submitted_at ON public.form_submissions("submittedAt");
+ 
