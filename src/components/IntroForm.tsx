@@ -2,7 +2,7 @@ import React from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
 
-export default function IntroForm({ onContinue }: FormStepProps) {
+export default function IntroForm({ onContinue, formData, questionNumber }: FormStepProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-50 flex flex-col items-center justify-center font-sans px-6 py-12">
       <div className="w-full max-w-3xl">
