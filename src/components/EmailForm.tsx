@@ -1,29 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FormStepProps } from '../types/form';
 
 export default function EmailForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [email, setEmail] = useState(formData.email || '');
   const [error, setError] = useState('');
 
-  const validateEmail = (email: string) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
+  const validateEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+  // Lê ?email= da URL (client-side) e pré-preenche se for válido
+  const emailFromUrl = useMemo(() => {
+    if (typeof window === 'undefined') return '';
+    const qs = new URLSearchParams(window.location.search);
+    return (qs.get('email') || '').trim();
+  }, []);
+
+  useEffect(() => {
+    if (!formData.email && emailFromUrl && validateEmail(emailFromUrl)) {
+      setEmail(emailFromUrl);
+    }
+  }, [emailFromUrl, formData.email]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email.trim()) {
+    const val = email.trim();
+    if (!val) {
       setError('Por favor, digite seu e-mail');
       return;
     }
-
-    if (!validateEmail(email)) {
+    if (!validateEmail(val)) {
       setError('Por favor, digite um e-mail válido');
       return;
     }
 
-    onContinue({ email: email.trim() });
+    onContinue({ email: val });
   };
 
   return (
@@ -40,16 +50,12 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
           </h1>
 
           <div className="prose prose-slate max-w-none mb-8 text-slate-700 leading-relaxed">
-            <p className="text-lg mb-4">
-              Olá!
-            </p>
+            <p className="text-lg mb-4">Olá!</p>
             <p className="mb-4">
               Este questionário é o primeiro passo para que possamos começar a traçar o seu planejamento financeiro personalizado.
               Queremos te ajudar a organizar o fluxo de dinheiro, eliminar eventuais dívidas, investir melhor e alcançar seus objetivos.
             </p>
-            <p className="mb-4">
-              Reserve cerca de 10 minutos para responder com calma.
-            </p>
+            <p className="mb-4">Reserve cerca de 10 minutos para responder com calma.</p>
             <p className="font-medium text-slate-900">
               Não há respostas certas ou erradas. O importante é que sejam verdadeiras e completas.
             </p>
@@ -66,14 +72,14 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  setError('');
+                  if (error) setError('');
                 }}
                 className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:border-slate-900 focus:outline-none transition-colors text-lg"
                 placeholder="seu@email.com"
+                autoComplete="email"
+                inputMode="email"
               />
-              {error && (
-                <p className="mt-2 text-red-600 text-sm">{error}</p>
-              )}
+              {error && <p className="mt-2 text-red-600 text-sm">{error}</p>}
             </div>
 
             <button
