@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import { formatCurrency, parseCurrency } from '../utils/currency';
 
 export default function DebtsForm({ onContinue, formData }: FormStepProps) {
   const [hasDebts, setHasDebts] = useState(formData?.hasDebts || '');
   const [debtTypes, setDebtTypes] = useState<string[]>(formData?.debtTypes || []);
   const [totalDebtAmount, setTotalDebtAmount] = useState(formData?.totalDebtAmount || '');
+  const [displayDebtAmount, setDisplayDebtAmount] = useState(totalDebtAmount ? formatCurrency(totalDebtAmount) : '');
   const [averageInterestRate, setAverageInterestRate] = useState(formData?.averageInterestRate || '');
   const [hasOverdueDebts, setHasOverdueDebts] = useState(formData?.hasOverdueDebts || '');
   const [triedRenegotiation, setTriedRenegotiation] = useState(formData?.triedRenegotiation || '');
@@ -109,19 +111,18 @@ export default function DebtsForm({ onContinue, formData }: FormStepProps) {
                 <label className="block text-lg font-medium text-gray-900 mb-3">
                   Valor total aproximado das dívidas
                 </label>
-                <div className="relative">
-                  <span className="absolute left-4 top-3 text-gray-500">R$</span>
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    value={totalDebtAmount}
-                    onChange={(e) => setTotalDebtAmount(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                    placeholder="0,00"
-                    required
-                  />
-                </div>
+                <input
+                  type="text"
+                  value={displayDebtAmount}
+                  onChange={(e) => {
+                    const rawValue = parseCurrency(e.target.value);
+                    setTotalDebtAmount(rawValue);
+                    setDisplayDebtAmount(formatCurrency(rawValue));
+                  }}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  placeholder="R$ 0,00"
+                  required
+                />
               </div>
 
               <div>

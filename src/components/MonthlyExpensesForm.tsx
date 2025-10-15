@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import { formatCurrency, parseCurrency } from '../utils/currency';
 
 export default function MonthlyExpensesForm({ onContinue, formData }: FormStepProps) {
   const [monthlyExpenses, setMonthlyExpenses] = useState(formData?.monthlyExpenses || '');
+  const [displayExpenses, setDisplayExpenses] = useState(monthlyExpenses ? formatCurrency(monthlyExpenses) : '');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,19 +21,18 @@ export default function MonthlyExpensesForm({ onContinue, formData }: FormStepPr
             <label className="block text-lg font-medium text-gray-900 mb-3">
               Quanto gasta em média por mês (total)?
             </label>
-            <div className="relative">
-              <span className="absolute left-4 top-3 text-gray-500">R$</span>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                value={monthlyExpenses}
-                onChange={(e) => setMonthlyExpenses(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                placeholder="0,00"
-                required
-              />
-            </div>
+            <input
+              type="text"
+              value={displayExpenses}
+              onChange={(e) => {
+                const rawValue = parseCurrency(e.target.value);
+                setMonthlyExpenses(rawValue);
+                setDisplayExpenses(formatCurrency(rawValue));
+              }}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+              placeholder="R$ 0,00"
+              required
+            />
           </div>
 
           <button

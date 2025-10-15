@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import { formatCurrency, parseCurrency } from '../utils/currency';
 
 export default function MainIncomeForm({ onContinue, formData }: FormStepProps) {
   const [mainIncomeSource, setMainIncomeSource] = useState(formData?.mainIncomeSource || '');
   const [mainIncomeSourceOther, setMainIncomeSourceOther] = useState(formData?.mainIncomeSourceOther || '');
   const [mainIncomeAmount, setMainIncomeAmount] = useState(formData?.mainIncomeAmount || '');
+  const [displayAmount, setDisplayAmount] = useState(mainIncomeAmount ? formatCurrency(mainIncomeAmount) : '');
 
   const incomeOptions = [
     'Salário fixo (CLT)',
@@ -85,17 +87,18 @@ export default function MainIncomeForm({ onContinue, formData }: FormStepProps) 
           {mainIncomeSource && (
             <div>
               <label className="block text-lg font-medium text-gray-900 mb-3">
-                Valor da renda principal (R$ mensal):
+                Valor da renda principal (mensal):
               </label>
               <input
                 type="text"
-                value={mainIncomeAmount}
+                value={displayAmount}
                 onChange={(e) => {
-                  const value = e.target.value.replace(/\D/g, '');
-                  setMainIncomeAmount(value);
+                  const rawValue = parseCurrency(e.target.value);
+                  setMainIncomeAmount(rawValue);
+                  setDisplayAmount(formatCurrency(rawValue));
                 }}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                placeholder="Ex: 5000"
+                placeholder="R$ 0,00"
                 required
               />
             </div>

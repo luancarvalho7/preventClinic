@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import { formatCurrency, parseCurrency } from '../utils/currency';
 
 export default function PatrimonySection5Form({ onContinue, formData }: FormStepProps) {
   const [hasEmergencyFund, setHasEmergencyFund] = useState(formData?.hasEmergencyFund || '');
@@ -8,8 +9,10 @@ export default function PatrimonySection5Form({ onContinue, formData }: FormStep
   const [alreadyInvests, setAlreadyInvests] = useState(formData?.alreadyInvests || '');
   const [investmentTypes, setInvestmentTypes] = useState(formData?.investmentTypes || '');
   const [monthlyInvestment, setMonthlyInvestment] = useState(formData?.monthlyInvestment || '');
+  const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(monthlyInvestment ? formatCurrency(monthlyInvestment) : '');
   const [investmentGoal, setInvestmentGoal] = useState(formData?.investmentGoal || '');
   const [retirementIncome, setRetirementIncome] = useState(formData?.retirementIncome || '');
+  const [displayRetirementIncome, setDisplayRetirementIncome] = useState(retirementIncome ? formatCurrency(retirementIncome) : '');
   const [hasVehicle, setHasVehicle] = useState(formData?.hasVehicle || '');
   const [vehicleDetails, setVehicleDetails] = useState(formData?.vehicleDetails || '');
   const [hasProperty, setHasProperty] = useState(formData?.hasProperty || '');
@@ -163,19 +166,18 @@ export default function PatrimonySection5Form({ onContinue, formData }: FormStep
                 <label className="block text-lg font-medium text-gray-900 mb-3">
                   Valor médio investido mensalmente
                 </label>
-                <div className="relative">
-                  <span className="absolute left-4 top-3 text-gray-500">R$</span>
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    value={monthlyInvestment}
-                    onChange={(e) => setMonthlyInvestment(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                    placeholder="0,00"
-                    required
-                  />
-                </div>
+                <input
+                  type="text"
+                  value={displayMonthlyInvestment}
+                  onChange={(e) => {
+                    const rawValue = parseCurrency(e.target.value);
+                    setMonthlyInvestment(rawValue);
+                    setDisplayMonthlyInvestment(formatCurrency(rawValue));
+                  }}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  placeholder="R$ 0,00"
+                  required
+                />
               </div>
 
               <div>
@@ -198,19 +200,18 @@ export default function PatrimonySection5Form({ onContinue, formData }: FormStep
             <label className="block text-lg font-medium text-gray-900 mb-3">
               Pensando no futuro, quanto precisaria receber de aposentadoria para viver tranquilo(a)?
             </label>
-            <div className="relative">
-              <span className="absolute left-4 top-3 text-gray-500">R$</span>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                value={retirementIncome}
-                onChange={(e) => setRetirementIncome(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                placeholder="0,00"
-                required
-              />
-            </div>
+            <input
+              type="text"
+              value={displayRetirementIncome}
+              onChange={(e) => {
+                const rawValue = parseCurrency(e.target.value);
+                setRetirementIncome(rawValue);
+                setDisplayRetirementIncome(formatCurrency(rawValue));
+              }}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+              placeholder="R$ 0,00"
+              required
+            />
           </div>
 
           <div>

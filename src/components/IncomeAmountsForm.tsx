@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import { formatCurrency, parseCurrency } from '../utils/currency';
 
 export default function IncomeAmountsForm({ onContinue, formData }: FormStepProps) {
   const [grossIncome, setGrossIncome] = useState(formData?.grossIncome || '');
   const [netIncome, setNetIncome] = useState(formData?.netIncome || '');
+  const [displayGrossIncome, setDisplayGrossIncome] = useState(grossIncome ? formatCurrency(grossIncome) : '');
+  const [displayNetIncome, setDisplayNetIncome] = useState(netIncome ? formatCurrency(netIncome) : '');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,38 +23,36 @@ export default function IncomeAmountsForm({ onContinue, formData }: FormStepProp
             <label className="block text-lg font-medium text-gray-900 mb-3">
               Renda total bruta (média mensal)
             </label>
-            <div className="relative">
-              <span className="absolute left-4 top-3 text-gray-500">R$</span>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                value={grossIncome}
-                onChange={(e) => setGrossIncome(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                placeholder="0,00"
-                required
-              />
-            </div>
+            <input
+              type="text"
+              value={displayGrossIncome}
+              onChange={(e) => {
+                const rawValue = parseCurrency(e.target.value);
+                setGrossIncome(rawValue);
+                setDisplayGrossIncome(formatCurrency(rawValue));
+              }}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+              placeholder="R$ 0,00"
+              required
+            />
           </div>
 
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-3">
               Renda total líquida (após descontos)
             </label>
-            <div className="relative">
-              <span className="absolute left-4 top-3 text-gray-500">R$</span>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                value={netIncome}
-                onChange={(e) => setNetIncome(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                placeholder="0,00"
-                required
-              />
-            </div>
+            <input
+              type="text"
+              value={displayNetIncome}
+              onChange={(e) => {
+                const rawValue = parseCurrency(e.target.value);
+                setNetIncome(rawValue);
+                setDisplayNetIncome(formatCurrency(rawValue));
+              }}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+              placeholder="R$ 0,00"
+              required
+            />
           </div>
 
           <button
