@@ -4,6 +4,14 @@ import { FormStepProps } from '../types/form';
 export default function LivingWithForm({ onContinue, formData }: FormStepProps) {
   const [livingWith, setLivingWith] = useState(formData?.livingWith || '');
 
+  const options = [
+    'Sozinho',
+    'Com cônjuge',
+    'Com cônjuge e filho(s)',
+    'Com filho(s)',
+    'Com pais'
+  ];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (livingWith) {
@@ -16,17 +24,27 @@ export default function LivingWithForm({ onContinue, formData }: FormStepProps) 
       <div className="bg-white rounded-lg shadow-sm p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-lg font-medium text-gray-900 mb-3">
+            <label className="block text-lg font-medium text-gray-900 mb-4">
               Com quem você vive atualmente?
             </label>
-            <input
-              type="text"
-              value={livingWith}
-              onChange={(e) => setLivingWith(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-              placeholder="Ex: Sozinho(a), com família, com cônjuge..."
-              required
-            />
+            <div className="space-y-3">
+              {options.map((option) => (
+                <label
+                  key={option}
+                  className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                >
+                  <input
+                    type="radio"
+                    name="livingWith"
+                    value={option}
+                    checked={livingWith === option}
+                    onChange={(e) => setLivingWith(e.target.value)}
+                    className="w-4 h-4 text-accent focus:ring-accent"
+                  />
+                  <span className="ml-3 text-gray-900">{option}</span>
+                </label>
+              ))}
+            </div>
           </div>
 
           <button

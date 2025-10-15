@@ -3,11 +3,29 @@ import { FormStepProps } from '../types/form';
 
 export default function MainIncomeForm({ onContinue, formData }: FormStepProps) {
   const [mainIncomeSource, setMainIncomeSource] = useState(formData?.mainIncomeSource || '');
+  const [mainIncomeSourceOther, setMainIncomeSourceOther] = useState(formData?.mainIncomeSourceOther || '');
+  const [mainIncomeAmount, setMainIncomeAmount] = useState(formData?.mainIncomeAmount || '');
+
+  const incomeOptions = [
+    'Salário fixo (CLT)',
+    'Pró-labore / honorários de empresa própria',
+    'Prestação de serviços autônomos',
+    'Comissões por vendas / resultados',
+    'Freelance / trabalhos eventuais',
+    'Dividendos / lucros de investimentos',
+    'Aluguel de imóveis',
+    'Aposentadoria / pensão',
+    'Outros'
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (mainIncomeSource) {
-      onContinue({ mainIncomeSource });
+    if (mainIncomeSource && mainIncomeAmount && (mainIncomeSource !== 'Outros' || mainIncomeSourceOther)) {
+      onContinue({
+        mainIncomeSource,
+        mainIncomeSourceOther: mainIncomeSource === 'Outros' ? mainIncomeSourceOther : '',
+        mainIncomeAmount
+      });
     }
   };
 
@@ -25,22 +43,67 @@ export default function MainIncomeForm({ onContinue, formData }: FormStepProps) 
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-lg font-medium text-gray-900 mb-3">
+            <label className="block text-lg font-medium text-gray-900 mb-4">
               Fonte de renda principal
             </label>
-            <input
-              type="text"
-              value={mainIncomeSource}
-              onChange={(e) => setMainIncomeSource(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-              placeholder="Ex: Salário, honorários, vendas..."
-              required
-            />
+            <div className="space-y-3">
+              {incomeOptions.map((option) => (
+                <label
+                  key={option}
+                  className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                >
+                  <input
+                    type="radio"
+                    name="mainIncomeSource"
+                    value={option}
+                    checked={mainIncomeSource === option}
+                    onChange={(e) => setMainIncomeSource(e.target.value)}
+                    className="w-4 h-4 text-accent focus:ring-accent"
+                  />
+                  <span className="ml-3 text-gray-900">{option}</span>
+                </label>
+              ))}
+            </div>
           </div>
+
+          {mainIncomeSource === 'Outros' && (
+            <div>
+              <label className="block text-lg font-medium text-gray-900 mb-3">
+                Especifique sua fonte de renda:
+              </label>
+              <input
+                type="text"
+                value={mainIncomeSourceOther}
+                onChange={(e) => setMainIncomeSourceOther(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                placeholder="Digite aqui..."
+                required
+              />
+            </div>
+          )}
+
+          {mainIncomeSource && (
+            <div>
+              <label className="block text-lg font-medium text-gray-900 mb-3">
+                Valor da renda principal (R$ mensal):
+              </label>
+              <input
+                type="text"
+                value={mainIncomeAmount}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, '');
+                  setMainIncomeAmount(value);
+                }}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                placeholder="Ex: 5000"
+                required
+              />
+            </div>
+          )}
 
           <button
             type="submit"
-            disabled={!mainIncomeSource}
+            disabled={!mainIncomeSource || !mainIncomeAmount || (mainIncomeSource === 'Outros' && !mainIncomeSourceOther)}
             className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar

@@ -1,18 +1,23 @@
 import React from 'react';
 import { FormStepProps } from '../types/form';
 
-export default function IntroForm({ onContinue }: FormStepProps) {
+interface SectionIntroProps extends FormStepProps {
+  sectionNumber: number;
+  title: string;
+  description: string;
+}
+
+export default function SectionIntro({ sectionNumber, title, description, onContinue }: SectionIntroProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-50 flex flex-col items-center justify-center font-sans px-6 py-12">
       <div className="w-full max-w-3xl">
         <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
           <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 mb-6 text-center">
-            Seção 1 – Perfil e Contexto
+            Seção {sectionNumber} – {title}
           </h2>
 
           <p className="text-lg text-slate-700 mb-8 leading-relaxed text-center">
-            Aqui queremos entender um pouco mais sobre quem você é e o seu momento atual de vida.
-            Isso ajuda a adaptar o plano à sua realidade.
+            {description}
           </p>
 
           <button

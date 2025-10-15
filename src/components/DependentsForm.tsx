@@ -2,15 +2,21 @@ import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 
 export default function DependentsForm({ onContinue, formData }: FormStepProps) {
-  const [hasDependents, setHasDependents] = useState(formData?.hasDependents || '');
   const [dependentsCount, setDependentsCount] = useState(formData?.dependentsCount || '');
+
+  const options = [
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5 ou mais'
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (hasDependents === 'Não') {
-      onContinue({ hasDependents, dependentsCount: '0' });
-    } else if (hasDependents === 'Sim' && dependentsCount) {
-      onContinue({ hasDependents, dependentsCount });
+    if (dependentsCount) {
+      onContinue({ dependentsCount });
     }
   };
 
@@ -20,20 +26,20 @@ export default function DependentsForm({ onContinue, formData }: FormStepProps) 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-4">
-              Você tem dependentes financeiros? (filhos ou familiares)
+              Você tem dependentes financeiros? Se sim, quantos? (filhos ou familiares)
             </label>
             <div className="space-y-3">
-              {['Não', 'Sim'].map((option) => (
+              {options.map((option) => (
                 <label
                   key={option}
                   className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
                 >
                   <input
                     type="radio"
-                    name="hasDependents"
+                    name="dependentsCount"
                     value={option}
-                    checked={hasDependents === option}
-                    onChange={(e) => setHasDependents(e.target.value)}
+                    checked={dependentsCount === option}
+                    onChange={(e) => setDependentsCount(e.target.value)}
                     className="w-4 h-4 text-accent focus:ring-accent"
                   />
                   <span className="ml-3 text-gray-900">{option}</span>
@@ -42,26 +48,9 @@ export default function DependentsForm({ onContinue, formData }: FormStepProps) 
             </div>
           </div>
 
-          {hasDependents === 'Sim' && (
-            <div>
-              <label className="block text-lg font-medium text-gray-900 mb-3">
-                Quantos dependentes?
-              </label>
-              <input
-                type="number"
-                min="1"
-                value={dependentsCount}
-                onChange={(e) => setDependentsCount(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                placeholder="Digite o número de dependentes"
-                required
-              />
-            </div>
-          )}
-
           <button
             type="submit"
-            disabled={!hasDependents || (hasDependents === 'Sim' && !dependentsCount)}
+            disabled={!dependentsCount}
             className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar
