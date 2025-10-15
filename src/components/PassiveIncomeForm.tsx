@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import QuestionNumber from './QuestionNumber';
 
-export default function PassiveIncomeForm({ onContinue, formData }: FormStepProps) {
+export default function PassiveIncomeForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [hasPassiveIncome, setHasPassiveIncome] = useState(formData?.hasPassiveIncome || '');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -14,6 +15,7 @@ export default function PassiveIncomeForm({ onContinue, formData }: FormStepProp
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
       <div className="bg-white rounded-lg shadow-sm p-8">
+        <QuestionNumber number={questionNumber} />
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-4">

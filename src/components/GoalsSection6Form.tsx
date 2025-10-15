@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import QuestionNumber from './QuestionNumber';
 
-export default function GoalsSection6Form({ onContinue, formData }: FormStepProps) {
+export default function GoalsSection6Form({ onContinue, formData, questionNumber }: FormStepProps) {
   const [goals12Months, setGoals12Months] = useState(formData?.goals12Months || '');
   const [goals5Years, setGoals5Years] = useState(formData?.goals5Years || '');
   const [topPriority, setTopPriority] = useState(formData?.topPriority || '');
@@ -24,6 +25,7 @@ export default function GoalsSection6Form({ onContinue, formData }: FormStepProp
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
       <div className="bg-white rounded-lg shadow-sm p-8">
+        <QuestionNumber number={questionNumber} />
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Seção 6 – Objetivos e Prioridades

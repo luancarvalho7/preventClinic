@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import QuestionNumber from './QuestionNumber';
 import { formatCurrency, parseCurrency } from '../utils/currency';
 
-export default function MonthlyExpensesForm({ onContinue, formData }: FormStepProps) {
+export default function MonthlyExpensesForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [monthlyExpenses, setMonthlyExpenses] = useState(formData?.monthlyExpenses || '');
   const [displayExpenses, setDisplayExpenses] = useState(monthlyExpenses ? formatCurrency(monthlyExpenses) : '');
 
@@ -16,6 +17,7 @@ export default function MonthlyExpensesForm({ onContinue, formData }: FormStepPr
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
       <div className="bg-white rounded-lg shadow-sm p-8">
+        <QuestionNumber number={questionNumber} />
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-3">

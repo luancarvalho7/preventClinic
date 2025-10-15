@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import QuestionNumber from './QuestionNumber';
 import { formatCurrency, parseCurrency } from '../utils/currency';
 
-export default function MainIncomeForm({ onContinue, formData }: FormStepProps) {
+export default function MainIncomeForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [mainIncomeSource, setMainIncomeSource] = useState(formData?.mainIncomeSource || '');
   const [mainIncomeSourceOther, setMainIncomeSourceOther] = useState(formData?.mainIncomeSourceOther || '');
   const [mainIncomeAmount, setMainIncomeAmount] = useState(formData?.mainIncomeAmount || '');
@@ -34,6 +35,7 @@ export default function MainIncomeForm({ onContinue, formData }: FormStepProps) 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
       <div className="bg-white rounded-lg shadow-sm p-8">
+        <QuestionNumber number={questionNumber} />
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Seção 2 – Renda

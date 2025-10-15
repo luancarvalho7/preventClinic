@@ -340,13 +340,18 @@ export default function FormNavigation() {
       );
     }
 
+    // Calculate question number based on step index
+    const stepIndex = formConfig.findIndex(step => step.id === currentStepId);
+    const questionNumber = stepIndex >= 0 ? stepIndex + 1 : undefined;
+
     // Render the step's component with the required props
     const StepComponent = currentStep.component;
     return (
-      <StepComponent 
-        onContinue={handleContinue} 
+      <StepComponent
+        onContinue={handleContinue}
         formData={formData}
         currentMedication={currentDynamicMedication}
+        questionNumber={questionNumber}
       />
     );
   };

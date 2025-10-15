@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import QuestionNumber from './QuestionNumber';
 
-export default function ExpectationsSection7Form({ onContinue, formData }: FormStepProps) {
+export default function ExpectationsSection7Form({ onContinue, formData, questionNumber }: FormStepProps) {
   const [consultingGoals, setConsultingGoals] = useState<string[]>(formData?.consultingGoals || []);
   const [successDefinition, setSuccessDefinition] = useState(formData?.successDefinition || '');
 
@@ -34,6 +35,7 @@ export default function ExpectationsSection7Form({ onContinue, formData }: FormS
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
       <div className="bg-white rounded-lg shadow-sm p-8">
+        <QuestionNumber number={questionNumber} />
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Seção 7 – Expectativas e Engajamento

@@ -55,9 +55,11 @@ export interface FormStep {
   nextStepLogic: (formData: FormData) => string | null;
   prevStepId?: string | ((formData: FormData, history: string[]) => string | null);
   title?: string;
+  questionNumber?: number;
 }
 
 export interface FormStepProps {
   onContinue: (data: any) => void;
   formData?: FormData;
+  questionNumber?: number;
 }

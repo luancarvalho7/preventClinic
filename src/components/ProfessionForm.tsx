@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import QuestionNumber from './QuestionNumber';
 
-export default function ProfessionForm({ onContinue, formData }: FormStepProps) {
+export default function ProfessionForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [currentProfession, setCurrentProfession] = useState(formData?.currentProfession || '');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -14,6 +15,7 @@ export default function ProfessionForm({ onContinue, formData }: FormStepProps) 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
       <div className="bg-white rounded-lg shadow-sm p-8">
+        <QuestionNumber number={questionNumber} />
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-3">

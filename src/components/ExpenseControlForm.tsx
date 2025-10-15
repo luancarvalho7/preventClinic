@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import QuestionNumber from './QuestionNumber';
 
-export default function ExpenseControlForm({ onContinue, formData }: FormStepProps) {
+export default function ExpenseControlForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [hasExpenseControl, setHasExpenseControl] = useState(formData?.hasExpenseControl || '');
 
   const options = [
@@ -22,6 +23,7 @@ export default function ExpenseControlForm({ onContinue, formData }: FormStepPro
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
       <div className="bg-white rounded-lg shadow-sm p-8">
+        <QuestionNumber number={questionNumber} />
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Seção 3 – Gastos
