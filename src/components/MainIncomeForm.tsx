@@ -109,7 +109,6 @@ export default function MainIncomeForm({ onContinue, formData, questionNumber }:
                 onChange={(e) => {
                   const cents = toCents(e.target.value);
                   setMainIncomeAmount(cents);
-                  // formatBRL será refletido pelo useEffect; manter responsivo enquanto digita:
                   setDisplayAmount(formatBRL(cents));
                 }}
                 onBlur={() => setDisplayAmount(formatBRL(mainIncomeAmount))}
