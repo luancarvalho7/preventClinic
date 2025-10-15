@@ -42,7 +42,6 @@ export default function FormNavigation() {
   const [currentStepId, setCurrentStepId] = useState<string>(getFirstStep().id);
   const [history, setHistory] = useState<string[]>([]); // Track visited steps for back navigation
   const [isComplete, setIsComplete] = useState(false);
-  const [userEmail, setUserEmail] = useState<string>('');
 
   // Dynamic sub-flow state for hormone therapy
   const [isDynamicSubFlowActive, setIsDynamicSubFlowActive] = useState(false);
@@ -54,21 +53,12 @@ export default function FormNavigation() {
   // Development state
   const [showDevNavigation, setShowDevNavigation] = useState(false);
 
-  // Get email from URL parameters
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const email = params.get('email');
-    if (email) {
-      setUserEmail(email);
-    }
-  }, []);
-
   // Send form data to webhook
   const sendFormDataToWebhook = async (finalFormData: FormData) => {
     const submittedAt = new Date().toISOString();
 
     const payload = {
-      email: userEmail,
+      email: finalFormData.email || '',
       formData: finalFormData,
       submittedAt
     };
