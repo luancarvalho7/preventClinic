@@ -117,7 +117,6 @@ export default function MainIncomeForm({ onContinue, formData, questionNumber }:
                 placeholder="R$ 0,00"
                 required
               />
-              <p className="mt-2 text-xs text-gray-500">Armazenado como centavos: {mainIncomeAmount}</p>
             </div>
           )}
 
