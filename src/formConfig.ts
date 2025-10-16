@@ -20,7 +20,11 @@ import DeficitActionForm from './components/DeficitActionForm';
 import DebtsForm from './components/DebtsForm';
 import PatrimonySection5Form from './components/PatrimonySection5Form';
 import GoalsSection6Form from './components/GoalsSection6Form';
-import ExpectationsSection7Form from './components/ExpectationsSection7Form';
+import PatrimonyEmergencyFundForm from './components/PatrimonyEmergencyFundForm';
+import PatrimonyInvestmentsForm from './components/PatrimonyInvestmentsForm';
+import PatrimonyRetirementForm from './components/PatrimonyRetirementForm';
+import PatrimonyAssetsForm from './components/PatrimonyAssetsForm';
+
 
 export const formConfig: FormStep[] = [
   {
