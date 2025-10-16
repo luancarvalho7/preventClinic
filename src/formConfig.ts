@@ -99,7 +99,7 @@ export const formConfig: FormStep[] = [
     component: IncomeAmountsForm,
     title: 'Valores de Renda',
     nextStepLogic: () => 'incomeVariability',
-    prevStepId: 'secondaryIncome'
+    prevStepId: 'mainIncome'
   },
   {
     id: 'incomeVariability',
