@@ -4,94 +4,142 @@ import QuestionNumber from './QuestionNumber';
 
 export default function SecondaryIncomeForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [hasSecondaryIncome, setHasSecondaryIncome] = useState(formData?.hasSecondaryIncome || '');
-  const [secondaryIncomeSource, setSecondaryIncomeSource] = useState(formData?.secondaryIncomeSource || '');
-  const [secondaryWorkRegime, setSecondaryWorkRegime] = useState(formData?.secondaryWorkRegime || '');
+  const [selectedSources, setSelectedSources] = useState<string[]>(formData?.secondaryIncomeSources || []);
+  const [otherSource, setOtherSource] = useState(formData?.otherSource || '');
 
-  const regimeOptions = ['CLT', 'PJ', 'Autônomo', 'Outros'];
+  const incomeOptions = [
+    'Salário fixo (CLT)',
+    'Pró-labore / honorários de empresa própria',
+    'Prestação de serviços autônomos',
+    'Comissões por vendas / resultados',
+    'Freelance / trabalhos eventuais',
+    'Dividendos / lucros de investimentos',
+    'Aluguel de imóveis',
+    'Aposentadoria / pensão',
+    'Outros',
+  ];
+
+  const handleCheckboxChange = (option: string) => {
+    setSelectedSources((prev) =>
+      prev.includes(option)
+        ? prev.filter((item) => item !== option)
+        : [...prev, option]
+    );
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (hasSecondaryIncome === 'Não') {
-      onContinue({ hasSecondaryIncome });
-    } else if (hasSecondaryIncome === 'Sim' && secondaryIncomeSource && secondaryWorkRegime) {
-      onContinue({ hasSecondaryIncome, secondaryIncomeSource, secondaryWorkRegime });
+      onContinue({ hasSecondaryIncome, secondaryIncomeSources: [], otherSource: '' });
+      return;
+    }
+
+    if (hasSecondaryIncome === 'Sim' && selectedSources.length > 0) {
+      const dataToSend = {
+        hasSecondaryIncome,
+        secondaryIncomeSources: selectedSources,
+        otherSource: selectedSources.includes('Outros') ? otherSource.trim() : '',
+      };
+      onContinue(dataToSend);
     }
   };
+
+  const isValid =
+    hasSecondaryIncome === 'Não' ||
+    (hasSecondaryIncome === 'Sim' &&
+      selectedSources.length > 0 &&
+      (!selectedSources.includes('Outros') || otherSource.trim() !== ''));
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
       <div className="bg-white rounded-lg shadow-sm p-8">
         <QuestionNumber number={questionNumber} />
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Pergunta principal */}
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-4">
               Possui outra fonte de renda?
             </label>
-            <div className="space-y-3">
+            <div className="flex gap-4">
               {['Não', 'Sim'].map((option) => (
                 <label
                   key={option}
-                  className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                  className={`flex-1 text-center p-4 border rounded-lg cursor-pointer transition-colors ${
+                    hasSecondaryIncome === option
+                      ? 'border-accent bg-accent/10'
+                      : 'border-gray-300 hover:bg-gray-50'
+                  }`}
                 >
                   <input
                     type="radio"
                     name="hasSecondaryIncome"
                     value={option}
                     checked={hasSecondaryIncome === option}
-                    onChange={(e) => setHasSecondaryIncome(e.target.value)}
-                    className="w-4 h-4 text-accent focus:ring-accent"
+                    onChange={(e) => {
+                      setHasSecondaryIncome(e.target.value);
+                      if (e.target.value === 'Não') {
+                        setSelectedSources([]);
+                        setOtherSource('');
+                      }
+                    }}
+                    className="hidden"
                   />
-                  <span className="ml-3 text-gray-900">{option}</span>
+                  <span className="capitalize text-gray-900">{option}</span>
                 </label>
               ))}
             </div>
           </div>
 
+          {/* Opções se "Sim" */}
           {hasSecondaryIncome === 'Sim' && (
-            <>
-              <div>
-                <label className="block text-lg font-medium text-gray-900 mb-3">
-                  Fonte de renda secundária
-                </label>
-                <input
-                  type="text"
-                  value={secondaryIncomeSource}
-                  onChange={(e) => setSecondaryIncomeSource(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                  placeholder="Ex: Freelance, aluguel..."
-                  required
-                />
+            <div className="space-y-4">
+              <label className="block text-lg font-medium text-gray-900 mb-4">
+                Se sim, quais?
+              </label>
+              <div className="space-y-3">
+                {incomeOptions.map((option) => (
+                  <label
+                    key={option}
+                    className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
+                      selectedSources.includes(option)
+                        ? 'border-accent bg-accent/10'
+                        : 'border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      value={option}
+                      checked={selectedSources.includes(option)}
+                      onChange={() => handleCheckboxChange(option)}
+                      className="w-4 h-4 text-accent focus:ring-accent"
+                    />
+                    <span className="ml-3 text-gray-900">{option}</span>
+                  </label>
+                ))}
               </div>
 
-              <div>
-                <label className="block text-lg font-medium text-gray-900 mb-4">
-                  Regime de trabalho (secundário)
-                </label>
-                <div className="space-y-3">
-                  {regimeOptions.map((option) => (
-                    <label
-                      key={option}
-                      className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
-                    >
-                      <input
-                        type="radio"
-                        name="secondaryWorkRegime"
-                        value={option}
-                        checked={secondaryWorkRegime === option}
-                        onChange={(e) => setSecondaryWorkRegime(e.target.value)}
-                        className="w-4 h-4 text-accent focus:ring-accent"
-                      />
-                      <span className="ml-3 text-gray-900">{option}</span>
-                    </label>
-                  ))}
+              {/* Campo "Outros" condicional */}
+              {selectedSources.includes('Outros') && (
+                <div className="mt-4">
+                  <label className="block text-lg font-medium text-gray-900 mb-2">
+                    Especifique:
+                  </label>
+                  <input
+                    type="text"
+                    value={otherSource}
+                    onChange={(e) => setOtherSource(e.target.value)}
+                    placeholder="Descreva sua outra fonte de renda"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  />
                 </div>
-              </div>
-            </>
+              )}
+            </div>
           )}
 
           <button
             type="submit"
-            disabled={!hasSecondaryIncome || (hasSecondaryIncome === 'Sim' && (!secondaryIncomeSource || !secondaryWorkRegime))}
+            disabled={!isValid}
             className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar
