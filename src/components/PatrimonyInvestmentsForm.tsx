@@ -7,7 +7,7 @@ export default function PatrimonyInvestmentsForm({ onContinue, formData, questio
   const [alreadyInvests, setAlreadyInvests] = useState(formData?.alreadyInvests || '');
   const [investmentTypes, setInvestmentTypes] = useState<string[]>(formData?.investmentTypes || []);
   const [monthlyInvestment, setMonthlyInvestment] = useState(formData?.monthlyInvestment || '');
-  const [displayInvestment, setDisplayInvestment] = useState(
+  const [www, setDisplayInvestment] = useState(
     formData?.monthlyInvestment ? formatCurrencyInput(formData.monthlyInvestment) : ''
   );
   const [investmentGoal, setInvestmentGoal] = useState(formData?.investmentGoal || '');
