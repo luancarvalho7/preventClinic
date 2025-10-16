@@ -8,7 +8,7 @@ export default function SurplusActionForm({ onContinue, formData, questionNumber
   const options = [
     'Deixo parado na conta corrente',
     'Guardo na poupança',
-    'Invisto',
+    'Invisto (renda fixa, fundos, ações, cripto etc.)',
     'Guardo em espécie',
     'Outro'
   ];
