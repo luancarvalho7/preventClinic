@@ -9,8 +9,7 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
   const [otherSegundaryIncomeSource, setotherSegundaryIncomeSource] = useState(formData?.otherSegundaryIncomeSource || '');
   const [secondaryIncomeValue, setSecondaryIncomeValue] = useState(formData?.secondaryIncomeValue || '');
   const [displayValue, setDisplayValue] = useState(
-  formData?.secondaryIncomeValue ? formatCurrencyInput(formData.secondaryIncomeValue) : ''
-);
+  formData?.secondaryIncomeValue ? formatCurrencyInput(formData.secondaryIncomeValue) : '');
 
 
   const incomeOptions = [
