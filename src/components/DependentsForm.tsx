@@ -3,21 +3,21 @@ import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
 
 export default function DependentsForm({ onContinue, formData, questionNumber }: FormStepProps) {
+  const [hasDependents, setHasDependents] = useState(formData?.hasDependents || '');
   const [dependentsCount, setDependentsCount] = useState(formData?.dependentsCount || '');
 
-  const options = [
-    '0',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5 ou mais'
-  ];
+  const countOptions = ['1', '2', '3', '4', '5 ou mais'];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (dependentsCount) {
-      onContinue({ dependentsCount });
+
+    if (hasDependents === 'não') {
+      onContinue({ hasDependents, dependentsCount: '0' });
+      return;
+    }
+
+    if (hasDependents === 'sim' && dependentsCount) {
+      onContinue({ hasDependents, dependentsCount });
     }
   };
 
@@ -28,31 +28,70 @@ export default function DependentsForm({ onContinue, formData, questionNumber }:
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-4">
-              Você tem dependentes financeiros? Se sim, quantos? (filhos ou familiares)
+              Você tem dependentes financeiros? (filhos ou familiares)
             </label>
-            <div className="space-y-3">
-              {options.map((option) => (
+            <div className="flex gap-4">
+              {['sim', 'não'].map((option) => (
                 <label
                   key={option}
-                  className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                  className={`flex-1 text-center p-4 border rounded-lg cursor-pointer transition-colors ${
+                    hasDependents === option
+                      ? 'border-accent bg-accent/10'
+                      : 'border-gray-300 hover:bg-gray-50'
+                  }`}
                 >
                   <input
                     type="radio"
-                    name="dependentsCount"
+                    name="hasDependents"
                     value={option}
-                    checked={dependentsCount === option}
-                    onChange={(e) => setDependentsCount(e.target.value)}
-                    className="w-4 h-4 text-accent focus:ring-accent"
+                    checked={hasDependents === option}
+                    onChange={(e) => {
+                      setHasDependents(e.target.value);
+                      setDependentsCount('');
+                    }}
+                    className="hidden"
                   />
-                  <span className="ml-3 text-gray-900">{option}</span>
+                  <span className="capitalize text-gray-900">{option}</span>
                 </label>
               ))}
             </div>
           </div>
 
+          {hasDependents === 'sim' && (
+            <div>
+              <label className="block text-lg font-medium text-gray-900 mb-4">
+                Quantos dependentes?
+              </label>
+              <div className="space-y-3">
+                {countOptions.map((option) => (
+                  <label
+                    key={option}
+                    className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
+                      dependentsCount === option
+                        ? 'border-accent bg-accent/10'
+                        : 'border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="dependentsCount"
+                      value={option}
+                      checked={dependentsCount === option}
+                      onChange={(e) => setDependentsCount(e.target.value)}
+                      className="w-4 h-4 text-accent focus:ring-accent"
+                    />
+                    <span className="ml-3 text-gray-900">{option}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
           <button
             type="submit"
-            disabled={!dependentsCount}
+            disabled={
+              !hasDependents || (hasDependents === 'sim' && !dependentsCount)
+            }
             className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar
