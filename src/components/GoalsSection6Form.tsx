@@ -97,7 +97,13 @@ export default function GoalsSection6Form({ onContinue, formData, questionNumber
               Você está disposto(a) a mudar hábitos para alcançá-lo?
             </label>
             <div className="space-y-3">
-              {['1 - Pouco disposto', '2', '3', '4', '5 - Totalmente comprometido'].map((option) => (
+              {[
+  '1 - Pouco disposto(a)',
+  '2 - Levemente comprometido(a)',
+  '3 - Moderadamente comprometido(a)',
+  '4 - Muito comprometido(a)',
+  '5 - Totalmente comprometido(a)',
+].map((option) => (
                 <label
                   key={option}
                   className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
