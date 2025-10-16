@@ -8,6 +8,10 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
   const [selectedSources, setSelectedSources] = useState<string[]>(formData?.secondaryIncomeSources || []);
   const [otherSegundaryIncomeSource, setotherSegundaryIncomeSource] = useState(formData?.otherSegundaryIncomeSource || '');
   const [secondaryIncomeValue, setSecondaryIncomeValue] = useState(formData?.secondaryIncomeValue || '');
+const [displayValue, setDisplayValue] = useState(
+  formData?.secondaryIncomeValue ? formatCurrencyInput(formData.secondaryIncomeValue) : ''
+);
+
 
   const incomeOptions = [
     'Salário fixo (CLT)',
