@@ -146,10 +146,11 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
                   type="text"
                   value={displayInvestment}
                   onChange={(e) => {
-                    const formatted = formatCurrencyInput(e.target.value);
-                    setDisplayInvestment(formatted);
-                    setMonthlyInvestment(String(parseCurrency(e.target.value)));
-                  }}
+  const formatted = formatCurrencyInput(e.target.value);
+  setDisplayMonthlyInvestment(formatted);
+  setMonthlyInvestment(parseCurrency(e.target.value)); // valor em centavos numérico
+}}
+
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                   placeholder="Ex: R$ 500,00"
                 />
