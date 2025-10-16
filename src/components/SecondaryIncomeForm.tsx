@@ -31,7 +31,7 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
     e.preventDefault();
 
     if (hasSecondaryIncome === 'Não') {
-      onContinue({ hasSecondaryIncome, secondaryIncomeSources: [], otherSource: '' });
+      onContinue({ hasSecondaryIncome, secondaryIncomeSources: [], otherSegundaryIncomeSource: '' });
       return;
     }
 
