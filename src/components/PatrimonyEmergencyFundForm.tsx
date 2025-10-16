@@ -5,8 +5,8 @@ import QuestionNumber from './QuestionNumber';
 
 export default function PatrimonyEmergencyFundForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [hasEmergencyFund, setHasEmergencyFund] = useState(formData?.hasEmergencyFund || '');
-  const [monthsCoverage, setMonthsCoverage] = useState(formData?.monthsCoverage || '');
-  const [fundLocations, setFundLocations] = useState<string[]>(formData?.fundLocations || []);
+  const [emergencyFundMonths, setemergencyFundMonths] = useState(formData?.emergencyFundMonths || '');
+  const [emergencyFundLocation, setemergencyFundLocation] = useState<string[]>(formData?.emergencyFundLocation || []);
 
   const monthOptions = [
     '1 a 2 meses',
@@ -29,14 +29,14 @@ export default function PatrimonyEmergencyFundForm({ onContinue, formData, quest
     e.preventDefault();
     onContinue({
       hasEmergencyFund,
-      monthsCoverage: hasEmergencyFund === 'Sim' ? monthsCoverage : '',
-      fundLocations: hasEmergencyFund === 'Sim' ? fundLocations : [],
+      emergencyFundMonths: hasEmergencyFund === 'Sim' ? emergencyFundMonths : '',
+      emergencyFundLocation: hasEmergencyFund === 'Sim' ? emergencyFundLocation : [],
     });
   };
 
   const isValid =
     hasEmergencyFund === 'Não' ||
-    (hasEmergencyFund === 'Sim' && monthsCoverage && fundLocations.length > 0);
+    (hasEmergencyFund === 'Sim' && emergencyFundMonths && emergencyFundLocation.length > 0);
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
@@ -84,15 +84,15 @@ export default function PatrimonyEmergencyFundForm({ onContinue, formData, quest
                     <label
                       key={opt}
                       className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
-                        monthsCoverage === opt ? 'border-accent bg-accent/10' : 'border-gray-300 hover:bg-gray-50'
+                        emergencyFundMonths === opt ? 'border-accent bg-accent/10' : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
                       <input
                         type="radio"
-                        name="monthsCoverage"
+                        name="emergencyFundMonths"
                         value={opt}
-                        checked={monthsCoverage === opt}
-                        onChange={(e) => setMonthsCoverage(e.target.value)}
+                        checked={emergencyFundMonths === opt}
+                        onChange={(e) => setemergencyFundMonths(e.target.value)}
                         className="w-4 h-4 text-accent focus:ring-accent"
                       />
                       <span className="ml-3 text-gray-900">{opt}</span>
@@ -110,15 +110,15 @@ export default function PatrimonyEmergencyFundForm({ onContinue, formData, quest
                     <label
                       key={opt}
                       className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
-                        fundLocations.includes(opt) ? 'border-accent bg-accent/10' : 'border-gray-300 hover:bg-gray-50'
+                        emergencyFundLocation.includes(opt) ? 'border-accent bg-accent/10' : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
                       <input
                         type="checkbox"
                         value={opt}
-                        checked={fundLocations.includes(opt)}
+                        checked={emergencyFundLocation.includes(opt)}
                         onChange={(e) =>
-                          setFundLocations((prev) =>
+                          setemergencyFundLocation((prev) =>
                             prev.includes(opt)
                               ? prev.filter((x) => x !== opt)
                               : [...prev, opt]
