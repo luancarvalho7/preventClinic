@@ -175,7 +175,7 @@ export const formConfig: FormStep[] = [
   {
     id: 'patrimony',
     component: PatrimonyRetirementForm,
-    title: 'Reserva de emergência',
+    title: 'Aposentadoria desejada',
     nextStepLogic: () => 'goals',
     prevStepId: 'debts'
   },
