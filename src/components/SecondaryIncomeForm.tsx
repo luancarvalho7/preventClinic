@@ -5,7 +5,7 @@ import QuestionNumber from './QuestionNumber';
 export default function SecondaryIncomeForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [hasSecondaryIncome, setHasSecondaryIncome] = useState(formData?.hasSecondaryIncome || '');
   const [selectedSources, setSelectedSources] = useState<string[]>(formData?.secondaryIncomeSources || []);
-  const [otherSegundaryIncomeSource, setOtherSource] = useState(formData?.otherSource || '');
+  const [otherSegundaryIncomeSource, setotherSegundaryIncomeSource] = useState(formData?.otherSegundaryIncomeSource || '');
 
   const incomeOptions = [
     'Salário fixo (CLT)',
@@ -39,7 +39,7 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
       const dataToSend = {
         hasSecondaryIncome,
         secondaryIncomeSources: selectedSources,
-        otherSource: selectedSources.includes('Outros') ? otherSource.trim() : '',
+        otherSegundaryIncomeSource: selectedSources.includes('Outros') ? otherSegundaryIncomeSource.trim() : '',
       };
       onContinue(dataToSend);
     }
@@ -49,7 +49,7 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
     hasSecondaryIncome === 'Não' ||
     (hasSecondaryIncome === 'Sim' &&
       selectedSources.length > 0 &&
-      (!selectedSources.includes('Outros') || otherSource.trim() !== ''));
+      (!selectedSources.includes('Outros') || otherSegundaryIncomeSource.trim() !== ''));
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
@@ -80,7 +80,7 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
                       setHasSecondaryIncome(e.target.value);
                       if (e.target.value === 'Não') {
                         setSelectedSources([]);
-                        setOtherSource('');
+                        setotherSegundaryIncomeSource('');
                       }
                     }}
                     className="hidden"
@@ -127,8 +127,8 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
                   </label>
                   <input
                     type="text"
-                    value={otherSource}
-                    onChange={(e) => setOtherSource(e.target.value)}
+                    value={otherSegundaryIncomeSource}
+                    onChange={(e) => setotherSegundaryIncomeSource(e.target.value)}
                     placeholder="Descreva sua outra fonte de renda"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                   />
