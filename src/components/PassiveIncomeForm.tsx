@@ -6,7 +6,6 @@ import { formatCurrencyInput, parseCurrency } from '../utils/currency';
 export default function PassiveIncomeForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [hasPassiveIncome, setHasPassiveIncome] = useState(formData?.hasPassiveIncome || '');
   const [selectedSources, setSelectedSources] = useState<string[]>(formData?.passiveIncomeSources || []);
-  const [otherPassiveIncomeSource, setOtherPassiveIncomeSource] = useState(formData?.otherPassiveIncomeSource || '');
   const [passiveIncomeValue, setPassiveIncomeValue] = useState(formData?.passiveIncomeValue || '');
   const [displayValue, setDisplayValue] = useState(
     formData?.passiveIncomeValue ? formatCurrencyInput(formData.passiveIncomeValue) : ''
@@ -36,22 +35,15 @@ export default function PassiveIncomeForm({ onContinue, formData, questionNumber
       onContinue({
         hasPassiveIncome,
         passiveIncomeSources: [],
-        otherPassiveIncomeSource: '',
         passiveIncomeValue: '',
       });
       return;
     }
 
-    if (
-      hasPassiveIncome === 'Sim' &&
-      selectedSources.length > 0 &&
-      (!selectedSources.includes('Outras') || otherPassiveIncomeSource.trim() !== '') &&
-      passiveIncomeValue.trim() !== ''
-    ) {
+    if (hasPassiveIncome === 'Sim' && selectedSources.length > 0 && passiveIncomeValue.trim() !== '') {
       const dataToSend = {
         hasPassiveIncome,
         passiveIncomeSources: selectedSources,
-        otherPassiveIncomeSource: selectedSources.includes('Outras') ? otherPassiveIncomeSource.trim() : '',
         passiveIncomeValue: passiveIncomeValue.trim(), // valor em centavos
       };
       onContinue(dataToSend);
@@ -62,8 +54,7 @@ export default function PassiveIncomeForm({ onContinue, formData, questionNumber
     hasPassiveIncome === 'Não' ||
     (hasPassiveIncome === 'Sim' &&
       selectedSources.length > 0 &&
-      passiveIncomeValue.trim() !== '' &&
-      (!selectedSources.includes('Outras') || otherPassiveIncomeSource.trim() !== ''));
+      passiveIncomeValue.trim() !== '');
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
@@ -94,7 +85,6 @@ export default function PassiveIncomeForm({ onContinue, formData, questionNumber
                       setHasPassiveIncome(e.target.value);
                       if (e.target.value === 'Não') {
                         setSelectedSources([]);
-                        setOtherPassiveIncomeSource('');
                         setPassiveIncomeValue('');
                         setDisplayValue('');
                       }
@@ -134,22 +124,6 @@ export default function PassiveIncomeForm({ onContinue, formData, questionNumber
                   </label>
                 ))}
               </div>
-
-              {/* Campo "Outras" condicional */}
-              {selectedSources.includes('Outras') && (
-                <div className="mt-4">
-                  <label className="block text-lg font-medium text-gray-900 mb-2">
-                    Especifique:
-                  </label>
-                  <input
-                    type="text"
-                    value={otherPassiveIncomeSource}
-                    onChange={(e) => setOtherPassiveIncomeSource(e.target.value)}
-                    placeholder="Descreva sua outra fonte de renda passiva"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                  />
-                </div>
-              )}
 
               {/* Campo de valor formatado */}
               <div className="mt-4">
