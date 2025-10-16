@@ -6,7 +6,7 @@ export default function SurplusActionForm({ onContinue, formData, questionNumber
   const [surplusAction, setSurplusAction] = useState(formData?.surplusAction || '');
 
   const options = [
-    'Deixo na conta',
+    'Deixo parado na conta corrente',
     'Gasto depois',
     'Invisto',
     'Guardo em espécie',
