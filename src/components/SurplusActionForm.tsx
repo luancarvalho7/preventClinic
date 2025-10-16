@@ -10,6 +10,7 @@ export default function SurplusActionForm({ onContinue, formData, questionNumber
     'Guardo na poupança',
     'Invisto (renda fixa, fundos, ações, cripto etc.)',
     'Gasto depois (em lazer, compras, imprevistos etc.)',
+    'Guardo em espécie (dinheiro físico)',
     'Outro'
   ];
 
