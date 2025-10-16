@@ -12,7 +12,6 @@ export interface FormData {
   secondaryIncomeSource?: string;
   otherSegundaryIncomeSource? : string;
   secondaryIncomeValue?: string;
-  secondaryWorkRegime?: string;
   incomeVariability?: string;
   incomeVariabilityDetails?: string;
   hasPassiveIncome?: string;
