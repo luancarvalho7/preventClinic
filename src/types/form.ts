@@ -19,7 +19,6 @@ export interface FormData {
   secondaryIncomeSource?: string;
   otherSegundaryIncomeSource?: string;
   secondaryIncomeValue?: string;
-  secondaryWorkRegime?: string; // ⚙️ agora também existe no banco
 
   // Variabilidade e passivos
   incomeVariability?: string;
