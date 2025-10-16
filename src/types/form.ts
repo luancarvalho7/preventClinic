@@ -11,6 +11,7 @@ export interface FormData {
   hasSecondaryIncome?: string;
   secondaryIncomeSource?: string;
   otherSegundaryIncomeSource? : string;
+  secondaryIncomeValue?: string;
   secondaryWorkRegime?: string;
   grossIncome?: string;
   netIncome?: string;
