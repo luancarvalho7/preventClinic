@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import { formatCurrencyInput, parseCurrency } from '../utils/currency';
 
 export default function SecondaryIncomeForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [hasSecondaryIncome, setHasSecondaryIncome] = useState(formData?.hasSecondaryIncome || '');
