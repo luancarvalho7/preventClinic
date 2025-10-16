@@ -75,7 +75,7 @@ export const formConfig: FormStep[] = [
     id: 'mainIncome',
     component: MainIncomeForm,
     title: 'Fonte de Renda Principal',
-    nextStepLogic: () => 'incomeAmounts',
+    nextStepLogic: () => 'secondaryIncome',
     prevStepId: 'profession'
   },
   /*
@@ -85,22 +85,21 @@ export const formConfig: FormStep[] = [
     title: 'Regime de Trabalho',
     nextStepLogic: () => 'secondaryIncome',
     prevStepId: 'mainIncome'
-  }, 
+  }, */
   {
     id: 'secondaryIncome',
     component: SecondaryIncomeForm,
     title: 'Renda Secundária',
     nextStepLogic: () => 'incomeAmounts',
     prevStepId: 'mainIncome'
-  },
-  */
+  },/*
   {
     id: 'incomeAmounts',
     component: IncomeAmountsForm,
     title: 'Valores de Renda',
     nextStepLogic: () => 'incomeVariability',
-    prevStepId: 'mainIncome'
-  },
+    prevStepId: 'secondaryIncome'
+  },*/
   {
     id: 'incomeVariability',
     component: IncomeVariabilityForm,
