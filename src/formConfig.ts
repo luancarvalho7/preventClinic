@@ -105,7 +105,7 @@ export const formConfig: FormStep[] = [
     component: IncomeVariabilityForm,
     title: 'Variabilidade de Renda',
     nextStepLogic: () => 'passiveIncome',
-    prevStepId: 'incomeAmounts'
+    prevStepId: 'secondaryIncome'
   },
   {
     id: 'passiveIncome',
