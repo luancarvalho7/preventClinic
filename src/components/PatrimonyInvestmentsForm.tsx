@@ -51,7 +51,7 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
         alreadyInvests,
         investmentTypes,
         monthlyInvestment,
-        investmentGoalformatCurrency
+        investmentGoal
       });
     }
   };
