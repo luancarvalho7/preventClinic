@@ -6,6 +6,7 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
   const [hasSecondaryIncome, setHasSecondaryIncome] = useState(formData?.hasSecondaryIncome || '');
   const [selectedSources, setSelectedSources] = useState<string[]>(formData?.secondaryIncomeSources || []);
   const [otherSegundaryIncomeSource, setotherSegundaryIncomeSource] = useState(formData?.otherSegundaryIncomeSource || '');
+  const [secondaryIncomeValue, setSecondaryIncomeValue] = useState(formData?.secondaryIncomeValue || '');
 
   const incomeOptions = [
     'Salário fixo (CLT)',
@@ -31,15 +32,28 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
     e.preventDefault();
 
     if (hasSecondaryIncome === 'Não') {
-      onContinue({ hasSecondaryIncome, secondaryIncomeSources: [], otherSegundaryIncomeSource: '' });
+      onContinue({
+        hasSecondaryIncome,
+        secondaryIncomeSources: [],
+        otherSegundaryIncomeSource: '',
+        secondaryIncomeValue: '',
+      });
       return;
     }
 
-    if (hasSecondaryIncome === 'Sim' && selectedSources.length > 0) {
+    if (
+      hasSecondaryIncome === 'Sim' &&
+      selectedSources.length > 0 &&
+      (!selectedSources.includes('Outros') || otherSegundaryIncomeSource.trim() !== '') &&
+      secondaryIncomeValue.trim() !== ''
+    ) {
       const dataToSend = {
         hasSecondaryIncome,
         secondaryIncomeSources: selectedSources,
-        otherSegundaryIncomeSource: selectedSources.includes('Outros') ? otherSegundaryIncomeSource.trim() : '',
+        otherSegundaryIncomeSource: selectedSources.includes('Outros')
+          ? otherSegundaryIncomeSource.trim()
+          : '',
+        secondaryIncomeValue: secondaryIncomeValue.trim(),
       };
       onContinue(dataToSend);
     }
@@ -49,6 +63,7 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
     hasSecondaryIncome === 'Não' ||
     (hasSecondaryIncome === 'Sim' &&
       selectedSources.length > 0 &&
+      secondaryIncomeValue.trim() !== '' &&
       (!selectedSources.includes('Outros') || otherSegundaryIncomeSource.trim() !== ''));
 
   return (
@@ -81,6 +96,7 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
                       if (e.target.value === 'Não') {
                         setSelectedSources([]);
                         setotherSegundaryIncomeSource('');
+                        setSecondaryIncomeValue('');
                       }
                     }}
                     className="hidden"
@@ -134,6 +150,22 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
                   />
                 </div>
               )}
+
+              {/* Campo de valor */}
+              <div className="mt-4">
+                <label className="block text-lg font-medium text-gray-900 mb-2">
+                  Valor mensal aproximado dessa renda (R$)
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={secondaryIncomeValue}
+                  onChange={(e) => setSecondaryIncomeValue(e.target.value)}
+                  placeholder="Ex: 1500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                />
+              </div>
             </div>
           )}
 
