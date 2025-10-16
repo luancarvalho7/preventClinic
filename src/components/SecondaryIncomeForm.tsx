@@ -5,7 +5,7 @@ import QuestionNumber from './QuestionNumber';
 export default function SecondaryIncomeForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [hasSecondaryIncome, setHasSecondaryIncome] = useState(formData?.hasSecondaryIncome || '');
   const [selectedSources, setSelectedSources] = useState<string[]>(formData?.secondaryIncomeSources || []);
-  const [otherIncomeSource, setOtherSource] = useState(formData?.otherSource || '');
+  const [otherSegundaryIncomeSource, setOtherSource] = useState(formData?.otherSource || '');
 
   const incomeOptions = [
     'Salário fixo (CLT)',
