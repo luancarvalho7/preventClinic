@@ -1,36 +1,55 @@
 export interface FormData {
+  // Identificação
   birthDate?: string;
   maritalStatus?: string;
+
+  // Família e moradia
   hasDependents?: string;
   dependentsCount?: string;
   livingWith?: string;
+
+  // Profissão e renda principal
   currentProfession?: string;
   mainIncomeSource?: string;
-  mainIncomeSourceOther? : string;
+  mainIncomeSourceOther?: string;
   workRegime?: string;
+
+  // Renda secundária
   hasSecondaryIncome?: string;
   secondaryIncomeSource?: string;
-  otherSegundaryIncomeSource? : string;
+  otherSegundaryIncomeSource?: string;
   secondaryIncomeValue?: string;
+  secondaryWorkRegime?: string; // ⚙️ agora também existe no banco
+
+  // Variabilidade e passivos
   incomeVariability?: string;
   incomeVariabilityDetails?: string;
   hasPassiveIncome?: string;
+  passiveIncomeSources?: string[]; // ⚙️ array como no banco
+  passiveIncomeValue?: string;
   otherIncome?: string;
+
+  // Controle e despesas
   hasExpenseControl?: string;
+  updateFrequency?: string; // ⚙️ adicionado (já existe no banco)
   monthlyExpenses?: string;
   surplusAction?: string;
   deficitAction?: string;
+
+  // Dívidas
   hasDebts?: string;
   debtTypes?: string[];
   totalDebtAmount?: string;
   averageInterestRate?: string;
   hasOverdueDebts?: string;
   triedRenegotiation?: string;
+
+  // Patrimônio e investimentos
   hasEmergencyFund?: string;
   emergencyFundMonths?: string;
-  emergencyFundLocation?: string;
+  emergencyFundLocation?: string[]; // ⚙️ agora array
   alreadyInvests?: string;
-  investmentTypes?: string;
+  investmentTypes?: string[]; // ⚙️ agora array
   monthlyInvestment?: string;
   investmentGoal?: string;
   retirementIncome?: string;
@@ -39,6 +58,8 @@ export interface FormData {
   hasProperty?: string;
   propertyDetails?: string;
   otherAssets?: string;
+
+  // Metas e objetivos
   goals12Months?: string;
   goals5Years?: string;
   topPriority?: string;
@@ -46,8 +67,11 @@ export interface FormData {
   changeCommitment?: string;
   consultingGoals?: string[];
   successDefinition?: string;
+
+  // Controle interno
   [key: string]: any;
 }
+
 
 export interface FormStep {
   id: string;
