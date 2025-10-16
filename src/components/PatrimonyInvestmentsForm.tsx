@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
-import { formatCurrencyInput, parseCurrency } from '../utils/currency';
+import { formatCurrencyInput, parseCurrency, formatCurrency  } from '../utils/currency';
 
 export default function PatrimonyInvestmentsForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [alreadyInvests, setAlreadyInvests] = useState(formData?.alreadyInvests || '');
@@ -51,7 +51,7 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
         alreadyInvests,
         investmentTypes,
         monthlyInvestment,
-        investmentGoal,
+        investmentGoalformatCurrency
       });
     }
   };
