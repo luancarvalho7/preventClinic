@@ -163,6 +163,30 @@ export const formConfig: FormStep[] = [
     nextStepLogic: () => 'goals',
     prevStepId: 'debts'
   },
+  ,
+  {
+    id: 'patrimony',
+    component: PatrimonyInvestmentsForm,
+    title: 'Investimentos ativos',
+    nextStepLogic: () => 'goals',
+    prevStepId: 'debts'
+  },
+  ,
+  {
+    id: 'patrimony',
+    component: PatrimonyRetirementForm,
+    title: 'Reserva de emergência',
+    nextStepLogic: () => 'goals',
+    prevStepId: 'debts'
+  },
+  ,
+  {
+    id: 'patrimony',
+    component: PatrimonyAssetsForm,
+    title: 'Reserva de emergência',
+    nextStepLogic: () => 'goals',
+    prevStepId: 'debts'
+  },
   {
     id: 'goals',
     component: GoalsSection6Form,
