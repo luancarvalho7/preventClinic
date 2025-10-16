@@ -9,7 +9,7 @@ export default function SurplusActionForm({ onContinue, formData, questionNumber
     'Deixo parado na conta corrente',
     'Guardo na poupança',
     'Invisto (renda fixa, fundos, ações, cripto etc.)',
-    'Guardo em espécie',
+    'Gasto depois (em lazer, compras, imprevistos etc.)',
     'Outro'
   ];
 
