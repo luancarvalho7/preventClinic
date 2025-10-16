@@ -159,7 +159,7 @@ export const formConfig: FormStep[] = [
   {
     id: 'patrimony',
     component: PatrimonyEmergencyFundForm,
-    title: 'Patrimônio e Investimentos',
+    title: 'Reserva de emergência',
     nextStepLogic: () => 'goals',
     prevStepId: 'debts'
   },
