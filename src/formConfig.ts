@@ -75,7 +75,7 @@ export const formConfig: FormStep[] = [
     id: 'mainIncome',
     component: MainIncomeForm,
     title: 'Fonte de Renda Principal',
-    nextStepLogic: () => 'secondaryIncome',
+    nextStepLogic: () => 'incomeAmounts',
     prevStepId: 'profession'
   },
   /*
