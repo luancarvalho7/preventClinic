@@ -144,7 +144,7 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
                 </label>
                 <input
                   type="text"
-                  value={displayInvestment}
+                  value={displayMonthlyInvestment}
                   onChange={(e) => {
   const formatted = formatCurrencyInput(e.target.value);
   setDisplayMonthlyInvestment(formatted);
