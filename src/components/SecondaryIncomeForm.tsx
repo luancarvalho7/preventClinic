@@ -156,19 +156,23 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
 
               {/* Campo de valor */}
               <div className="mt-4">
-                <label className="block text-lg font-medium text-gray-900 mb-2">
-                  Valor mensal aproximado dessa renda (R$)
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={secondaryIncomeValue}
-                  onChange={(e) => setSecondaryIncomeValue(e.target.value)}
-                  placeholder="Ex: 1500"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                />
-              </div>
+  <label className="block text-lg font-medium text-gray-900 mb-2">
+    Valor mensal aproximado dessa renda (R$)
+  </label>
+  <input
+    type="text"
+    inputMode="numeric"
+    value={displayValue}
+    onChange={(e) => {
+      const formatted = formatCurrencyInput(e.target.value);
+      setDisplayValue(formatted);
+      setSecondaryIncomeValue(String(parseCurrency(e.target.value)));
+    }}
+    placeholder="Ex: R$ 1.500,00"
+    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+  />
+</div>
+
             </div>
           )}
 
