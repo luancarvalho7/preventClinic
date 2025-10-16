@@ -11,13 +11,17 @@ export default function DependentsForm({ onContinue, formData, questionNumber }:
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (hasDependents === 'não') {
-      onContinue({ hasDependents, dependentsCount: '0' });
-      return;
-    }
+    // Normaliza dependentsCount pra garantir persistência consistente
+    const finalData = {
+      hasDependents,
+      dependentsCount: hasDependents === 'sim' ? dependentsCount || '' : '0',
+    };
 
-    if (hasDependents === 'sim' && dependentsCount) {
-      onContinue({ hasDependents, dependentsCount });
+    if (
+      (hasDependents === 'sim' && dependentsCount) ||
+      hasDependents === 'não'
+    ) {
+      onContinue(finalData);
     }
   };
 
@@ -26,6 +30,7 @@ export default function DependentsForm({ onContinue, formData, questionNumber }:
       <div className="bg-white rounded-lg shadow-sm p-8">
         <QuestionNumber number={questionNumber} />
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Pergunta principal */}
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-4">
               Você tem dependentes financeiros? (filhos ou familiares)
@@ -46,8 +51,10 @@ export default function DependentsForm({ onContinue, formData, questionNumber }:
                     value={option}
                     checked={hasDependents === option}
                     onChange={(e) => {
-                      setHasDependents(e.target.value);
-                      setDependentsCount('');
+                      const value = e.target.value;
+                      setHasDependents(value);
+                      // Só limpa dependentsCount se escolher "não"
+                      if (value === 'não') setDependentsCount('');
                     }}
                     className="hidden"
                   />
@@ -57,6 +64,7 @@ export default function DependentsForm({ onContinue, formData, questionNumber }:
             </div>
           </div>
 
+          {/* Se tiver dependentes, mostra a quantidade */}
           {hasDependents === 'sim' && (
             <div>
               <label className="block text-lg font-medium text-gray-900 mb-4">
@@ -87,6 +95,7 @@ export default function DependentsForm({ onContinue, formData, questionNumber }:
             </div>
           )}
 
+          {/* Botão continuar */}
           <button
             type="submit"
             disabled={
