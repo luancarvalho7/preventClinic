@@ -90,7 +90,7 @@ export const formConfig: FormStep[] = [
     id: 'secondaryIncome',
     component: SecondaryIncomeForm,
     title: 'Renda Secundária',
-    nextStepLogic: () => 'incomeAmounts',
+    nextStepLogic: () => 'incomeVariability',
     prevStepId: 'mainIncome'
   },/*
   {
