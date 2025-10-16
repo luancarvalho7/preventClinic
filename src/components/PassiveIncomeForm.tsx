@@ -1,49 +1,181 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import { formatCurrencyInput, parseCurrency } from '../utils/currency';
 
 export default function PassiveIncomeForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [hasPassiveIncome, setHasPassiveIncome] = useState(formData?.hasPassiveIncome || '');
+  const [selectedSources, setSelectedSources] = useState<string[]>(formData?.passiveIncomeSources || []);
+  const [otherPassiveIncomeSource, setOtherPassiveIncomeSource] = useState(formData?.otherPassiveIncomeSource || '');
+  const [passiveIncomeValue, setPassiveIncomeValue] = useState(formData?.passiveIncomeValue || '');
+  const [displayValue, setDisplayValue] = useState(
+    formData?.passiveIncomeValue ? formatCurrencyInput(formData.passiveIncomeValue) : ''
+  );
+
+  const incomeOptions = [
+    'Aluguéis de imóveis',
+    'Investimentos financeiros (renda fixa, dividendos, fundos imobiliários etc.)',
+    'Royalties de livros, marcas, patentes ou franquias',
+    'Negócio automatizado / online que gera receita recorrente',
+    'Participação societária (lucros de empresa em que não atua diretamente)',
+    'Outras',
+  ];
+
+  const handleCheckboxChange = (option: string) => {
+    setSelectedSources((prev) =>
+      prev.includes(option)
+        ? prev.filter((item) => item !== option)
+        : [...prev, option]
+    );
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (hasPassiveIncome) {
-      onContinue({ hasPassiveIncome });
+
+    if (hasPassiveIncome === 'Não') {
+      onContinue({
+        hasPassiveIncome,
+        passiveIncomeSources: [],
+        otherPassiveIncomeSource: '',
+        passiveIncomeValue: '',
+      });
+      return;
+    }
+
+    if (
+      hasPassiveIncome === 'Sim' &&
+      selectedSources.length > 0 &&
+      (!selectedSources.includes('Outras') || otherPassiveIncomeSource.trim() !== '') &&
+      passiveIncomeValue.trim() !== ''
+    ) {
+      const dataToSend = {
+        hasPassiveIncome,
+        passiveIncomeSources: selectedSources,
+        otherPassiveIncomeSource: selectedSources.includes('Outras') ? otherPassiveIncomeSource.trim() : '',
+        passiveIncomeValue: passiveIncomeValue.trim(), // valor em centavos
+      };
+      onContinue(dataToSend);
     }
   };
+
+  const isValid =
+    hasPassiveIncome === 'Não' ||
+    (hasPassiveIncome === 'Sim' &&
+      selectedSources.length > 0 &&
+      passiveIncomeValue.trim() !== '' &&
+      (!selectedSources.includes('Outras') || otherPassiveIncomeSource.trim() !== ''));
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
       <div className="bg-white rounded-lg shadow-sm p-8">
         <QuestionNumber number={questionNumber} />
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Pergunta principal */}
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-4">
               Você possui renda passiva (aluguéis, investimentos, royalties etc.)?
             </label>
-            <div className="space-y-3">
+            <div className="flex gap-4">
               {['Não', 'Sim'].map((option) => (
                 <label
                   key={option}
-                  className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                  className={`flex-1 text-center p-4 border rounded-lg cursor-pointer transition-colors ${
+                    hasPassiveIncome === option
+                      ? 'border-accent bg-accent/10'
+                      : 'border-gray-300 hover:bg-gray-50'
+                  }`}
                 >
                   <input
                     type="radio"
                     name="hasPassiveIncome"
                     value={option}
                     checked={hasPassiveIncome === option}
-                    onChange={(e) => setHasPassiveIncome(e.target.value)}
-                    className="w-4 h-4 text-accent focus:ring-accent"
+                    onChange={(e) => {
+                      setHasPassiveIncome(e.target.value);
+                      if (e.target.value === 'Não') {
+                        setSelectedSources([]);
+                        setOtherPassiveIncomeSource('');
+                        setPassiveIncomeValue('');
+                        setDisplayValue('');
+                      }
+                    }}
+                    className="hidden"
                   />
-                  <span className="ml-3 text-gray-900">{option}</span>
+                  <span className="capitalize text-gray-900">{option}</span>
                 </label>
               ))}
             </div>
           </div>
 
+          {/* Opções se "Sim" */}
+          {hasPassiveIncome === 'Sim' && (
+            <div className="space-y-4">
+              <label className="block text-lg font-medium text-gray-900 mb-4">
+                Se sim, quais?
+              </label>
+              <div className="space-y-3">
+                {incomeOptions.map((option) => (
+                  <label
+                    key={option}
+                    className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
+                      selectedSources.includes(option)
+                        ? 'border-accent bg-accent/10'
+                        : 'border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      value={option}
+                      checked={selectedSources.includes(option)}
+                      onChange={() => handleCheckboxChange(option)}
+                      className="w-4 h-4 text-accent focus:ring-accent"
+                    />
+                    <span className="ml-3 text-gray-900">{option}</span>
+                  </label>
+                ))}
+              </div>
+
+              {/* Campo "Outras" condicional */}
+              {selectedSources.includes('Outras') && (
+                <div className="mt-4">
+                  <label className="block text-lg font-medium text-gray-900 mb-2">
+                    Especifique:
+                  </label>
+                  <input
+                    type="text"
+                    value={otherPassiveIncomeSource}
+                    onChange={(e) => setOtherPassiveIncomeSource(e.target.value)}
+                    placeholder="Descreva sua outra fonte de renda passiva"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  />
+                </div>
+              )}
+
+              {/* Campo de valor formatado */}
+              <div className="mt-4">
+                <label className="block text-lg font-medium text-gray-900 mb-2">
+                  Valor mensal aproximado da renda passiva
+                </label>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={displayValue}
+                  onChange={(e) => {
+                    const formatted = formatCurrencyInput(e.target.value);
+                    setDisplayValue(formatted);
+                    setPassiveIncomeValue(String(parseCurrency(e.target.value)));
+                  }}
+                  placeholder="Ex: R$ 2.500,00"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Botão de continuar */}
           <button
             type="submit"
-            disabled={!hasPassiveIncome}
+            disabled={!isValid}
             className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar
