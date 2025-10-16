@@ -7,7 +7,7 @@ export default function SurplusActionForm({ onContinue, formData, questionNumber
 
   const options = [
     'Deixo parado na conta corrente',
-    'Gasto depois',
+    'Guardo na poupança',
     'Invisto',
     'Guardo em espécie',
     'Outro'
