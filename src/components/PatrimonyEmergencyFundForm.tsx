@@ -1,3 +1,8 @@
+import React, { useState } from 'react';
+import { FormStepProps } from '../types/form';
+import QuestionNumber from './QuestionNumber';
+
+
 export default function PatrimonyEmergencyFundForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [hasEmergencyFund, setHasEmergencyFund] = useState(formData?.hasEmergencyFund || '');
   const [monthsCoverage, setMonthsCoverage] = useState(formData?.monthsCoverage || '');
