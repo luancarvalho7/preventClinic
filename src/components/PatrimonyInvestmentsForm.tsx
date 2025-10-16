@@ -6,10 +6,11 @@ import { formatCurrencyInput, parseCurrency } from '../utils/currency';
 export default function PatrimonyInvestmentsForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [alreadyInvests, setAlreadyInvests] = useState(formData?.alreadyInvests || '');
   const [investmentTypes, setInvestmentTypes] = useState<string[]>(formData?.investmentTypes || []);
-  const [monthlyInvestment, setMonthlyInvestment] = useState(formData?.monthlyInvestment || '');
-  const [www, setDisplayInvestment] = useState(
-    formData?.monthlyInvestment ? formatCurrencyInput(formData.monthlyInvestment) : ''
-  );
+  const [monthlyInvestment, setMonthlyInvestment] = useState<number>(formData?.monthlyInvestment || 0);
+const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
+  formData?.monthlyInvestment ? formatCurrency(formData.monthlyInvestment) : ''
+);
+
   const [investmentGoal, setInvestmentGoal] = useState(formData?.investmentGoal || '');
 
   const investmentOptions = [
