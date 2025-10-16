@@ -157,36 +157,33 @@ export const formConfig: FormStep[] = [
     prevStepId: 'deficitAction'
   },
   {
-    id: 'patrimony',
-    component: PatrimonyEmergencyFundForm,
-    title: 'Reserva de emergência',
-    nextStepLogic: () => 'goals',
-    prevStepId: 'debts'
-  },
-  ,
-  {
-    id: 'patrimony',
-    component: PatrimonyInvestmentsForm,
-    title: 'Investimentos ativos',
-    nextStepLogic: () => 'goals',
-    prevStepId: 'debts'
-  },
-  ,
-  {
-    id: 'patrimony',
-    component: PatrimonyRetirementForm,
-    title: 'Aposentadoria desejada',
-    nextStepLogic: () => 'goals',
-    prevStepId: 'debts'
-  },
-  ,
-  {
-    id: 'patrimony',
-    component: PatrimonyAssetsForm,
-    title: 'Veículos, imóveis e bens',
-    nextStepLogic: () => 'goals',
-    prevStepId: 'debts'
-  },
+  id: 'patrimonyEmergencyFund',
+  component: PatrimonyEmergencyFundForm,
+  title: 'Reserva de emergência',
+  nextStepLogic: () => 'patrimonyInvestments',
+  prevStepId: 'debts'
+},
+{
+  id: 'patrimonyInvestments',
+  component: PatrimonyInvestmentsForm,
+  title: 'Investimentos ativos',
+  nextStepLogic: () => 'patrimonyRetirement',
+  prevStepId: 'patrimonyEmergencyFund'
+},
+{
+  id: 'patrimonyRetirement',
+  component: PatrimonyRetirementForm,
+  title: 'Aposentadoria desejada',
+  nextStepLogic: () => 'patrimonyAssets',
+  prevStepId: 'patrimonyInvestments'
+},
+{
+  id: 'patrimonyAssets',
+  component: PatrimonyAssetsForm,
+  title: 'Veículos, imóveis e bens',
+  nextStepLogic: () => 'goals',
+  prevStepId: 'patrimonyRetirement'
+},
   {
     id: 'goals',
     component: GoalsSection6Form,
