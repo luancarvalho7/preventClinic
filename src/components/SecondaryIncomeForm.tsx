@@ -157,7 +157,7 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
               {/* Campo de valor */}
               <div className="mt-4">
   <label className="block text-lg font-medium text-gray-900 mb-2">
-    Valor mensal aproximado dessa renda (R$)
+    Valor mensal aproximado dessa renda
   </label>
   <input
     type="text"
