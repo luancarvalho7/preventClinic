@@ -6,6 +6,7 @@ export interface FormData {
   livingWith?: string;
   currentProfession?: string;
   mainIncomeSource?: string;
+  mainIncomeSourceOther? : string;
   workRegime?: string;
   hasSecondaryIncome?: string;
   secondaryIncomeSource?: string;
