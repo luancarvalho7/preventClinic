@@ -33,8 +33,6 @@ export default function MainIncomeForm({ onContinue, formData, questionNumber }:
     'Prestação de serviços autônomos',
     'Comissões por vendas / resultados',
     'Freelance / trabalhos eventuais',
-    'Dividendos / lucros de investimentos',
-    'Aluguel de imóveis',
     'Aposentadoria / pensão',
     'Outros',
   ];
@@ -56,7 +54,7 @@ export default function MainIncomeForm({ onContinue, formData, questionNumber }:
       <div className="bg-white rounded-lg shadow-sm p-8">
         <QuestionNumber number={questionNumber} />
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Seção 2 – Renda</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Seção 2 – Renda Ativa</h2>
           <p className="text-gray-600">
             Vamos mapear suas fontes de renda — principais e adicionais — para compreender seu potencial de poupança e investimento.
           </p>
