@@ -17,8 +17,6 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
     'Prestação de serviços autônomos',
     'Comissões por vendas / resultados',
     'Freelance / trabalhos eventuais',
-    'Dividendos / lucros de investimentos',
-    'Aluguel de imóveis',
     'Aposentadoria / pensão',
     'Outros',
   ];
@@ -77,7 +75,7 @@ export default function SecondaryIncomeForm({ onContinue, formData, questionNumb
           {/* Pergunta principal */}
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-4">
-              Possui outra fonte de renda?
+              Possui outra fonte de renda ativa?
             </label>
             <div className="flex gap-4">
               {['Não', 'Sim'].map((option) => (
