@@ -126,23 +126,25 @@ export default function PassiveIncomeForm({ onContinue, formData, questionNumber
               </div>
 
               {/* Campo de valor formatado */}
-              <div className="mt-4">
-                <label className="block text-lg font-medium text-gray-900 mb-2">
-                  Valor mensal aproximado da renda passiva
-                </label>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={displayValue}
-                  onChange={(e) => {
-                    const formatted = formatCurrencyInput(e.target.value);
-                    setDisplayValue(formatted);
-                    setPassiveIncomeValue(String(parseCurrency(e.target.value)));
-                  }}
-                  placeholder="Ex: R$ 2.500,00"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                />
-              </div>
+              {selectedSources.length > 0 && (
+                <div className="mt-4">
+                  <label className="block text-lg font-medium text-gray-900 mb-2">
+                    Valor total aproximado mensal da renda complementar:
+                  </label>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    value={displayValue}
+                    onChange={(e) => {
+                      const formatted = formatCurrencyInput(e.target.value);
+                      setDisplayValue(formatted);
+                      setPassiveIncomeValue(String(parseCurrency(e.target.value)));
+                    }}
+                    placeholder="R$ 0,00"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  />
+                </div>
+              )}
             </div>
           )}
 
