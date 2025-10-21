@@ -10,7 +10,8 @@ export default function LivingWithForm({ onContinue, formData, questionNumber }:
     'Com cônjuge',
     'Com cônjuge e filho(s)',
     'Com filho(s)',
-    'Com pais'
+    'Com pais',
+    'Com amigo(s)'
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
