@@ -29,7 +29,7 @@ export default function PatrimonyRetirementForm({ onContinue, formData, question
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-3">
-              Pensando no futuro, quanto precisaria receber de aposentadoria para viver tranquilo(a)?
+              Pensando no futuro, quanto precisaria receber por mês de aposentadoria para viver tranquilo(a)?
             </label>
             <input
               type="text"
