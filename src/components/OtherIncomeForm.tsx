@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import { formatCurrencyInput, parseCurrency } from '../utils/currency';
 
 export default function OtherIncomeForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [otherIncome, setOtherIncome] = useState(formData?.otherIncome || '');
+  const [otherIncomeValue, setOtherIncomeValue] = useState(formData?.otherIncomeValue || '');
+  const [displayValue, setDisplayValue] = useState(
+    formData?.otherIncomeValue ? formatCurrencyInput(formData.otherIncomeValue) : ''
+  );
 
   const options = [
     'Sim, recebo pensão ou ajuda financeira regular',
@@ -14,8 +19,15 @@ export default function OtherIncomeForm({ onContinue, formData, questionNumber }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (otherIncome) {
-      onContinue({ otherIncome });
+    const hasOtherIncome = otherIncome.startsWith('Sim');
+
+    if (otherIncome === 'Não possuo outra fonte de renda') {
+      onContinue({ otherIncome, otherIncomeValue: '' });
+      return;
+    }
+
+    if (hasOtherIncome && otherIncomeValue.trim() !== '') {
+      onContinue({ otherIncome, otherIncomeValue: otherIncomeValue.trim() });
     }
   };
 
@@ -57,9 +69,33 @@ export default function OtherIncomeForm({ onContinue, formData, questionNumber }
             </div>
           </div>
 
+          {otherIncome.startsWith('Sim') && (
+            <div className="mt-4">
+              <label className="block text-lg font-medium text-gray-900 mb-2">
+                Valor total aproximado mensal da renda complementar:
+              </label>
+              <input
+                type="text"
+                inputMode="numeric"
+                value={displayValue}
+                onChange={(e) => {
+                  const formatted = formatCurrencyInput(e.target.value);
+                  setDisplayValue(formatted);
+                  setOtherIncomeValue(String(parseCurrency(e.target.value)));
+                }}
+                placeholder="R$ 0,00"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                required
+              />
+            </div>
+          )}
+
           <button
             type="submit"
-            disabled={!otherIncome}
+            disabled={
+              !otherIncome ||
+              (otherIncome.startsWith('Sim') && otherIncomeValue.trim() === '')
+            }
             className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar
