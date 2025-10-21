@@ -77,7 +77,7 @@ export default function PatrimonyEmergencyFundForm({ onContinue, formData, quest
             <>
               <div>
                 <label className="block text-lg font-medium text-gray-900 mb-4">
-                  Ela cobre quantos meses do seu custo fixo?
+                  Ela cobre quantos meses dos seus gastos?
                 </label>
                 <div className="space-y-3">
                   {monthOptions.map((opt) => (
