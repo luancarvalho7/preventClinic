@@ -1,30 +1,44 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import { formatCurrencyInput, parseCurrency } from '../utils/currency';
 
 export default function PatrimonyAssetsForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [hasVehicle, setHasVehicle] = useState(formData?.hasVehicle || '');
-  const [vehicleDetails, setVehicleDetails] = useState(formData?.vehicleDetails || '');
+  const [vehicleModels, setVehicleModels] = useState<string[]>(formData?.vehicleModels || []);
+  const [vehicleValue, setVehicleValue] = useState(formData?.vehicleValue || '');
+  const [displayVehicleValue, setDisplayVehicleValue] = useState(
+    formData?.vehicleValue ? formatCurrencyInput(formData.vehicleValue) : ''
+  );
   const [hasProperty, setHasProperty] = useState(formData?.hasProperty || '');
-  const [propertyDetails, setPropertyDetails] = useState(formData?.propertyDetails || '');
+  const [propertyTypes, setPropertyTypes] = useState<string[]>(formData?.propertyTypes || []);
+  const [propertyValue, setPropertyValue] = useState(formData?.propertyValue || '');
+  const [displayPropertyValue, setDisplayPropertyValue] = useState(
+    formData?.propertyValue ? formatCurrencyInput(formData.propertyValue) : ''
+  );
   const [otherAssets, setOtherAssets] = useState(formData?.otherAssets || '');
+
+  const vehicleModelOptions = ['Carro', 'Moto', 'Caminhão', 'Outro'];
+  const propertyTypeOptions = ['Casa', 'Apartamento', 'Terreno', 'Sítio/Chácara', 'Outro'];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onContinue({
       hasVehicle,
-      vehicleDetails: hasVehicle === 'Sim' ? vehicleDetails : '',
+      vehicleModels: hasVehicle === 'Sim' ? vehicleModels : [],
+      vehicleValue: hasVehicle === 'Sim' ? vehicleValue : '',
       hasProperty,
-      propertyDetails: hasProperty === 'Sim' ? propertyDetails : '',
+      propertyTypes: hasProperty === 'Sim' ? propertyTypes : [],
+      propertyValue: hasProperty === 'Sim' ? propertyValue : '',
       otherAssets: otherAssets || 'Nenhum',
     });
   };
 
   const isValid =
     hasVehicle &&
-    (hasVehicle === 'Não' || vehicleDetails) &&
+    (hasVehicle === 'Não' || (vehicleModels.length > 0 && vehicleValue.trim() !== '')) &&
     hasProperty &&
-    (hasProperty === 'Não' || propertyDetails);
+    (hasProperty === 'Não' || (propertyTypes.length > 0 && propertyValue.trim() !== ''));
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
@@ -65,18 +79,58 @@ export default function PatrimonyAssetsForm({ onContinue, formData, questionNumb
           </div>
 
           {hasVehicle === 'Sim' && (
-            <div>
-              <label className="block text-lg font-medium text-gray-900 mb-3">
-                Qual modelo e valor estimado atual?
-              </label>
-              <input
-                type="text"
-                value={vehicleDetails}
-                onChange={(e) => setVehicleDetails(e.target.value)}
-                placeholder="Ex: Honda Civic 2018, R$ 80.000"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-              />
-            </div>
+            <>
+              <div>
+                <label className="block text-lg font-medium text-gray-900 mb-4">
+                  Qual(is) modelo(s)?
+                </label>
+                <div className="space-y-3">
+                  {vehicleModelOptions.map((model) => (
+                    <label
+                      key={model}
+                      className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
+                        vehicleModels.includes(model)
+                          ? 'border-accent bg-accent/10'
+                          : 'border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        value={model}
+                        checked={vehicleModels.includes(model)}
+                        onChange={(e) =>
+                          setVehicleModels((prev) =>
+                            prev.includes(model)
+                              ? prev.filter((x) => x !== model)
+                              : [...prev, model]
+                          )
+                        }
+                        className="w-4 h-4 text-accent focus:ring-accent"
+                      />
+                      <span className="ml-3 text-gray-900">{model}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-lg font-medium text-gray-900 mb-3">
+                  Qual valor total do(s) veículo(s)?
+                </label>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={displayVehicleValue}
+                  onChange={(e) => {
+                    const formatted = formatCurrencyInput(e.target.value);
+                    setDisplayVehicleValue(formatted);
+                    setVehicleValue(String(parseCurrency(e.target.value)));
+                  }}
+                  placeholder="R$ 0,00"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                />
+              </div>
+            </>
           )}
 
           {/* 26 */}
@@ -109,18 +163,58 @@ export default function PatrimonyAssetsForm({ onContinue, formData, questionNumb
           </div>
 
           {hasProperty === 'Sim' && (
-            <div>
-              <label className="block text-lg font-medium text-gray-900 mb-3">
-                Descreva tipo(s) e valor estimado
-              </label>
-              <textarea
-                value={propertyDetails}
-                onChange={(e) => setPropertyDetails(e.target.value)}
-                rows={3}
-                placeholder="Ex: Apartamento em São Paulo, R$ 500.000"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-              />
-            </div>
+            <>
+              <div>
+                <label className="block text-lg font-medium text-gray-900 mb-4">
+                  Qual(is) tipo(s) de imóvel(is)?
+                </label>
+                <div className="space-y-3">
+                  {propertyTypeOptions.map((type) => (
+                    <label
+                      key={type}
+                      className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
+                        propertyTypes.includes(type)
+                          ? 'border-accent bg-accent/10'
+                          : 'border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        value={type}
+                        checked={propertyTypes.includes(type)}
+                        onChange={(e) =>
+                          setPropertyTypes((prev) =>
+                            prev.includes(type)
+                              ? prev.filter((x) => x !== type)
+                              : [...prev, type]
+                          )
+                        }
+                        className="w-4 h-4 text-accent focus:ring-accent"
+                      />
+                      <span className="ml-3 text-gray-900">{type}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-lg font-medium text-gray-900 mb-3">
+                  Qual valor total do(s) imóvel(is)?
+                </label>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={displayPropertyValue}
+                  onChange={(e) => {
+                    const formatted = formatCurrencyInput(e.target.value);
+                    setDisplayPropertyValue(formatted);
+                    setPropertyValue(String(parseCurrency(e.target.value)));
+                  }}
+                  placeholder="R$ 0,00"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                />
+              </div>
+            </>
           )}
 
           {/* 27 */}
