@@ -7,7 +7,7 @@ export default {
         'outfit': ['Outfit', 'sans-serif'],
       },
       colors: {
-        accent: '#98002F',
+        accent: '#0960ae',
       },
     },
   },
