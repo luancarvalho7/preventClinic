@@ -52,6 +52,7 @@ export interface FormData {
   alreadyInvests?: string;
   investmentTypes?: string[]; // ⚙️ agora array
   monthlyInvestment?: string;
+  totalInvested?: string;
   investmentGoal?: string;
   retirementIncome?: string;
   hasVehicle?: string;

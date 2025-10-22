@@ -12,6 +12,11 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
   formData?.monthlyInvestment ? formatCurrency(formData.monthlyInvestment) : ''
 );
 
+  const [totalInvested, setTotalInvested] = useState<number>(formData?.totalInvested || 0);
+  const [displayTotalInvested, setDisplayTotalInvested] = useState(
+    formData?.totalInvested ? formatCurrency(formData.totalInvested) : ''
+  );
+
   const [investmentGoal, setInvestmentGoal] = useState(formData?.investmentGoal || '');
 
   const investmentOptions = [
@@ -43,15 +48,16 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (alreadyInvests === 'Não') {
-      onContinue({ alreadyInvests, investmentTypes: [], monthlyInvestment: '', investmentGoal: '' });
+      onContinue({ alreadyInvests, investmentTypes: [], monthlyInvestment: '', totalInvested: '', investmentGoal: '' });
       return;
     }
 
-    if (alreadyInvests === 'Sim' && investmentTypes.length > 0 && monthlyInvestment && investmentGoal) {
+    if (alreadyInvests === 'Sim' && investmentTypes.length > 0 && monthlyInvestment && totalInvested && investmentGoal) {
       onContinue({
         alreadyInvests,
         investmentTypes,
         monthlyInvestment,
+        totalInvested,
         investmentGoal
       });
     }
@@ -59,7 +65,7 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
 
   const isValid =
     alreadyInvests === 'Não' ||
-    (alreadyInvests === 'Sim' && investmentTypes.length > 0 && monthlyInvestment && investmentGoal);
+    (alreadyInvests === 'Sim' && investmentTypes.length > 0 && monthlyInvestment && totalInvested && investmentGoal);
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
@@ -95,9 +101,11 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
                       setAlreadyInvests(e.target.value);
                       if (e.target.value === 'Não') {
                         setInvestmentTypes([]);
-                        setMonthlyInvestment('');
+                        setMonthlyInvestment(0);
+                        setDisplayMonthlyInvestment('');
+                        setTotalInvested(0);
+                        setDisplayTotalInvested('');
                         setInvestmentGoal('');
-                        setDisplayInvestment('');
                       }
                     }}
                     className="hidden"
@@ -150,11 +158,28 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
                   onChange={(e) => {
   const formatted = formatCurrencyInput(e.target.value);
   setDisplayMonthlyInvestment(formatted);
-  setMonthlyInvestment(parseCurrency(e.target.value)); // valor em centavos numérico
+  setMonthlyInvestment(parseCurrency(e.target.value));
 }}
-
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                   placeholder="Ex: R$ 500,00"
+                />
+              </div>
+
+              {/* Quanto tem investido */}
+              <div>
+                <label className="block text-lg font-medium text-gray-900 mb-3">
+                  Quanto você tem investido?
+                </label>
+                <input
+                  type="text"
+                  value={displayTotalInvested}
+                  onChange={(e) => {
+  const formatted = formatCurrencyInput(e.target.value);
+  setDisplayTotalInvested(formatted);
+  setTotalInvested(parseCurrency(e.target.value));
+}}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  placeholder="Ex: R$ 10.000,00"
                 />
               </div>
 
