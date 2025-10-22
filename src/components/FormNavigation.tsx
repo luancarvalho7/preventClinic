@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FormData } from '../types/form';
 import { formConfig, findStepById, getFirstStep } from '../formConfig';
+import LoadingPage from './LoadingPage';
 import ResultsPage from './ResultsPage';
 
 // localStorage key for form data
 const FORM_DATA_STORAGE_KEY = 'prevent-quiz-responses';
-
-// Webhook URL for form submissions
-const WEBHOOK_URL = 'https://n8nsemfila.iatom.site/webhook/6bd7af0d-aa3e-4c08-83a7-514d49e9fb73';
 
 // Helper functions for localStorage
 const saveFormDataToStorage = (data: FormData) => {
@@ -42,7 +40,8 @@ export default function FormNavigation() {
   const [currentStepId, setCurrentStepId] = useState<string>(getFirstStep().id);
   const [history, setHistory] = useState<string[]>([]); // Track visited steps for back navigation
   const [isComplete, setIsComplete] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
+  
   // Dynamic sub-flow state for hormone therapy
   const [isDynamicSubFlowActive, setIsDynamicSubFlowActive] = useState(false);
   const [dynamicMedicationQueue, setDynamicMedicationQueue] = useState<string[]>([]);
@@ -52,35 +51,6 @@ export default function FormNavigation() {
 
   // Development state
   const [showDevNavigation, setShowDevNavigation] = useState(false);
-
-  // Send form data to webhook
-  const sendFormDataToWebhook = async (finalFormData: FormData) => {
-    const submittedAt = new Date().toISOString();
-
-    const payload = {
-      email: finalFormData.email || '',
-      formData: finalFormData,
-      submittedAt
-    };
-
-    try {
-      const response = await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (response.ok) {
-        console.log('Form data sent successfully to webhook');
-      } else {
-        console.error('Failed to send form data to webhook:', response.status);
-      }
-    } catch (error) {
-      console.error('Error sending form data to webhook:', error);
-    }
-  };
 
   // Get current step configuration
   const getCurrentStep = () => {
@@ -116,9 +86,9 @@ export default function FormNavigation() {
         // Initialize dynamic sub-flow
         startDynamicSubFlow(updatedFormData);
       } else if (nextStepId === null) {
-        // Form is complete - send data to webhook
-        sendFormDataToWebhook(updatedFormData);
-        setIsComplete(true);
+        // Form is complete
+        setIsLoading(true);
+        // The loading page will call setIsComplete when done
       } else {
         // Navigate to next step
         const nextStep = findStepById(nextStepId);
@@ -193,8 +163,19 @@ export default function FormNavigation() {
     }
   };
 
+  // Handle completion of loading animation
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+    setIsComplete(true);
+    console.log('Complete form data:', formData);
+  };
+
   // Handle back navigation
   const handleBack = () => {
+    if (isLoading) {
+      // Don't allow back navigation during loading
+      return;
+    }
     
     if (isComplete) {
       // If we're on the complete screen, go back to last step
@@ -249,7 +230,7 @@ export default function FormNavigation() {
 
   // Check if back button should be shown
   const canGoBack = () => {
-    return (history.length > 0 || isComplete || (isDynamicSubFlowActive && dynamicHistory.length > 0));
+    return (history.length > 0 || isComplete || (isDynamicSubFlowActive && dynamicHistory.length > 0)) && !isLoading;
   };
 
   // Development helper function to jump to any step
@@ -309,6 +290,15 @@ export default function FormNavigation() {
 
   // Render the current step component
   const renderCurrentStep = () => {
+    if (isLoading) {
+      return (
+        <LoadingPage 
+          formData={formData} 
+          onComplete={handleLoadingComplete}
+        />
+      );
+    }
+    
     if (isComplete) {
       return <ResultsPage formData={formData} onBack={handleBack} />;
     }
@@ -340,18 +330,13 @@ export default function FormNavigation() {
       );
     }
 
-    // Calculate question number based on step index
-    const stepIndex = formConfig.findIndex(step => step.id === currentStepId);
-    const questionNumber = stepIndex >= 0 ? stepIndex + 1 : undefined;
-
     // Render the step's component with the required props
     const StepComponent = currentStep.component;
     return (
-      <StepComponent
-        onContinue={handleContinue}
+      <StepComponent 
+        onContinue={handleContinue} 
         formData={formData}
         currentMedication={currentDynamicMedication}
-        questionNumber={questionNumber}
       />
     );
   };
