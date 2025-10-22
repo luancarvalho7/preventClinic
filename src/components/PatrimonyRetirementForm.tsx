@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 import { formatCurrencyInput, parseCurrency } from '../utils/currency';
 
-export default function PatrimonyRetirementForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function PatrimonyRetirementForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [retirementIncome, setRetirementIncome] = useState(formData?.retirementIncome || '');
   const [displayRetirement, setDisplayRetirement] = useState(
     formData?.retirementIncome ? formatCurrencyInput(formData.retirementIncome) : ''
@@ -20,6 +21,7 @@ export default function PatrimonyRetirementForm({ onContinue, formData, question
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
+      <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
       <div className="bg-white rounded-lg shadow-sm p-8">
         <QuestionNumber number={questionNumber} />
         <h2 className="text-2xl font-bold text-gray-900 mb-2">

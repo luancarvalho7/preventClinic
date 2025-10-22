@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 import { formatCurrency, parseCurrency } from '../utils/currency';
 
-export default function MonthlyExpensesForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function MonthlyExpensesForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [monthlyExpenses, setMonthlyExpenses] = useState(formData?.monthlyExpenses || '');
   const [displayExpenses, setDisplayExpenses] = useState(monthlyExpenses ? formatCurrency(monthlyExpenses) : '');
 

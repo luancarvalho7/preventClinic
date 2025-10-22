@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 
-export default function SurplusActionForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function SurplusActionForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [surplusAction, setSurplusAction] = useState(formData?.surplusAction || '');
 
   const options = [

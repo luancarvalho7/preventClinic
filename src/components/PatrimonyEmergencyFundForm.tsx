@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 
 
-export default function PatrimonyEmergencyFundForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function PatrimonyEmergencyFundForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [hasEmergencyFund, setHasEmergencyFund] = useState(formData?.hasEmergencyFund || '');
   const [emergencyFundMonths, setemergencyFundMonths] = useState(formData?.emergencyFundMonths || '');
   const [emergencyFundLocation, setemergencyFundLocation] = useState<string[]>(formData?.emergencyFundLocation || []);
@@ -40,6 +41,7 @@ export default function PatrimonyEmergencyFundForm({ onContinue, formData, quest
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
+      <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
       <div className="bg-white rounded-lg shadow-sm p-8">
         <QuestionNumber number={questionNumber} />
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Seção 5 – Patrimônio e Investimentos</h2>

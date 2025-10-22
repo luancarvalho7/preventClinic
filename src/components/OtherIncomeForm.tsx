@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 import { formatCurrencyInput, parseCurrency } from '../utils/currency';
 
-export default function OtherIncomeForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function OtherIncomeForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [otherIncome, setOtherIncome] = useState(formData?.otherIncome || '');
   const [otherIncomeValue, setOtherIncomeValue] = useState(formData?.otherIncomeValue || '');
   const [displayValue, setDisplayValue] = useState(

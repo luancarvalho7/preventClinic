@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 import { formatCurrency, parseCurrency } from '../utils/currency';
 
-export default function IncomeAmountsForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function IncomeAmountsForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [grossIncome, setGrossIncome] = useState(formData?.grossIncome || '');
   const [netIncome, setNetIncome] = useState(formData?.netIncome || '');
   const [displayGrossIncome, setDisplayGrossIncome] = useState(grossIncome ? formatCurrency(grossIncome) : '');
@@ -18,6 +19,7 @@ export default function IncomeAmountsForm({ onContinue, formData, questionNumber
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
+      <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
       <div className="bg-white rounded-lg shadow-sm p-8">
         <QuestionNumber number={questionNumber} />
         <form onSubmit={handleSubmit} className="space-y-6">

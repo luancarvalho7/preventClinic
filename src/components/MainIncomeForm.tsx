@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 
-export default function MainIncomeForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function MainIncomeForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [mainIncomeSource, setMainIncomeSource] = useState(formData?.mainIncomeSource || '');
   const [mainIncomeSourceOther, setMainIncomeSourceOther] = useState(formData?.mainIncomeSourceOther || '');
 
@@ -51,6 +52,7 @@ export default function MainIncomeForm({ onContinue, formData, questionNumber }:
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
+      <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
       <div className="bg-white rounded-lg shadow-sm p-8">
         <QuestionNumber number={questionNumber} />
         <div className="mb-6">

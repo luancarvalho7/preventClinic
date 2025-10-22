@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 
-export default function ExpectationsSection7Form({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function ExpectationsSection7Form({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [consultingGoals, setConsultingGoals] = useState<string[]>(formData?.consultingGoals || []);
   const [successDefinition, setSuccessDefinition] = useState(formData?.successDefinition || '');
 
@@ -34,6 +35,7 @@ export default function ExpectationsSection7Form({ onContinue, formData, questio
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
+      <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
       <div className="bg-white rounded-lg shadow-sm p-8">
         <QuestionNumber number={questionNumber} />
         <div className="mb-6">

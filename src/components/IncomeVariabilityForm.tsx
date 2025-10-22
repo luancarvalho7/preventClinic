@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 
-export default function IncomeVariabilityForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function IncomeVariabilityForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [incomeVariability, setIncomeVariability] = useState(formData?.incomeVariability || '');
   const [incomeVariabilityDetails, setIncomeVariabilityDetails] = useState(formData?.incomeVariabilityDetails || '');
 

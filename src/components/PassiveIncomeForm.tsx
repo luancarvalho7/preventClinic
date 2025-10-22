@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 import { formatCurrencyInput, parseCurrency } from '../utils/currency';
 
-export default function PassiveIncomeForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function PassiveIncomeForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [hasPassiveIncome, setHasPassiveIncome] = useState(formData?.hasPassiveIncome || '');
   const [selectedSources, setSelectedSources] = useState<string[]>(formData?.passiveIncomeSources || []);
   const [passiveIncomeValue, setPassiveIncomeValue] = useState(formData?.passiveIncomeValue || '');

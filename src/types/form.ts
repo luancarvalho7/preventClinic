@@ -85,6 +85,8 @@ export interface FormStep {
 
 export interface FormStepProps {
   onContinue: (data: any) => void;
+  onBack?: () => void;
   formData?: FormData;
   questionNumber?: number;
+  canGoBack?: boolean;
 }

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 import { formatCurrency, parseCurrency } from '../utils/currency';
 
-export default function DebtsForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function DebtsForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [hasDebts, setHasDebts] = useState(formData?.hasDebts || '');
   const [debtTypes, setDebtTypes] = useState<string[]>(formData?.debtTypes || []);
   const [totalDebtAmount, setTotalDebtAmount] = useState(formData?.totalDebtAmount || '');

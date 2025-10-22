@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 
-export default function WorkRegimeForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function WorkRegimeForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [workRegime, setWorkRegime] = useState(formData?.workRegime || '');
 
   const options = [

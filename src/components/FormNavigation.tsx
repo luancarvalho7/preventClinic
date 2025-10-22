@@ -349,6 +349,8 @@ export default function FormNavigation() {
     return (
       <StepComponent
         onContinue={handleContinue}
+        onBack={handleBack}
+        canGoBack={canGoBack()}
         formData={formData}
         currentMedication={currentDynamicMedication}
         questionNumber={questionNumber}
@@ -359,20 +361,7 @@ export default function FormNavigation() {
   return (
     <div className="relative">
       {renderCurrentStep()}
-      
-      {/* Back Button - Only show when navigation is possible */}
-      {canGoBack() && (
-        <button
-          onClick={handleBack}
-          className="fixed top-12 left-6 p-2 text-gray-600 hover:text-gray-900 transition-colors duration-200 z-10"
-          aria-label="Go back"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-      )}
-      
+
       {/* Development Helper - Remove in production */}
       {process.env.NODE_ENV === 'development' && (
         <div className="fixed top-4 right-4 bg-black/90 text-white p-3 rounded-lg text-xs font-mono z-20 max-w-xs">

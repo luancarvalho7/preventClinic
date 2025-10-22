@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 
-export default function DeficitActionForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function DeficitActionForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [deficitAction, setDeficitAction] = useState(formData?.deficitAction || '');
 
   const options = [

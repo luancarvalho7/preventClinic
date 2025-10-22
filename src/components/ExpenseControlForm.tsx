@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 
-export default function ExpenseControlForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function ExpenseControlForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [hasExpenseControl, setHasExpenseControl] = useState(formData?.hasExpenseControl || '');
   const [updateFrequency, setUpdateFrequency] = useState(formData?.updateFrequency || '');
 
