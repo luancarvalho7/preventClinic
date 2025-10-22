@@ -50,6 +50,7 @@ export default function DebtsForm({ onContinue, onBack, canGoBack, formData, que
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
+      <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
       <div className="bg-white rounded-lg shadow-sm p-8">
         <QuestionNumber number={questionNumber} />
         <div className="mb-6">

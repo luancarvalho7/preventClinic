@@ -17,6 +17,7 @@ export default function MonthlyExpensesForm({ onContinue, onBack, canGoBack, for
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
+      <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
       <div className="bg-white rounded-lg shadow-sm p-8">
         <QuestionNumber number={questionNumber} />
         <form onSubmit={handleSubmit} className="space-y-6">
