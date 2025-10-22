@@ -1,5 +1,7 @@
 export interface FormData {
   // Identificação
+  email?: string;
+  phone?: string;
   birthDate?: string;
   maritalStatus?: string;
 

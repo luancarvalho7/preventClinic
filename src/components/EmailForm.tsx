@@ -3,6 +3,7 @@ import { FormStepProps } from '../types/form';
 
 export default function EmailForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [email, setEmail] = useState(formData.email || '');
+  const [phone, setPhone] = useState(formData.phone || '');
   const [error, setError] = useState('');
 
   const validateEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -20,6 +21,18 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
     }
   }, [emailFromUrl, formData.email]);
 
+  const formatPhone = (value: string) => {
+    const numbers = value.replace(/\D/g, '');
+    if (numbers.length <= 2) return numbers;
+    if (numbers.length <= 7) return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+    return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
+  };
+
+  const validatePhone = (value: string) => {
+    const numbers = value.replace(/\D/g, '');
+    return numbers.length === 11;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -33,7 +46,17 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
       return;
     }
 
-    onContinue({ email: val });
+    const phoneVal = phone.trim();
+    if (!phoneVal) {
+      setError('Por favor, digite seu número de contato');
+      return;
+    }
+    if (!validatePhone(phoneVal)) {
+      setError('Por favor, digite um número válido com DDD (11 dígitos)');
+      return;
+    }
+
+    onContinue({ email: val, phone: phoneVal });
   };
 
   return (
@@ -79,8 +102,30 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
                 autoComplete="email"
                 inputMode="email"
               />
-              {error && <p className="mt-2 text-red-600 text-sm">{error}</p>}
             </div>
+
+            <div>
+              <label htmlFor="phone" className="block text-lg font-medium text-slate-900 mb-3">
+                Digite seu número de contato com DDD:
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                value={phone}
+                onChange={(e) => {
+                  const formatted = formatPhone(e.target.value);
+                  setPhone(formatted);
+                  if (error) setError('');
+                }}
+                className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:border-slate-900 focus:outline-none transition-colors text-lg"
+                placeholder="(11) 99999-9999"
+                autoComplete="tel"
+                inputMode="tel"
+                maxLength={15}
+              />
+            </div>
+
+            {error && <p className="text-red-600 text-sm">{error}</p>}
 
             <button
               type="submit"
