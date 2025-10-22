@@ -9,15 +9,16 @@ export default function PatrimonyRetirementForm({ onContinue, onBack, canGoBack,
   const [displayRetirement, setDisplayRetirement] = useState(
     formData?.retirementIncome ? formatCurrencyInput(formData.retirementIncome) : ''
   );
+  const [retirementAge, setRetirementAge] = useState(formData?.retirementAge || '');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (retirementIncome) {
-      onContinue({ retirementIncome });
+    if (retirementIncome && retirementAge) {
+      onContinue({ retirementIncome, retirementAge });
     }
   };
 
-  const isValid = !!retirementIncome;
+  const isValid = !!retirementIncome && !!retirementAge;
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
@@ -43,6 +44,22 @@ export default function PatrimonyRetirementForm({ onContinue, onBack, canGoBack,
                 setRetirementIncome(String(parseCurrency(e.target.value)));
               }}
               placeholder="Ex: R$ 5.000,00"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+            />
+          </div>
+
+          <div>
+            <label className="block text-lg font-medium text-gray-900 mb-3">
+              Com quantos anos pretende se aposentar?
+            </label>
+            <input
+              type="number"
+              inputMode="numeric"
+              value={retirementAge}
+              onChange={(e) => setRetirementAge(e.target.value)}
+              placeholder="Ex: 65"
+              min="1"
+              max="120"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
             />
           </div>
