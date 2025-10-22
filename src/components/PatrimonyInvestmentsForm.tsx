@@ -80,7 +80,7 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
                   key={option}
                   className={`flex-1 text-center p-4 border rounded-lg cursor-pointer transition-colors ${
                     alreadyInvests === option
-                      ? 'border-accent bg-accent/10'
+                      ? 'border-accent bg-slate-900/10'
                       : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -120,7 +120,7 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
                       key={opt}
                       className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                         investmentTypes.includes(opt)
-                          ? 'border-accent bg-accent/10'
+                          ? 'border-accent bg-slate-900/10'
                           : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
@@ -167,7 +167,7 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
                       key={opt}
                       className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                         investmentGoal === opt
-                          ? 'border-accent bg-accent/10'
+                          ? 'border-accent bg-slate-900/10'
                           : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
@@ -190,7 +190,7 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
           <button
             type="submit"
             disabled={!isValid}
-            className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-slate-900 text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar
           </button>

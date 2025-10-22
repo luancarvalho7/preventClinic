@@ -48,7 +48,7 @@ export default function PatrimonyRetirementForm({ onContinue, formData, question
           <button
             type="submit"
             disabled={!isValid}
-            className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-slate-900 text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar
           </button>

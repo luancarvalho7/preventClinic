@@ -37,7 +37,7 @@ export default function ResultsPage({ formData }: ResultsPageProps) {
           </div>
 
           <div className="pt-8">
-            <div className="inline-block px-6 py-3 bg-accent/10 text-accent rounded-lg font-medium">
+            <div className="inline-block px-6 py-3 bg-slate-900/10 text-slate-900 rounded-lg font-medium">
               Respostas enviadas com sucesso
             </div>
           </div>

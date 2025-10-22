@@ -51,7 +51,7 @@ export default function OtherIncomeForm({ onContinue, formData, questionNumber }
                   key={option}
                   className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                     otherIncome === option
-                      ? 'border-accent bg-accent/10'
+                      ? 'border-accent bg-slate-900/10'
                       : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -96,7 +96,7 @@ export default function OtherIncomeForm({ onContinue, formData, questionNumber }
               !otherIncome ||
               (otherIncome.startsWith('Sim') && otherIncomeValue.trim() === '')
             }
-            className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-slate-900 text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar
           </button>

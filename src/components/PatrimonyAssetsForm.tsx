@@ -60,7 +60,7 @@ export default function PatrimonyAssetsForm({ onContinue, formData, questionNumb
                   key={opt}
                   className={`flex-1 text-center p-4 border rounded-lg cursor-pointer transition-colors ${
                     hasVehicle === opt
-                      ? 'border-accent bg-accent/10'
+                      ? 'border-accent bg-slate-900/10'
                       : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -90,7 +90,7 @@ export default function PatrimonyAssetsForm({ onContinue, formData, questionNumb
                       key={model}
                       className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                         vehicleModels.includes(model)
-                          ? 'border-accent bg-accent/10'
+                          ? 'border-accent bg-slate-900/10'
                           : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
@@ -144,7 +144,7 @@ export default function PatrimonyAssetsForm({ onContinue, formData, questionNumb
                   key={opt}
                   className={`flex-1 text-center p-4 border rounded-lg cursor-pointer transition-colors ${
                     hasProperty === opt
-                      ? 'border-accent bg-accent/10'
+                      ? 'border-accent bg-slate-900/10'
                       : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -174,7 +174,7 @@ export default function PatrimonyAssetsForm({ onContinue, formData, questionNumb
                       key={type}
                       className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                         propertyTypes.includes(type)
-                          ? 'border-accent bg-accent/10'
+                          ? 'border-accent bg-slate-900/10'
                           : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
@@ -235,7 +235,7 @@ export default function PatrimonyAssetsForm({ onContinue, formData, questionNumb
           <button
             type="submit"
             disabled={!isValid}
-            className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-slate-900 text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar
           </button>

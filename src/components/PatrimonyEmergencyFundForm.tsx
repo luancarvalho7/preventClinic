@@ -55,7 +55,7 @@ export default function PatrimonyEmergencyFundForm({ onContinue, formData, quest
                 <label
                   key={option}
                   className={`flex-1 text-center p-4 border rounded-lg cursor-pointer transition-colors ${
-                    hasEmergencyFund === option ? 'border-accent bg-accent/10' : 'border-gray-300 hover:bg-gray-50'
+                    hasEmergencyFund === option ? 'border-accent bg-slate-900/10' : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >
                   <input
@@ -84,7 +84,7 @@ export default function PatrimonyEmergencyFundForm({ onContinue, formData, quest
                     <label
                       key={opt}
                       className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
-                        emergencyFundMonths === opt ? 'border-accent bg-accent/10' : 'border-gray-300 hover:bg-gray-50'
+                        emergencyFundMonths === opt ? 'border-accent bg-slate-900/10' : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
                       <input
@@ -110,7 +110,7 @@ export default function PatrimonyEmergencyFundForm({ onContinue, formData, quest
                     <label
                       key={opt}
                       className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
-                        emergencyFundLocation.includes(opt) ? 'border-accent bg-accent/10' : 'border-gray-300 hover:bg-gray-50'
+                        emergencyFundLocation.includes(opt) ? 'border-accent bg-slate-900/10' : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
                       <input
@@ -137,7 +137,7 @@ export default function PatrimonyEmergencyFundForm({ onContinue, formData, quest
           <button
             type="submit"
             disabled={!isValid}
-            className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-slate-900 text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar
           </button>

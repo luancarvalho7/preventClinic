@@ -58,7 +58,7 @@ export default function ExpenseControlForm({ onContinue, formData, questionNumbe
                   key={option}
                   className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                     hasExpenseControl === option
-                      ? 'border-accent bg-accent/10'
+                      ? 'border-accent bg-slate-900/10'
                       : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -93,7 +93,7 @@ export default function ExpenseControlForm({ onContinue, formData, questionNumbe
                     key={option}
                     className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                       updateFrequency === option
-                        ? 'border-accent bg-accent/10'
+                        ? 'border-accent bg-slate-900/10'
                         : 'border-gray-300 hover:bg-gray-50'
                     }`}
                   >
@@ -116,7 +116,7 @@ export default function ExpenseControlForm({ onContinue, formData, questionNumbe
           <button
             type="submit"
             disabled={!isValid}
-            className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-slate-900 text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar
           </button>
