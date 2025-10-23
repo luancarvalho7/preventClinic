@@ -15,8 +15,10 @@ export interface FormData {
   mainIncomeSource?: string;
   mainIncomeSourceOther?: string;
   workRegime?: string;
-
+  mainIncomeAmount?: string | number;
+  
   // Renda secundária
+  secondaryIncomeSources?: string[];
   hasSecondaryIncome?: string;
   secondaryIncomeSource?: string;
   otherSegundaryIncomeSource?: string;
@@ -27,6 +29,7 @@ export interface FormData {
   incomeVariabilityDetails?: string;
   hasPassiveIncome?: string;
   passiveIncomeSources?: string[]; // ⚙️ array como no banco
+  otherIncomeValue?: string;
   passiveIncomeValue?: string;
   otherIncome?: string;
 
