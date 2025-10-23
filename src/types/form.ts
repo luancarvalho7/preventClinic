@@ -54,7 +54,7 @@ export interface FormData {
   emergencyFundLocation?: string[]; // ⚙️ agora array
   alreadyInvests?: string;
   investmentTypes?: string[]; // ⚙️ agora array
-  monthlyInvestment?: string;
+  monthlyInvestment?: number;
   totalInvested?: string;
   investmentGoal?: string;
   vehicleModels?: string[];
