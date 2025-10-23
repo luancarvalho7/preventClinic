@@ -58,6 +58,7 @@ export interface FormData {
   totalInvested?: string;
   investmentGoal?: string;
   vehicleModels?: string[];
+  vehicleValue?: string;
   retirementIncome?: string;
   retirementAge?: string;
   hasVehicle?: string;
