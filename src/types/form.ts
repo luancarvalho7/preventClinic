@@ -60,6 +60,7 @@ export interface FormData {
   vehicleModels?: string[];
   vehicleValue?: string;
   retirementIncome?: string;
+  propertyTypes?: string[];
   retirementAge?: string;
   hasVehicle?: string;
   vehicleDetails?: string;
