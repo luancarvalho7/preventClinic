@@ -15,7 +15,7 @@ export interface FormData {
   mainIncomeSource?: string;
   mainIncomeSourceOther?: string;
   workRegime?: string;
-  mainIncomeAmount?: string | number;
+  mainIncomeAmount?: number;
   
   // Renda secundária
   secondaryIncomeSources?: string[];
