@@ -75,6 +75,7 @@ export interface FormData {
   topPriority?: string;
   goalImpact?: string;
   changeCommitment?: string;
+  goalsOtherText?: string
   goalsSelection: string[]
   consultingGoals?: string[];
   successDefinition?: string;
