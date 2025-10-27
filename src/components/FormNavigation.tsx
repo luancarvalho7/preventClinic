@@ -3,36 +3,36 @@ import { FormData } from '../types/form';
 import { formConfig, findStepById, getFirstStep } from '../formConfig';
 import ResultsPage from './ResultsPage';
 
-// localStorage key for form data
+// sessionStorage key for form data
 const FORM_DATA_STORAGE_KEY = 'prevent-quiz-responses';
 
 // Webhook URL for form submissions
 const WEBHOOK_URL = 'https://n8nsemfila.iatom.site/webhook/6bd7af0d-aa3e-4c08-83a7-514d49e9fb73';
 
-// Helper functions for localStorage
+// Helper functions for sessionStorage
 const saveFormDataToStorage = (data: FormData) => {
   try {
-    localStorage.setItem(FORM_DATA_STORAGE_KEY, JSON.stringify(data));
+    sessionStorage.setItem(FORM_DATA_STORAGE_KEY, JSON.stringify(data));
   } catch (error) {
-    console.warn('Failed to save form data to localStorage:', error);
+    console.warn('Failed to save form data to sessionStorage:', error);
   }
 };
 
 const loadFormDataFromStorage = (): FormData => {
   try {
-    const stored = localStorage.getItem(FORM_DATA_STORAGE_KEY);
+    const stored = sessionStorage.getItem(FORM_DATA_STORAGE_KEY);
     return stored ? JSON.parse(stored) : {};
   } catch (error) {
-    console.warn('Failed to load form data from localStorage:', error);
+    console.warn('Failed to load form data from sessionStorage:', error);
     return {};
   }
 };
 
 const clearFormDataFromStorage = () => {
   try {
-    localStorage.removeItem(FORM_DATA_STORAGE_KEY);
+    sessionStorage.removeItem(FORM_DATA_STORAGE_KEY);
   } catch (error) {
-    console.warn('Failed to clear form data from localStorage:', error);
+    console.warn('Failed to clear form data from sessionStorage:', error);
   }
 };
 
