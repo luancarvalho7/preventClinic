@@ -68,7 +68,11 @@ export interface FormData {
   hasProperty?: string;
   propertyDetails?: string;
   otherAssets?: string;
-
+  hasVehicleInsurance: 'Sim' | 'Não' | ''
+  vehicleInsurancePremium: string
+  hasPropertyInsurance: 'Sim' | 'Não' | ''
+  propertyInsurancePremium: string
+  
   // Metas e objetivos
   goals12Months?: string;
   goals5Years?: string;
