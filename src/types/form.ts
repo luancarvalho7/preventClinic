@@ -76,6 +76,7 @@ export interface FormData {
   goalImpact?: string;
   changeCommitment?: string;
   goalsOtherText?: string
+  investsMonthly: 'Sim' | 'Não'
   goalsSelection: string[]
   consultingGoals?: string[];
   successDefinition?: string;
