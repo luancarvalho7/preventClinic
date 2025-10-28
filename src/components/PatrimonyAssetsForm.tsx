@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
 import BackButton from './BackButton';
-import { formatCurrencyInput, parseCurrency } from '../utils/currency';
+import { formatCurrencyInput, handleCurrencyInput } from '../utils/currency';
 
 export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [hasVehicle, setHasVehicle] = useState(formData?.hasVehicle || '');

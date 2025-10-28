@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
 import BackButton from './BackButton';
-import { formatCurrency, parseCurrency } from '../utils/currency';
+import { formatCurrencyInput, handleCurrencyInput } from '../utils/currency';
 
 export default function DebtsForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [hasDebts, setHasDebts] = useState(formData?.hasDebts || '');
   const [debtTypes, setDebtTypes] = useState<string[]>(formData?.debtTypes || []);
-  const [totalDebtAmount, setTotalDebtAmount] = useState(formData?.totalDebtAmount || '');
-  const [displayDebtAmount, setDisplayDebtAmount] = useState(totalDebtAmount ? formatCurrency(totalDebtAmount) : '');
+  const [totalDebtAmount, setTotalDebtAmount] = useState<number>(
+    typeof formData?.totalDebtAmount === 'number' ? formData.totalDebtAmount : 0
+  );
+  const [displayDebtAmount, setDisplayDebtAmount] = useState(
+    totalDebtAmount > 0 ? formatCurrencyInput(totalDebtAmount) : ''
+  );
   const [averageInterestRate, setAverageInterestRate] = useState(formData?.averageInterestRate || '');
   const [hasOverdueDebts, setHasOverdueDebts] = useState(formData?.hasOverdueDebts || '');
   const [triedRenegotiation, setTriedRenegotiation] = useState(formData?.triedRenegotiation || '');
@@ -36,7 +40,7 @@ export default function DebtsForm({ onContinue, onBack, canGoBack, formData, que
     e.preventDefault();
     if (hasDebts === 'Não') {
       onContinue({ hasDebts });
-    } else if (hasDebts === 'Sim' && debtTypes.length > 0 && totalDebtAmount && hasOverdueDebts && triedRenegotiation) {
+    } else if (hasDebts === 'Sim' && debtTypes.length > 0 && totalDebtAmount > 0 && hasOverdueDebts && triedRenegotiation) {
       onContinue({
         hasDebts,
         debtTypes,
@@ -119,9 +123,9 @@ export default function DebtsForm({ onContinue, onBack, canGoBack, formData, que
                   type="text"
                   value={displayDebtAmount}
                   onChange={(e) => {
-                    const rawValue = parseCurrency(e.target.value);
-                    setTotalDebtAmount(rawValue);
-                    setDisplayDebtAmount(formatCurrency(rawValue));
+                    const newCents = handleCurrencyInput(e.target.value, totalDebtAmount);
+                    setTotalDebtAmount(newCents);
+                    setDisplayDebtAmount(formatCurrencyInput(newCents));
                   }}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                   placeholder="R$ 0,00"
@@ -198,7 +202,7 @@ export default function DebtsForm({ onContinue, onBack, canGoBack, formData, que
 
           <button
             type="submit"
-            disabled={!hasDebts || (hasDebts === 'Sim' && (debtTypes.length === 0 || !totalDebtAmount || !hasOverdueDebts || !triedRenegotiation))}
+            disabled={!hasDebts || (hasDebts === 'Sim' && (debtTypes.length === 0 || totalDebtAmount === 0 || !hasOverdueDebts || !triedRenegotiation))}
             className="w-full bg-slate-900 text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar

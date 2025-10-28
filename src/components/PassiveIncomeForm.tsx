@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
 import BackButton from './BackButton';
-import { formatCurrencyInput, parseCurrency } from '../utils/currency';
+import { formatCurrencyInput, handleCurrencyInput } from '../utils/currency';
 
 export default function PassiveIncomeForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [hasPassiveIncome, setHasPassiveIncome] = useState(formData?.hasPassiveIncome || '');
   const [selectedSources, setSelectedSources] = useState<string[]>(formData?.passiveIncomeSources || []);
-  const [passiveIncomeValue, setPassiveIncomeValue] = useState(formData?.passiveIncomeValue || '');
+  const [passiveIncomeValue, setPassiveIncomeValue] = useState<number>(
+    typeof formData?.passiveIncomeValue === 'number' ? formData.passiveIncomeValue : 0
+  );
   const [displayValue, setDisplayValue] = useState(
-    formData?.passiveIncomeValue ? formatCurrencyInput(formData.passiveIncomeValue) : ''
+    passiveIncomeValue > 0 ? formatCurrencyInput(passiveIncomeValue) : ''
   );
 
   const incomeOptions = [
@@ -36,16 +38,16 @@ export default function PassiveIncomeForm({ onContinue, onBack, canGoBack, formD
       onContinue({
         hasPassiveIncome,
         passiveIncomeSources: [],
-        passiveIncomeValue: '',
+        passiveIncomeValue: 0,
       });
       return;
     }
 
-    if (hasPassiveIncome === 'Sim' && selectedSources.length > 0 && passiveIncomeValue.trim() !== '') {
+    if (hasPassiveIncome === 'Sim' && selectedSources.length > 0 && passiveIncomeValue > 0) {
       const dataToSend = {
         hasPassiveIncome,
         passiveIncomeSources: selectedSources,
-        passiveIncomeValue: passiveIncomeValue.trim(), // valor em centavos
+        passiveIncomeValue,
       };
       onContinue(dataToSend);
     }
@@ -55,7 +57,7 @@ export default function PassiveIncomeForm({ onContinue, onBack, canGoBack, formD
     hasPassiveIncome === 'Não' ||
     (hasPassiveIncome === 'Sim' &&
       selectedSources.length > 0 &&
-      passiveIncomeValue.trim() !== '');
+      passiveIncomeValue > 0);
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
@@ -87,7 +89,7 @@ export default function PassiveIncomeForm({ onContinue, onBack, canGoBack, formD
                       setHasPassiveIncome(e.target.value);
                       if (e.target.value === 'Não') {
                         setSelectedSources([]);
-                        setPassiveIncomeValue('');
+                        setPassiveIncomeValue(0);
                         setDisplayValue('');
                       }
                     }}
@@ -138,9 +140,9 @@ export default function PassiveIncomeForm({ onContinue, onBack, canGoBack, formD
                     inputMode="numeric"
                     value={displayValue}
                     onChange={(e) => {
-                      const formatted = formatCurrencyInput(e.target.value);
-                      setDisplayValue(formatted);
-                      setPassiveIncomeValue(String(parseCurrency(e.target.value)));
+                      const newCents = handleCurrencyInput(e.target.value, passiveIncomeValue);
+                      setPassiveIncomeValue(newCents);
+                      setDisplayValue(formatCurrencyInput(newCents));
                     }}
                     placeholder="R$ 0,00"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"

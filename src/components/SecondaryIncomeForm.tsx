@@ -2,14 +2,18 @@ import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
 import BackButton from './BackButton';
-import { formatCurrencyInput, parseCurrency } from '../utils/currency';
+import { formatCurrencyInput, handleCurrencyInput } from '../utils/currency';
 
 export default function SecondaryIncomeForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [hasSecondaryIncome, setHasSecondaryIncome] = useState(formData?.hasSecondaryIncome || '');
   const [selectedSources, setSelectedSources] = useState<string[]>(formData?.secondaryIncomeSources || []);
   const [otherSegundaryIncomeSource, setotherSegundaryIncomeSource] = useState(formData?.otherSegundaryIncomeSource || '');
-  const [secondaryIncomeValue, setSecondaryIncomeValue] = useState(formData?.secondaryIncomeValue || '');
-  const [displayValue, setDisplayValue] = useState(formData?.secondaryIncomeValue ? formatCurrencyInput(formData.secondaryIncomeValue) : '');
+  const [secondaryIncomeValue, setSecondaryIncomeValue] = useState<number>(
+    typeof formData?.secondaryIncomeValue === 'number' ? formData.secondaryIncomeValue : 0
+  );
+  const [displayValue, setDisplayValue] = useState(
+    secondaryIncomeValue > 0 ? formatCurrencyInput(secondaryIncomeValue) : ''
+  );
 
 
   const incomeOptions = [
@@ -38,7 +42,7 @@ export default function SecondaryIncomeForm({ onContinue, onBack, canGoBack, for
         hasSecondaryIncome,
         secondaryIncomeSources: [],
         otherSegundaryIncomeSource: '',
-        secondaryIncomeValue: '',
+        secondaryIncomeValue: 0,
       });
       return;
     }
@@ -47,7 +51,7 @@ export default function SecondaryIncomeForm({ onContinue, onBack, canGoBack, for
       hasSecondaryIncome === 'Sim' &&
       selectedSources.length > 0 &&
       (!selectedSources.includes('Outros') || otherSegundaryIncomeSource.trim() !== '') &&
-      secondaryIncomeValue.trim() !== ''
+      secondaryIncomeValue > 0
     ) {
       const dataToSend = {
         hasSecondaryIncome,
@@ -55,7 +59,7 @@ export default function SecondaryIncomeForm({ onContinue, onBack, canGoBack, for
         otherSegundaryIncomeSource: selectedSources.includes('Outros')
           ? otherSegundaryIncomeSource.trim()
           : '',
-        secondaryIncomeValue: secondaryIncomeValue.trim(),
+        secondaryIncomeValue,
       };
       onContinue(dataToSend);
     }
@@ -65,7 +69,7 @@ export default function SecondaryIncomeForm({ onContinue, onBack, canGoBack, for
     hasSecondaryIncome === 'Não' ||
     (hasSecondaryIncome === 'Sim' &&
       selectedSources.length > 0 &&
-      secondaryIncomeValue.trim() !== '' &&
+      secondaryIncomeValue > 0 &&
       (!selectedSources.includes('Outros') || otherSegundaryIncomeSource.trim() !== ''));
 
   return (
@@ -99,7 +103,8 @@ export default function SecondaryIncomeForm({ onContinue, onBack, canGoBack, for
                       if (e.target.value === 'Não') {
                         setSelectedSources([]);
                         setotherSegundaryIncomeSource('');
-                        setSecondaryIncomeValue('');
+                        setSecondaryIncomeValue(0);
+                        setDisplayValue('');
                       }
                     }}
                     className="hidden"
@@ -164,9 +169,9 @@ export default function SecondaryIncomeForm({ onContinue, onBack, canGoBack, for
     inputMode="numeric"
     value={displayValue}
     onChange={(e) => {
-      const formatted = formatCurrencyInput(e.target.value);
-      setDisplayValue(formatted);
-      setSecondaryIncomeValue(String(parseCurrency(e.target.value)));
+      const newCents = handleCurrencyInput(e.target.value, secondaryIncomeValue);
+      setSecondaryIncomeValue(newCents);
+      setDisplayValue(formatCurrencyInput(newCents));
     }}
     placeholder="Ex: R$ 1.500,00"
     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"

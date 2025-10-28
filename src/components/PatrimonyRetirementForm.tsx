@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
 import BackButton from './BackButton';
-import { formatCurrencyInput, parseCurrency } from '../utils/currency';
+import { formatCurrencyInput, handleCurrencyInput } from '../utils/currency';
 
 export default function PatrimonyRetirementForm({
   onContinue,
@@ -11,41 +11,45 @@ export default function PatrimonyRetirementForm({
   formData,
   questionNumber,
 }: FormStepProps) {
-  const [retirementIncome, setRetirementIncome] = useState(formData?.retirementIncome || '');
+  const [retirementIncome, setRetirementIncome] = useState<number>(
+    typeof formData?.retirementIncome === 'number' ? formData.retirementIncome : 0
+  );
   const [displayRetirement, setDisplayRetirement] = useState(
-    formData?.retirementIncome ? formatCurrencyInput(formData.retirementIncome) : ''
+    retirementIncome > 0 ? formatCurrencyInput(retirementIncome) : ''
   );
   const [retirementAge, setRetirementAge] = useState(formData?.retirementAge || '');
 
   // NOVOS CAMPOS – Seguro de vida
   const [hasLifeInsurance, setHasLifeInsurance] = useState(formData?.hasLifeInsurance || '');
   const [lifeInsuranceCompany, setLifeInsuranceCompany] = useState(formData?.lifeInsuranceCompany || '');
-  const [lifeInsurancePremium, setLifeInsurancePremium] = useState(formData?.lifeInsurancePremium || '');
+  const [lifeInsurancePremium, setLifeInsurancePremium] = useState<number>(
+    typeof formData?.lifeInsurancePremium === 'number' ? formData.lifeInsurancePremium : 0
+  );
   const [displayLifeInsurancePremium, setDisplayLifeInsurancePremium] = useState(
-    formData?.lifeInsurancePremium ? formatCurrencyInput(formData.lifeInsurancePremium) : ''
+    lifeInsurancePremium > 0 ? formatCurrencyInput(lifeInsurancePremium) : ''
   );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (retirementIncome && retirementAge && hasLifeInsurance) {
+    if (retirementIncome > 0 && retirementAge && hasLifeInsurance) {
       onContinue({
         retirementIncome,
         retirementAge,
         hasLifeInsurance,
         lifeInsuranceCompany: hasLifeInsurance === 'Sim' ? lifeInsuranceCompany : '',
         lifeInsurancePremium:
-          hasLifeInsurance === 'Sim' ? String(parseCurrency(lifeInsurancePremium)) : '',
+          hasLifeInsurance === 'Sim' ? lifeInsurancePremium : 0,
       });
     }
   };
 
   const isValid =
-    !!retirementIncome &&
+    retirementIncome > 0 &&
     !!retirementAge &&
     !!hasLifeInsurance &&
     (hasLifeInsurance === 'Não' ||
-      (lifeInsuranceCompany.trim() !== '' && lifeInsurancePremium.trim() !== ''));
+      (lifeInsuranceCompany.trim() !== '' && lifeInsurancePremium > 0));
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
@@ -66,9 +70,9 @@ export default function PatrimonyRetirementForm({
               inputMode="numeric"
               value={displayRetirement}
               onChange={(e) => {
-                const formatted = formatCurrencyInput(e.target.value);
-                setDisplayRetirement(formatted);
-                setRetirementIncome(String(parseCurrency(e.target.value)));
+                const newCents = handleCurrencyInput(e.target.value, retirementIncome);
+                setRetirementIncome(newCents);
+                setDisplayRetirement(formatCurrencyInput(newCents));
               }}
               placeholder="Ex: R$ 5.000,00"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
@@ -115,7 +119,7 @@ export default function PatrimonyRetirementForm({
                       setHasLifeInsurance(e.target.value);
                       if (e.target.value === 'Não') {
                         setLifeInsuranceCompany('');
-                        setLifeInsurancePremium('');
+                        setLifeInsurancePremium(0);
                         setDisplayLifeInsurancePremium('');
                       }
                     }}
@@ -151,9 +155,9 @@ export default function PatrimonyRetirementForm({
                   inputMode="numeric"
                   value={displayLifeInsurancePremium}
                   onChange={(e) => {
-                    const formatted = formatCurrencyInput(e.target.value);
-                    setDisplayLifeInsurancePremium(formatted);
-                    setLifeInsurancePremium(String(parseCurrency(e.target.value)));
+                    const newCents = handleCurrencyInput(e.target.value, lifeInsurancePremium);
+                    setLifeInsurancePremium(newCents);
+                    setDisplayLifeInsurancePremium(formatCurrencyInput(newCents));
                   }}
                   placeholder="R$ 0,00"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"

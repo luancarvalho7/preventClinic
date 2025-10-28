@@ -2,17 +2,25 @@ import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
 import BackButton from './BackButton';
-import { formatCurrency, parseCurrency } from '../utils/currency';
+import { formatCurrencyInput, handleCurrencyInput } from '../utils/currency';
 
 export default function IncomeAmountsForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
-  const [grossIncome, setGrossIncome] = useState(formData?.grossIncome || '');
-  const [netIncome, setNetIncome] = useState(formData?.netIncome || '');
-  const [displayGrossIncome, setDisplayGrossIncome] = useState(grossIncome ? formatCurrency(grossIncome) : '');
-  const [displayNetIncome, setDisplayNetIncome] = useState(netIncome ? formatCurrency(netIncome) : '');
+  const [grossIncome, setGrossIncome] = useState<number>(
+    typeof formData?.grossIncome === 'number' ? formData.grossIncome : 0
+  );
+  const [netIncome, setNetIncome] = useState<number>(
+    typeof formData?.netIncome === 'number' ? formData.netIncome : 0
+  );
+  const [displayGrossIncome, setDisplayGrossIncome] = useState(
+    grossIncome > 0 ? formatCurrencyInput(grossIncome) : ''
+  );
+  const [displayNetIncome, setDisplayNetIncome] = useState(
+    netIncome > 0 ? formatCurrencyInput(netIncome) : ''
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (grossIncome && netIncome) {
+    if (grossIncome > 0 && netIncome > 0) {
       onContinue({ grossIncome, netIncome });
     }
   };
@@ -31,9 +39,9 @@ export default function IncomeAmountsForm({ onContinue, onBack, canGoBack, formD
               type="text"
               value={displayGrossIncome}
               onChange={(e) => {
-                const rawValue = parseCurrency(e.target.value);
-                setGrossIncome(rawValue);
-                setDisplayGrossIncome(formatCurrency(rawValue));
+                const newCents = handleCurrencyInput(e.target.value, grossIncome);
+                setGrossIncome(newCents);
+                setDisplayGrossIncome(formatCurrencyInput(newCents));
               }}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
               placeholder="R$ 0,00"
@@ -49,9 +57,9 @@ export default function IncomeAmountsForm({ onContinue, onBack, canGoBack, formD
               type="text"
               value={displayNetIncome}
               onChange={(e) => {
-                const rawValue = parseCurrency(e.target.value);
-                setNetIncome(rawValue);
-                setDisplayNetIncome(formatCurrency(rawValue));
+                const newCents = handleCurrencyInput(e.target.value, netIncome);
+                setNetIncome(newCents);
+                setDisplayNetIncome(formatCurrencyInput(newCents));
               }}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
               placeholder="R$ 0,00"
@@ -61,7 +69,7 @@ export default function IncomeAmountsForm({ onContinue, onBack, canGoBack, formD
 
           <button
             type="submit"
-            disabled={!grossIncome || !netIncome}
+            disabled={grossIncome === 0 || netIncome === 0}
             className="w-full bg-slate-900 text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar

@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
 import BackButton from './BackButton';
-import { formatCurrencyInput, parseCurrency } from '../utils/currency';
+import { formatCurrencyInput, handleCurrencyInput } from '../utils/currency';
 
 export default function OtherIncomeForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [otherIncome, setOtherIncome] = useState(formData?.otherIncome || '');
-  const [otherIncomeValue, setOtherIncomeValue] = useState(formData?.otherIncomeValue || '');
+  const [otherIncomeValue, setOtherIncomeValue] = useState<number>(
+    typeof formData?.otherIncomeValue === 'number' ? formData.otherIncomeValue : 0
+  );
   const [displayValue, setDisplayValue] = useState(
-    formData?.otherIncomeValue ? formatCurrencyInput(formData.otherIncomeValue) : ''
+    otherIncomeValue > 0 ? formatCurrencyInput(otherIncomeValue) : ''
   );
 
   const options = [
@@ -23,12 +25,12 @@ export default function OtherIncomeForm({ onContinue, onBack, canGoBack, formDat
     const hasOtherIncome = otherIncome.startsWith('Sim');
 
     if (otherIncome === 'Não possuo outra fonte de renda') {
-      onContinue({ otherIncome, otherIncomeValue: '' });
+      onContinue({ otherIncome, otherIncomeValue: 0 });
       return;
     }
 
-    if (hasOtherIncome && otherIncomeValue.trim() !== '') {
-      onContinue({ otherIncome, otherIncomeValue: otherIncomeValue.trim() });
+    if (hasOtherIncome && otherIncomeValue > 0) {
+      onContinue({ otherIncome, otherIncomeValue });
     }
   };
 
@@ -81,9 +83,9 @@ export default function OtherIncomeForm({ onContinue, onBack, canGoBack, formDat
                 inputMode="numeric"
                 value={displayValue}
                 onChange={(e) => {
-                  const formatted = formatCurrencyInput(e.target.value);
-                  setDisplayValue(formatted);
-                  setOtherIncomeValue(String(parseCurrency(e.target.value)));
+                  const newCents = handleCurrencyInput(e.target.value, otherIncomeValue);
+                  setOtherIncomeValue(newCents);
+                  setDisplayValue(formatCurrencyInput(newCents));
                 }}
                 placeholder="R$ 0,00"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
@@ -96,7 +98,7 @@ export default function OtherIncomeForm({ onContinue, onBack, canGoBack, formDat
             type="submit"
             disabled={
               !otherIncome ||
-              (otherIncome.startsWith('Sim') && otherIncomeValue.trim() === '')
+              (otherIncome.startsWith('Sim') && otherIncomeValue === 0)
             }
             className="w-full bg-slate-900 text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
