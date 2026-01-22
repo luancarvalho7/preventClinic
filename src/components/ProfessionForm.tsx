@@ -21,7 +21,7 @@ export default function ProfessionForm({ onContinue, onBack, canGoBack, formData
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-3">
-              Profissão atual
+              Qual é a sua Profissão atual?
             </label>
             <input
               type="text"
