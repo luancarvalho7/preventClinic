@@ -156,9 +156,9 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
                   type="text"
                   value={displayMonthlyInvestment}
                   onChange={(e) => {
-  const formatted = formatCurrencyInput(e.target.value);
-  setDisplayMonthlyInvestment(formatted);
-  setMonthlyInvestment(parseCurrency(e.target.value));
+  const cents = parseCurrency(e.target.value);
+  setMonthlyInvestment(cents);
+  setDisplayMonthlyInvestment(formatCurrencyInput(cents));
 }}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                   placeholder="Ex: R$ 500,00"
@@ -174,9 +174,9 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
                   type="text"
                   value={displayTotalInvested}
                   onChange={(e) => {
-  const formatted = formatCurrencyInput(e.target.value);
-  setDisplayTotalInvested(formatted);
-  setTotalInvested(parseCurrency(e.target.value));
+  const cents = parseCurrency(e.target.value);
+  setTotalInvested(cents);
+  setDisplayTotalInvested(formatCurrencyInput(cents));
 }}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                   placeholder="Ex: R$ 10.000,00"
