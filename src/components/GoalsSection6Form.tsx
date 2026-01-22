@@ -12,8 +12,8 @@ export default function GoalsSection6Form({ onContinue, onBack, canGoBack, formD
   const [goalImpact, setGoalImpact] = useState<string>(formData?.goalImpact || '');
   const [changeCommitment, setChangeCommitment] = useState<string>(formData?.changeCommitment || '');
 
-  // NOVOS CAMPOS – Objetivos selecionáveis (inclui “outros” com campo texto)
-  type GoalOption = 'Reserva de emergência' | 'Compra de automóvel' | 'Outros';
+  // NOVOS CAMPOS – Objetivos selecionáveis (inclui "outros" com campo texto)
+  type GoalOption = 'Viagem' | 'Casa própria' | 'Novo carro' | 'Reserva de emergência' | 'Aposentadoria' | 'Segurança' | 'Renda Passiva' | 'Outros';
   const [goalsSelection, setGoalsSelection] = useState<GoalOption[]>(formData?.goalsSelection || []);
   const [goalsOtherText, setGoalsOtherText] = useState<string>(formData?.goalsOtherText || '');
 
@@ -88,7 +88,7 @@ export default function GoalsSection6Form({ onContinue, onBack, canGoBack, formD
               Selecione seus objetivos financeiros principais
             </label>
             <div className="space-y-3">
-              {(['Reserva de emergência', 'Compra de automóvel', 'Outros'] as GoalOption[]).map((opt) => (
+              {(['Viagem', 'Casa própria', 'Novo carro', 'Reserva de emergência', 'Aposentadoria', 'Segurança', 'Renda Passiva', 'Outros'] as GoalOption[]).map((opt) => (
                 <label key={opt} className="flex items-start p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
                   <input
                     type="checkbox"
