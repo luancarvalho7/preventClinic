@@ -55,7 +55,7 @@ export default function OtherIncomeForm({ onContinue, onBack, canGoBack, formDat
                   key={option}
                   className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                     otherIncome === option
-                      ? 'border-accent bg-slate-900/10'
+                      ? 'border-accent bg-blue-50'
                       : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >

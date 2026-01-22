@@ -57,7 +57,7 @@ export default function PatrimonyEmergencyFundForm({ onContinue, onBack, canGoBa
                 <label
                   key={option}
                   className={`flex-1 text-center p-4 border rounded-lg cursor-pointer transition-colors ${
-                    hasEmergencyFund === option ? 'border-accent bg-slate-900/10' : 'border-gray-300 hover:bg-gray-50'
+                    hasEmergencyFund === option ? 'border-accent bg-blue-50' : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >
                   <input
@@ -86,7 +86,7 @@ export default function PatrimonyEmergencyFundForm({ onContinue, onBack, canGoBa
                     <label
                       key={opt}
                       className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
-                        emergencyFundMonths === opt ? 'border-accent bg-slate-900/10' : 'border-gray-300 hover:bg-gray-50'
+                        emergencyFundMonths === opt ? 'border-accent bg-blue-50' : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
                       <input
@@ -112,7 +112,7 @@ export default function PatrimonyEmergencyFundForm({ onContinue, onBack, canGoBa
                     <label
                       key={opt}
                       className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
-                        emergencyFundLocation.includes(opt) ? 'border-accent bg-slate-900/10' : 'border-gray-300 hover:bg-gray-50'
+                        emergencyFundLocation.includes(opt) ? 'border-accent bg-blue-50' : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
                       <input

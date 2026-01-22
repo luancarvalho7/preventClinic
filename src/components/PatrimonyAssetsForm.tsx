@@ -90,7 +90,7 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                   key={opt}
                   className={`flex-1 text-center p-4 border rounded-lg cursor-pointer transition-colors ${
                     hasVehicle === opt
-                      ? 'border-accent bg-slate-900/10'
+                      ? 'border-accent bg-blue-50'
                       : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -131,7 +131,7 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                       key={model}
                       className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                         vehicleModels.includes(model)
-                          ? 'border-accent bg-slate-900/10'
+                          ? 'border-accent bg-blue-50'
                           : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
@@ -183,7 +183,7 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                       key={opt}
                       className={`flex-1 text-center p-3 border rounded-lg cursor-pointer transition-colors ${
                         hasVehicleInsurance === opt
-                          ? 'border-accent bg-slate-900/10'
+                          ? 'border-accent bg-blue-50'
                           : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
@@ -240,7 +240,7 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                   key={opt}
                   className={`flex-1 text-center p-4 border rounded-lg cursor-pointer transition-colors ${
                     hasProperty === opt
-                      ? 'border-accent bg-slate-900/10'
+                      ? 'border-accent bg-blue-50'
                       : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -280,7 +280,7 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                       key={type}
                       className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                         propertyTypes.includes(type)
-                          ? 'border-accent bg-slate-900/10'
+                          ? 'border-accent bg-blue-50'
                           : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >
@@ -332,7 +332,7 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                       key={opt}
                       className={`flex-1 text-center p-3 border rounded-lg cursor-pointer transition-colors ${
                         hasPropertyInsurance === opt
-                          ? 'border-accent bg-slate-900/10'
+                          ? 'border-accent bg-blue-50'
                           : 'border-gray-300 hover:bg-gray-50'
                       }`}
                     >

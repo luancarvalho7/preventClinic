@@ -43,7 +43,7 @@ export default function DependentsForm({ onContinue, onBack, canGoBack, formData
                   key={option}
                   className={`flex-1 text-center p-4 border rounded-lg cursor-pointer transition-colors ${
                     hasDependents === option
-                      ? 'border-accent bg-slate-900/10'
+                      ? 'border-accent bg-blue-50'
                       : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -78,7 +78,7 @@ export default function DependentsForm({ onContinue, onBack, canGoBack, formData
                     key={option}
                     className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                       dependentsCount === option
-                        ? 'border-accent bg-slate-900/10'
+                        ? 'border-accent bg-blue-50'
                         : 'border-gray-300 hover:bg-gray-50'
                     }`}
                   >

@@ -60,7 +60,7 @@ export default function ExpenseControlForm({ onContinue, onBack, canGoBack, form
                   key={option}
                   className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                     hasExpenseControl === option
-                      ? 'border-accent bg-slate-900/10'
+                      ? 'border-accent bg-blue-50'
                       : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -95,7 +95,7 @@ export default function ExpenseControlForm({ onContinue, onBack, canGoBack, form
                     key={option}
                     className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${
                       updateFrequency === option
-                        ? 'border-accent bg-slate-900/10'
+                        ? 'border-accent bg-blue-50'
                         : 'border-gray-300 hover:bg-gray-50'
                     }`}
                   >
