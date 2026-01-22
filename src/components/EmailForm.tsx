@@ -33,6 +33,8 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
     return numbers.length === 11;
   };
 
+  const isValid = email.trim() && validateEmail(email.trim()) && phone.trim() && validatePhone(phone.trim());
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -122,7 +124,12 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
             <button
               type="submit"
               form="contact-form"
-              className="w-full py-4 bg-primary text-white rounded-full hover:bg-blue-600 transition-colors duration-200 font-medium text-lg shadow-md hover:shadow-lg"
+              disabled={!isValid}
+              className={`w-full py-4 text-white rounded-full transition-colors duration-200 font-medium text-lg shadow-md ${
+                isValid
+                  ? 'bg-blue-600 hover:bg-blue-700 hover:shadow-lg cursor-pointer'
+                  : 'bg-black cursor-not-allowed'
+              }`}
             >
               Continuar
             </button>

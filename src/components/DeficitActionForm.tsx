@@ -55,7 +55,11 @@ export default function DeficitActionForm({ onContinue, onBack, canGoBack, formD
           <button
             type="submit"
             disabled={!deficitAction}
-            className="w-full bg-slate-900 text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            className={`w-full text-white py-3 px-6 rounded-lg font-medium transition-colors ${
+              deficitAction
+                ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                : 'bg-black cursor-not-allowed'
+            }`}
           >
             Continuar
           </button>

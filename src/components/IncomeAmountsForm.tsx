@@ -70,7 +70,11 @@ export default function IncomeAmountsForm({ onContinue, onBack, canGoBack, formD
           <button
             type="submit"
             disabled={grossIncome === 0 || netIncome === 0}
-            className="w-full bg-slate-900 text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            className={`w-full text-white py-3 px-6 rounded-lg font-medium transition-colors ${
+              grossIncome > 0 && netIncome > 0
+                ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                : 'bg-black cursor-not-allowed'
+            }`}
           >
             Continuar
           </button>

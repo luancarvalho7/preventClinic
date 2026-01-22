@@ -203,7 +203,11 @@ export default function DebtsForm({ onContinue, onBack, canGoBack, formData, que
           <button
             type="submit"
             disabled={!hasDebts || (hasDebts === 'Sim' && (debtTypes.length === 0 || totalDebtAmount === 0 || !hasOverdueDebts || !triedRenegotiation))}
-            className="w-full bg-slate-900 text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            className={`w-full text-white py-3 px-6 rounded-lg font-medium transition-colors ${
+              hasDebts && (hasDebts === 'Não' || (debtTypes.length > 0 && totalDebtAmount > 0 && hasOverdueDebts && triedRenegotiation))
+                ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                : 'bg-black cursor-not-allowed'
+            }`}
           >
             Continuar
           </button>

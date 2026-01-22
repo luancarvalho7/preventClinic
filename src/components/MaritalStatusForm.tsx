@@ -59,7 +59,11 @@ export default function MaritalStatusForm({ onContinue, onBack, canGoBack, formD
             form="marital-status-form"
             type="submit"
             disabled={!maritalStatus}
-            className="w-full py-4 bg-primary text-white rounded-full hover:bg-blue-600 transition-colors duration-200 font-medium text-lg shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className={`w-full py-4 text-white rounded-full transition-colors duration-200 font-medium text-lg shadow-md ${
+              maritalStatus
+                ? 'bg-blue-600 hover:bg-blue-700 hover:shadow-lg cursor-pointer'
+                : 'bg-black cursor-not-allowed'
+            }`}
           >
             Continuar
           </button>

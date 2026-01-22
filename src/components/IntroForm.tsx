@@ -19,7 +19,7 @@ export default function IntroForm({ onContinue, formData, questionNumber }: Form
 
           <button
             onClick={() => onContinue({})}
-            className="w-full py-4 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors duration-200 font-medium text-lg shadow-md hover:shadow-lg"
+            className="w-full py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium text-lg shadow-md hover:shadow-lg"
           >
             Continuar
           </button>
