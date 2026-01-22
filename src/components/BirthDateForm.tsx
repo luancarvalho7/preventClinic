@@ -99,7 +99,7 @@ export default function BirthDateForm({ onContinue, onBack, canGoBack, formData,
         <QuestionNumber number={questionNumber} />
         <div className="mb-6">
           <h1 className="text-2xl md:text-3xl font-funnel font-bold text-slate-900 mb-2">
-            Data de nascimento
+            Quando você nasceu?
           </h1>
         </div>
 
