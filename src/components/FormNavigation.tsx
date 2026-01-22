@@ -53,13 +53,46 @@ export default function FormNavigation() {
   // Development state
   const [showDevNavigation, setShowDevNavigation] = useState(false);
 
+  // Convert monetary values from cents to actual currency for JSON
+  const convertMonetaryValuesToDecimal = (data: FormData): FormData => {
+    const monetaryFields = [
+      'mainIncomeAmount',
+      'secondaryIncomeValue',
+      'passiveIncomeValue',
+      'otherIncomeValue',
+      'monthlyExpenses',
+      'totalDebtAmount',
+      'averageInterestRate',
+      'emergencyFundMonths',
+      'monthlyInvestment',
+      'totalInvested',
+      'vehicleValue',
+      'propertyValue',
+      'vehicleInsurancePremium',
+      'propertyInsurancePremium',
+      'lifeInsurancePremium',
+      'averageMonthlyInvestment'
+    ];
+
+    const convertedData = { ...data };
+
+    monetaryFields.forEach(field => {
+      if (field in convertedData && typeof convertedData[field] === 'number' && convertedData[field] > 0) {
+        convertedData[field] = convertedData[field] / 100;
+      }
+    });
+
+    return convertedData;
+  };
+
   // Send form data to webhook
   const sendFormDataToWebhook = async (finalFormData: FormData) => {
     const submittedAt = new Date().toISOString();
+    const convertedFormData = convertMonetaryValuesToDecimal(finalFormData);
 
     const payload = {
-      email: finalFormData.email || '',
-      formData: finalFormData,
+      email: convertedFormData.email || '',
+      formData: convertedFormData,
       submittedAt
     };
 
