@@ -71,8 +71,7 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
             Suas Informações de Contato
           </h1>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <form id="contact-form" onSubmit={handleSubmit} className="space-y-6">
+          <form id="contact-form" onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-lg font-medium text-slate-900 mb-3">
                 Digite seu e-mail:
@@ -130,6 +129,5 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
           </div>
         </div>
       </div>
-    </div>
   );
 }
