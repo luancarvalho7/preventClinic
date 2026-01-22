@@ -59,7 +59,7 @@ export default function DebtsForm({ onContinue, onBack, canGoBack, formData, que
         <QuestionNumber number={questionNumber} />
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Seção 4 – Dívidas e Compromissos Financeiros
+            Dívidas e Compromissos Financeiros
           </h2>
           <p className="text-gray-600">
             Essa parte ajuda a mapear compromissos e possíveis endividamentos — informação essencial para planejar sua recuperação financeira.
