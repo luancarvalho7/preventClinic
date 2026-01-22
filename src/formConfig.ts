@@ -131,43 +131,15 @@ export const formConfig: FormStep[] = [
     id: 'otherIncome',
     component: OtherIncomeForm,
     title: 'Outras Rendas',
-    nextStepLogic: () => 'expenseControl',
-    prevStepId: 'passiveIncome'
-  },
-  {
-    id: 'expenseControl',
-    component: ExpenseControlForm,
-    title: 'Controle de Gastos',
-    nextStepLogic: () => 'monthlyExpenses',
-    prevStepId: 'otherIncome'
-  },
-  {
-    id: 'monthlyExpenses',
-    component: MonthlyExpensesForm,
-    title: 'Gastos Mensais',
-    nextStepLogic: () => 'surplusAction',
-    prevStepId: 'expenseControl'
-  },
-  {
-    id: 'surplusAction',
-    component: SurplusActionForm,
-    title: 'Ação com Sobras',
-    nextStepLogic: () => 'deficitAction',
-    prevStepId: 'monthlyExpenses'
-  },
-  {
-    id: 'deficitAction',
-    component: DeficitActionForm,
-    title: 'Ação com Faltas',
     nextStepLogic: () => 'debts',
-    prevStepId: 'surplusAction'
+    prevStepId: 'passiveIncome'
   },
   {
     id: 'debts',
     component: DebtsForm,
     title: 'Dívidas',
     nextStepLogic: () => 'patrimonyEmergencyFund',
-    prevStepId: 'deficitAction'
+    prevStepId: 'otherIncome'
   },
   {
   id: 'patrimonyEmergencyFund',
@@ -201,15 +173,43 @@ export const formConfig: FormStep[] = [
     id: 'goals',
     component: GoalsSection6Form,
     title: 'Objetivos e Prioridades',
+    nextStepLogic: () => 'expenseControl',
+    prevStepId: 'patrimonyAssets'
+  },
+  {
+    id: 'expenseControl',
+    component: ExpenseControlForm,
+    title: 'Controle de Gastos',
+    nextStepLogic: () => 'monthlyExpenses',
+    prevStepId: 'goals'
+  },
+  {
+    id: 'monthlyExpenses',
+    component: MonthlyExpensesForm,
+    title: 'Gastos Mensais',
+    nextStepLogic: () => 'surplusAction',
+    prevStepId: 'expenseControl'
+  },
+  {
+    id: 'surplusAction',
+    component: SurplusActionForm,
+    title: 'Ação com Sobras',
+    nextStepLogic: () => 'deficitAction',
+    prevStepId: 'monthlyExpenses'
+  },
+  {
+    id: 'deficitAction',
+    component: DeficitActionForm,
+    title: 'Ação com Faltas',
     nextStepLogic: () => 'expectations',
-    prevStepId: 'patrimony'
+    prevStepId: 'surplusAction'
   },
   {
     id: 'expectations',
     component: ExpectationsSection7Form,
     title: 'Expectativas e Engajamento',
     nextStepLogic: () => null,
-    prevStepId: 'goals'
+    prevStepId: 'deficitAction'
   }
 ];
 
