@@ -40,9 +40,9 @@ export default function PatrimonyEmergencyFundForm({ onContinue, onBack, canGoBa
     (hasEmergencyFund === 'Sim' && emergencyFundMonths && emergencyFundLocation.length > 0);
 
   return (
-    <div className="w-full max-w-2xl mx-auto px-4 pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8 pt-20">
       <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
-      <div className="bg-white rounded-lg shadow-sm p-8">
+      <div className="w-full max-w-2xl mx-auto">
         <QuestionNumber number={questionNumber} />
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Seção 5 – Patrimônio e Investimentos</h2>
 

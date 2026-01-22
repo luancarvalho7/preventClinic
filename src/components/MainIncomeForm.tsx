@@ -51,9 +51,9 @@ export default function MainIncomeForm({ onContinue, onBack, canGoBack, formData
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto px-4 pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8 pt-20">
       <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
-      <div className="bg-white rounded-lg shadow-sm p-8">
+      <div className="w-full max-w-2xl mx-auto">
         <QuestionNumber number={questionNumber} />
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Seção 2 – Renda Ativa</h2>
