@@ -75,7 +75,7 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
       <div className="w-full max-w-2xl mx-auto">
         <QuestionNumber number={questionNumber} />
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          Seção 5 – Patrimônio e Investimentos
+          Patrimônio e Investimentos
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
