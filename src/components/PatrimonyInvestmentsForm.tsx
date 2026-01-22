@@ -73,14 +73,13 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
       <div className="w-full max-w-2xl mx-auto">
         <QuestionNumber number={questionNumber} />
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          Seção 5 – Patrimônio e Investimentos
+              Você já investe?
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* 23. Você já investe? */}
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-4">
-              Você já investe?
             </label>
             <div className="flex gap-4">
               {['Não', 'Sim'].map((option) => (
