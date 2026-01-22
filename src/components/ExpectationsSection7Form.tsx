@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import PageHeader from './PageHeader';
 import QuestionNumber from './QuestionNumber';
 import BackButton from './BackButton';
 
@@ -34,7 +35,9 @@ export default function ExpectationsSection7Form({ onContinue, onBack, canGoBack
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8 pt-20">
+    <>
+      <PageHeader />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8 pt-20">
       <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
       <div className="w-full max-w-2xl mx-auto">
         <QuestionNumber number={questionNumber} />
@@ -100,5 +103,6 @@ export default function ExpectationsSection7Form({ onContinue, onBack, canGoBack
         </form>
       </div>
     </div>
+    </>
   );
 }

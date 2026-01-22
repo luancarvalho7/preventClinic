@@ -1,10 +1,13 @@
 import React from 'react';
+import PageHeader from './PageHeader';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
 
 export default function IntroForm({ onContinue, formData, questionNumber }: FormStepProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8">
+    <>
+      <PageHeader />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8">
       <div className="w-full max-w-2xl mx-auto">
         <QuestionNumber number={questionNumber} />
         <h2 className="text-3xl md:text-4xl font-funnel font-bold text-slate-900 mb-6">
@@ -28,5 +31,6 @@ export default function IntroForm({ onContinue, formData, questionNumber }: Form
         </div>
       </div>
     </div>
+    </>
   );
 }
