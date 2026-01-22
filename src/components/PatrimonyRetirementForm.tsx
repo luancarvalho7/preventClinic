@@ -57,7 +57,7 @@ export default function PatrimonyRetirementForm({
       <div className="w-full max-w-2xl mx-auto">
         <QuestionNumber number={questionNumber} />
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          Futuro
+          Longo Prazo
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
