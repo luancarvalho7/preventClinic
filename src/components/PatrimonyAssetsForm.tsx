@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
 import BackButton from './BackButton';
-import { formatCurrencyInput, handleCurrencyInput } from '../utils/currency';
+import { formatCurrencyInput, handleCurrencyInput, parseCurrency } from '../utils/currency';
 
 export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [hasVehicle, setHasVehicle] = useState(formData?.hasVehicle || '');
@@ -163,9 +163,9 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                   inputMode="numeric"
                   value={displayVehicleValue}
                   onChange={(e) => {
-                    const formatted = formatCurrencyInput(e.target.value);
-                    setDisplayVehicleValue(formatted);
-                    setVehicleValue(String(parseCurrency(e.target.value)));
+                    const cents = parseCurrency(e.target.value);
+                    setVehicleValue(String(cents));
+                    setDisplayVehicleValue(formatCurrencyInput(cents));
                   }}
                   placeholder="R$ 0,00"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
@@ -217,9 +217,9 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                     inputMode="numeric"
                     value={displayVehicleInsurancePremium}
                     onChange={(e) => {
-                      const formatted = formatCurrencyInput(e.target.value);
-                      setDisplayVehicleInsurancePremium(formatted);
-                      setVehicleInsurancePremium(String(parseCurrency(e.target.value)));
+                      const cents = parseCurrency(e.target.value);
+                      setVehicleInsurancePremium(String(cents));
+                      setDisplayVehicleInsurancePremium(formatCurrencyInput(cents));
                     }}
                     placeholder="R$ 0,00"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
@@ -312,9 +312,9 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                   inputMode="numeric"
                   value={displayPropertyValue}
                   onChange={(e) => {
-                    const formatted = formatCurrencyInput(e.target.value);
-                    setDisplayPropertyValue(formatted);
-                    setPropertyValue(String(parseCurrency(e.target.value)));
+                    const cents = parseCurrency(e.target.value);
+                    setPropertyValue(String(cents));
+                    setDisplayPropertyValue(formatCurrencyInput(cents));
                   }}
                   placeholder="R$ 0,00"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
@@ -366,9 +366,9 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                     inputMode="numeric"
                     value={displayPropertyInsurancePremium}
                     onChange={(e) => {
-                      const formatted = formatCurrencyInput(e.target.value);
-                      setDisplayPropertyInsurancePremium(formatted);
-                      setPropertyInsurancePremium(String(parseCurrency(e.target.value)));
+                      const cents = parseCurrency(e.target.value);
+                      setPropertyInsurancePremium(String(cents));
+                      setDisplayPropertyInsurancePremium(formatCurrencyInput(cents));
                     }}
                     placeholder="R$ 0,00"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
