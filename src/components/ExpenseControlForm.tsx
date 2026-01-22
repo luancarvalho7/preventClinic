@@ -41,7 +41,7 @@ export default function ExpenseControlForm({ onContinue, onBack, canGoBack, form
 
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Seção 3 – Gastos
+            Gastos
           </h2>
           <p className="text-gray-600">
             Aqui o foco é entender o seu fluxo de gastos e como você lida com sobras ou apertos no fim do mês.
