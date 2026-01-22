@@ -4,11 +4,11 @@ import QuestionNumber from './QuestionNumber';
 
 export default function IntroForm({ onContinue, formData, questionNumber }: FormStepProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-50 flex flex-col items-center justify-center font-sans px-6 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-50 flex flex-col items-center justify-center font-inter px-6 py-12">
       <div className="w-full max-w-3xl">
         <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
         <QuestionNumber number={questionNumber} />
-          <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 mb-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-funnel font-bold text-slate-900 mb-6 text-center">
             Seção 1 – Perfil e Contexto
           </h2>
 

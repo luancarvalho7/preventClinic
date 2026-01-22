@@ -9,7 +9,7 @@ interface ResultsPageProps {
 
 export default function ResultsPage({ formData }: ResultsPageProps) {
   return (
-    <div className="min-h-screen bg-gray-50 font-outfit">
+    <div className="min-h-screen bg-gray-50 font-inter">
       <div className="bg-white shadow-sm">
         <div className="max-w-4xl mx-auto px-6 py-8">
           <Logo />
@@ -20,7 +20,7 @@ export default function ResultsPage({ formData }: ResultsPageProps) {
         <div className="bg-white rounded-lg shadow-sm p-12 text-center space-y-6">
           <div className="text-4xl mb-4">✅</div>
 
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-funnel font-bold text-gray-900">
             Questionário Concluído!
           </h1>
 
