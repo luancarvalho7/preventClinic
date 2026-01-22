@@ -166,17 +166,19 @@ export default function PatrimonyRetirementForm({
             </>
           )}
 
-          <button
-            type="submit"
-            disabled={!isValid}
-            className={`w-full text-white py-3 px-6 rounded-lg font-medium transition-colors ${
-              isValid
-                ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
-                : 'bg-black cursor-not-allowed'
-            }`}
-          >
-            Continuar
-          </button>
+          <div className="pb-16">
+            <button
+              type="submit"
+              disabled={!isValid}
+              className={`w-full max-w-[999px] mx-auto text-white py-3 px-6 rounded-lg font-medium transition-colors ${
+                isValid
+                  ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                  : 'bg-black cursor-not-allowed'
+              }`}
+            >
+              Continuar
+            </button>
+          </div>
         </form>
       </div>
     </div>

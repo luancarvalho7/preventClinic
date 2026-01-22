@@ -52,17 +52,19 @@ export default function SurplusActionForm({ onContinue, onBack, canGoBack, formD
             </div>
           </div>
 
-          <button
-            type="submit"
-            disabled={!surplusAction}
-            className={`w-full text-white py-3 px-6 rounded-lg font-medium transition-colors ${
-              surplusAction
-                ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
-                : 'bg-black cursor-not-allowed'
-            }`}
-          >
-            Continuar
-          </button>
+          <div className="pb-16">
+            <button
+              type="submit"
+              disabled={!surplusAction}
+              className={`w-full max-w-[999px] mx-auto text-white py-3 px-6 rounded-lg font-medium transition-colors ${
+                surplusAction
+                  ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                  : 'bg-black cursor-not-allowed'
+              }`}
+            >
+              Continuar
+            </button>
+          </div>
         </form>
       </div>
     </div>

@@ -246,17 +246,19 @@ export default function GoalsSection6Form({ onContinue, onBack, canGoBack, formD
             )}
           </div>
 
-          <button
-            type="submit"
-            disabled={!canSubmit}
-            className={`w-full text-white py-3 px-6 rounded-lg font-medium transition-colors ${
-              canSubmit
-                ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
-                : 'bg-black cursor-not-allowed'
-            }`}
-          >
-            Continuar
-          </button>
+          <div className="pb-16">
+            <button
+              type="submit"
+              disabled={!canSubmit}
+              className={`w-full max-w-[999px] mx-auto text-white py-3 px-6 rounded-lg font-medium transition-colors ${
+                canSubmit
+                  ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                  : 'bg-black cursor-not-allowed'
+              }`}
+            >
+              Continuar
+            </button>
+          </div>
         </form>
 
         {/*\n  NOVAS CHAVES adicionadas ao payload:\n  - goalsSelection: string[]\n  - goalsOtherText?: string\n  - investsMonthly: 'Sim' | 'Não'\n  - averageMonthlyInvestment?: number\n  Campos antigos NÃO foram renomeados nem removidos.\n*/}

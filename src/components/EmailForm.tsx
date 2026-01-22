@@ -119,8 +119,8 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
           </form>
         </div>
         
-        <div className="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-50 to-transparent">
-          <div className="w-full max-w-2xl mx-auto">
+        <div className="fixed bottom-0 left-0 right-0 px-6 pt-6 pb-16 bg-gradient-to-t from-slate-50 to-transparent">
+          <div className="w-full max-w-[999px] mx-auto">
             <button
               type="submit"
               form="contact-form"

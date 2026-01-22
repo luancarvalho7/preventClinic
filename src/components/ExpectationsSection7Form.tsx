@@ -84,17 +84,19 @@ export default function ExpectationsSection7Form({ onContinue, onBack, canGoBack
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={consultingGoals.length === 0 || !successDefinition}
-            className={`w-full text-white py-3 px-6 rounded-lg font-medium transition-colors ${
-              consultingGoals.length > 0 && successDefinition
-                ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
-                : 'bg-black cursor-not-allowed'
-            }`}
-          >
-            Finalizar
-          </button>
+          <div className="pb-16">
+            <button
+              type="submit"
+              disabled={consultingGoals.length === 0 || !successDefinition}
+              className={`w-full max-w-[999px] mx-auto text-white py-3 px-6 rounded-lg font-medium transition-colors ${
+                consultingGoals.length > 0 && successDefinition
+                  ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                  : 'bg-black cursor-not-allowed'
+              }`}
+            >
+              Finalizar
+            </button>
+          </div>
         </form>
       </div>
     </div>
