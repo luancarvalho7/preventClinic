@@ -44,7 +44,6 @@ export default function PatrimonyEmergencyFundForm({ onContinue, onBack, canGoBa
       <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
       <div className="w-full max-w-2xl mx-auto">
         <QuestionNumber number={questionNumber} />
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Patrimônio e Investimentos</h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* 20 */}
