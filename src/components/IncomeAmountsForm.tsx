@@ -71,7 +71,7 @@ export default function IncomeAmountsForm({ onContinue, onBack, canGoBack, formD
             <button
               type="submit"
               disabled={grossIncome === 0 || netIncome === 0}
-              className={`w-full max-w-[999px] mx-auto text-white py-3 px-6 rounded-lg font-medium transition-colors ${
+              className={`w-full max-w-[576px] mx-auto text-white py-3 px-6 rounded-full font-medium transition-colors ${
                 grossIncome > 0 && netIncome > 0
                   ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
                   : 'bg-black cursor-not-allowed'

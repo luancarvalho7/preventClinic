@@ -88,7 +88,7 @@ export default function ExpectationsSection7Form({ onContinue, onBack, canGoBack
             <button
               type="submit"
               disabled={consultingGoals.length === 0 || !successDefinition}
-              className={`w-full max-w-[999px] mx-auto text-white py-3 px-6 rounded-lg font-medium transition-colors ${
+              className={`w-full max-w-[576px] mx-auto text-white py-3 px-6 rounded-full font-medium transition-colors ${
                 consultingGoals.length > 0 && successDefinition
                   ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
                   : 'bg-black cursor-not-allowed'

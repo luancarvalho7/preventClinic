@@ -204,7 +204,7 @@ export default function DebtsForm({ onContinue, onBack, canGoBack, formData, que
             <button
               type="submit"
               disabled={!hasDebts || (hasDebts === 'Sim' && (debtTypes.length === 0 || totalDebtAmount === 0 || !hasOverdueDebts || !triedRenegotiation))}
-              className={`w-full max-w-[999px] mx-auto text-white py-3 px-6 rounded-lg font-medium transition-colors ${
+              className={`w-full max-w-[576px] mx-auto text-white py-3 px-6 rounded-full font-medium transition-colors ${
                 hasDebts && (hasDebts === 'Não' || (debtTypes.length > 0 && totalDebtAmount > 0 && hasOverdueDebts && triedRenegotiation))
                   ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
                   : 'bg-black cursor-not-allowed'

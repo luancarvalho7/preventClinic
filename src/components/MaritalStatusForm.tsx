@@ -54,7 +54,7 @@ export default function MaritalStatusForm({ onContinue, onBack, canGoBack, formD
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 px-6 pt-6 pb-16 bg-gradient-to-t from-slate-50 to-transparent">
-        <div className="w-full max-w-[999px] mx-auto">
+        <div className="w-full max-w-[576px] mx-auto">
           <button
             form="marital-status-form"
             type="submit"
