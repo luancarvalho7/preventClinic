@@ -7,7 +7,7 @@ import ResultsPage from './ResultsPage';
 const FORM_DATA_STORAGE_KEY = 'prevent-quiz-responses';
 
 // Webhook URL for form submissions
-const WEBHOOK_URL = 'https://n8nsemfila.iatom.site/webhook/6bd7af0d-aa3e-4c08-83a7-514d49e9fb73';
+const WEBHOOK_URL = 'https://n8nsemfila.iatom.site/webhook/finishFinanceForm';
 
 // Helper functions for sessionStorage
 const saveFormDataToStorage = (data: FormData) => {
