@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PageHeader from './PageHeader';
 import { FormStepProps } from '../types/form';
+import BackButton from './BackButton';
 
-export default function EmailForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function EmailForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [email, setEmail] = useState(formData.email || '');
   const [error, setError] = useState('');
 
@@ -42,7 +43,8 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
   return (
     <>
       <PageHeader />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8">
+      <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8 pt-20">
       <div className="w-full max-w-2xl mx-auto">
           {questionNumber && (
             <div className="text-sm font-medium text-slate-500 mb-2">

@@ -2,12 +2,14 @@ import React from 'react';
 import PageHeader from './PageHeader';
 import { FormStepProps } from '../types/form';
 import QuestionNumber from './QuestionNumber';
+import BackButton from './BackButton';
 
-export default function IntroForm({ onContinue, formData, questionNumber }: FormStepProps) {
+export default function IntroForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   return (
     <>
       <PageHeader />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8">
+      <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8 pt-20">
       <div className="w-full max-w-2xl mx-auto">
         <QuestionNumber number={questionNumber} />
         <h2 className="text-3xl md:text-4xl font-funnel font-bold text-slate-900 mb-6">

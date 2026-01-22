@@ -1,11 +1,13 @@
 import React from 'react';
 import { FormStepProps } from '../types/form';
 import PageHeader from './PageHeader';
+import BackButton from './BackButton';
 
-export default function StartForm({ onContinue, questionNumber }: FormStepProps) {
+export default function StartForm({ onContinue, onBack, canGoBack, questionNumber }: FormStepProps) {
   return (
     <>
       <PageHeader />
+      <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center font-inter px-6 pt-8">
       <div className="w-full max-w-2xl">
         <h1 className="text-3xl md:text-4xl font-funnel font-bold text-slate-900 mb-4 text-left">
