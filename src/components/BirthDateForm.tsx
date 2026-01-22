@@ -101,9 +101,6 @@ export default function BirthDateForm({ onContinue, onBack, canGoBack, formData,
           <h1 className="text-2xl md:text-3xl font-funnel font-bold text-slate-900 mb-2">
             Data de nascimento
           </h1>
-          <p className="text-gray-600">
-            Para entender melhor seu contexto de vida
-          </p>
         </div>
 
         <form id="birth-date-form" onSubmit={handleSubmit} className="space-y-6">
