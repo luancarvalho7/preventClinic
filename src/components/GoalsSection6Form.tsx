@@ -92,7 +92,7 @@ export default function GoalsSection6Form({ onContinue, onBack, canGoBack, formD
                 <label key={opt} className="flex items-start p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
                   <input
                     type="checkbox"
-                    className="mt-1 w-4 h-4 text-accent focus:ring-accent"
+                    className="mt-1 w-4 h-4 text-blue-600 focus:ring-blue-600"
                     checked={goalsSelection.includes(opt)}
                     onChange={() => toggleGoal(opt)}
                   />
@@ -196,7 +196,7 @@ export default function GoalsSection6Form({ onContinue, onBack, canGoBack, formD
                     value={option}
                     checked={changeCommitment === option}
                     onChange={(e) => setChangeCommitment(e.target.value)}
-                    className="w-4 h-4 text-accent focus:ring-accent"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                   />
                   <span className="ml-3 text-gray-900">{option}</span>
                 </label>
@@ -218,7 +218,7 @@ export default function GoalsSection6Form({ onContinue, onBack, canGoBack, formD
                     value={opt}
                     checked={investsMonthly === opt}
                     onChange={(e) => setInvestsMonthly(e.target.value as InvestsMonthly)}
-                    className="w-4 h-4 text-accent focus:ring-accent"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                   />
                   <span className="ml-2 text-gray-900">{opt}</span>
                 </label>

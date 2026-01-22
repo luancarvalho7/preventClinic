@@ -80,7 +80,7 @@ export default function PatrimonySection5Form({ onContinue, onBack, canGoBack, f
                     value={option}
                     checked={hasEmergencyFund === option}
                     onChange={(e) => setHasEmergencyFund(e.target.value)}
-                    className="w-4 h-4 text-accent focus:ring-accent"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                   />
                   <span className="ml-3 text-gray-900">{option}</span>
                 </label>
@@ -119,7 +119,7 @@ export default function PatrimonySection5Form({ onContinue, onBack, canGoBack, f
                         value={option}
                         checked={emergencyFundLocation === option}
                         onChange={(e) => setEmergencyFundLocation(e.target.value)}
-                        className="w-4 h-4 text-accent focus:ring-accent"
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                       />
                       <span className="ml-3 text-gray-900">{option}</span>
                     </label>
@@ -142,7 +142,7 @@ export default function PatrimonySection5Form({ onContinue, onBack, canGoBack, f
                     value={option}
                     checked={alreadyInvests === option}
                     onChange={(e) => setAlreadyInvests(e.target.value)}
-                    className="w-4 h-4 text-accent focus:ring-accent"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                   />
                   <span className="ml-3 text-gray-900">{option}</span>
                 </label>
@@ -231,7 +231,7 @@ export default function PatrimonySection5Form({ onContinue, onBack, canGoBack, f
                     value={option}
                     checked={hasVehicle === option}
                     onChange={(e) => setHasVehicle(e.target.value)}
-                    className="w-4 h-4 text-accent focus:ring-accent"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                   />
                   <span className="ml-3 text-gray-900">{option}</span>
                 </label>
@@ -268,7 +268,7 @@ export default function PatrimonySection5Form({ onContinue, onBack, canGoBack, f
                     value={option}
                     checked={hasProperty === option}
                     onChange={(e) => setHasProperty(e.target.value)}
-                    className="w-4 h-4 text-accent focus:ring-accent"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                   />
                   <span className="ml-3 text-gray-900">{option}</span>
                 </label>

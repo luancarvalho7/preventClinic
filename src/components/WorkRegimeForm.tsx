@@ -43,7 +43,7 @@ export default function WorkRegimeForm({ onContinue, onBack, canGoBack, formData
                     value={option}
                     checked={workRegime === option}
                     onChange={(e) => setWorkRegime(e.target.value)}
-                    className="w-4 h-4 text-accent focus:ring-accent"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                   />
                   <span className="ml-3 text-gray-900">{option}</span>
                 </label>

@@ -83,7 +83,7 @@ export default function DebtsForm({ onContinue, onBack, canGoBack, formData, que
                     value={option}
                     checked={hasDebts === option}
                     onChange={(e) => setHasDebts(e.target.value)}
-                    className="w-4 h-4 text-accent focus:ring-accent"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                   />
                   <span className="ml-3 text-gray-900">{option}</span>
                 </label>
@@ -107,7 +107,7 @@ export default function DebtsForm({ onContinue, onBack, canGoBack, formData, que
                         type="checkbox"
                         checked={debtTypes.includes(option)}
                         onChange={() => handleDebtTypeToggle(option)}
-                        className="w-4 h-4 text-accent focus:ring-accent rounded"
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-600 rounded"
                       />
                       <span className="ml-3 text-gray-900">{option}</span>
                     </label>
@@ -166,7 +166,7 @@ export default function DebtsForm({ onContinue, onBack, canGoBack, formData, que
                         value={option}
                         checked={hasOverdueDebts === option}
                         onChange={(e) => setHasOverdueDebts(e.target.value)}
-                        className="w-4 h-4 text-accent focus:ring-accent"
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                       />
                       <span className="ml-3 text-gray-900">{option}</span>
                     </label>
@@ -190,7 +190,7 @@ export default function DebtsForm({ onContinue, onBack, canGoBack, formData, que
                         value={option}
                         checked={triedRenegotiation === option}
                         onChange={(e) => setTriedRenegotiation(e.target.value)}
-                        className="w-4 h-4 text-accent focus:ring-accent"
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                       />
                       <span className="ml-3 text-gray-900">{option}</span>
                     </label>

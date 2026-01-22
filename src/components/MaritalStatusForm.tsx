@@ -43,7 +43,7 @@ export default function MaritalStatusForm({ onContinue, onBack, canGoBack, formD
                     value={option}
                     checked={maritalStatus === option}
                     onChange={(e) => setMaritalStatus(e.target.value)}
-                    className="w-4 h-4 text-accent focus:ring-accent"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                   />
                   <span className="ml-3 text-gray-900">{option}</span>
                 </label>

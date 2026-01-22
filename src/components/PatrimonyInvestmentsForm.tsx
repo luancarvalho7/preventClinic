@@ -139,7 +139,7 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
                         value={opt}
                         checked={investmentTypes.includes(opt)}
                         onChange={() => handleCheckboxChange(opt)}
-                        className="w-4 h-4 text-accent focus:ring-accent"
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                       />
                       <span className="ml-3 text-gray-900">{opt}</span>
                     </label>
@@ -204,7 +204,7 @@ const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
                         value={opt}
                         checked={investmentGoal === opt}
                         onChange={(e) => setInvestmentGoal(e.target.value)}
-                        className="w-4 h-4 text-accent focus:ring-accent"
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-600"
                       />
                       <span className="ml-3 text-gray-900">{opt}</span>
                     </label>

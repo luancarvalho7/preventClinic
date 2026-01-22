@@ -62,7 +62,7 @@ export default function ExpectationsSection7Form({ onContinue, onBack, canGoBack
                     type="checkbox"
                     checked={consultingGoals.includes(option)}
                     onChange={() => handleGoalToggle(option)}
-                    className="w-4 h-4 text-accent focus:ring-accent rounded"
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-600 rounded"
                   />
                   <span className="ml-3 text-gray-900">{option}</span>
                 </label>
