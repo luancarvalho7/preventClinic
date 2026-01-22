@@ -5,9 +5,14 @@ import { FormData } from '../types/form';
 interface ResultsPageProps {
   formData: FormData;
   onBack: () => void;
+  finalPrice?: string;
 }
 
-export default function ResultsPage({ formData }: ResultsPageProps) {
+export default function ResultsPage({ formData, finalPrice }: ResultsPageProps) {
+  const handleComprar = () => {
+    window.location.href = '#';
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 font-inter">
       <div className="bg-white shadow-sm">
@@ -17,7 +22,7 @@ export default function ResultsPage({ formData }: ResultsPageProps) {
       </div>
 
       <div className="max-w-3xl mx-auto px-6 py-12">
-        <div className="bg-white rounded-lg shadow-sm p-12 text-center space-y-6">
+        <div className="bg-white rounded-lg shadow-sm p-12 text-center space-y-8">
           <div className="text-4xl mb-4">✅</div>
 
           <h1 className="text-3xl font-funnel font-bold text-gray-900">
@@ -31,12 +36,32 @@ export default function ResultsPage({ formData }: ResultsPageProps) {
             <p>
               Suas respostas serão guia para a estruturação de um plano personalizado, feito para trazer clareza, equilíbrio e evolução financeira.
             </p>
-            <p className="font-medium">
-              Em breve seu consultor entrará em contato para conversarem sobre os próximos passos.
-            </p>
           </div>
 
-          <div className="pt-8">
+          {finalPrice && (
+            <div className="border-2 border-blue-200 bg-blue-50 rounded-lg p-8 space-y-4">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Consultoria Personalizada
+              </h2>
+              <p className="text-gray-700">
+                Com base em suas respostas, preparamos uma consultoria exclusiva para você estruturar seu plano financeiro.
+              </p>
+              <div className="pt-4">
+                <div className="text-sm text-gray-600 mb-2">Investimento</div>
+                <div className="text-3xl font-bold text-blue-600">
+                  R$ {finalPrice}
+                </div>
+              </div>
+              <button
+                onClick={handleComprar}
+                className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+              >
+                Comprar
+              </button>
+            </div>
+          )}
+
+          <div className="pt-4">
             <div className="inline-block px-6 py-3 bg-slate-900/10 text-slate-900 rounded-lg font-medium">
               Respostas enviadas com sucesso
             </div>

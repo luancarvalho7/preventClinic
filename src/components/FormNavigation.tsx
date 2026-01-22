@@ -42,6 +42,7 @@ export default function FormNavigation() {
   const [currentStepId, setCurrentStepId] = useState<string>(getFirstStep().id);
   const [history, setHistory] = useState<string[]>([]); // Track visited steps for back navigation
   const [isComplete, setIsComplete] = useState(false);
+  const [finalPrice, setFinalPrice] = useState<string | null>(null);
 
   // Dynamic sub-flow state for hormone therapy
   const [isDynamicSubFlowActive, setIsDynamicSubFlowActive] = useState(false);
@@ -106,6 +107,10 @@ export default function FormNavigation() {
       });
 
       if (response.ok) {
+        const responseData = await response.json();
+        if (responseData.finalPrice) {
+          setFinalPrice(responseData.finalPrice);
+        }
         console.log('Form data sent successfully to webhook');
       } else {
         console.error('Failed to send form data to webhook:', response.status);
@@ -343,7 +348,7 @@ export default function FormNavigation() {
   // Render the current step component
   const renderCurrentStep = () => {
     if (isComplete) {
-      return <ResultsPage formData={formData} onBack={handleBack} />;
+      return <ResultsPage formData={formData} onBack={handleBack} finalPrice={finalPrice || undefined} />;
     }
 
     const currentStep = getCurrentStep();
