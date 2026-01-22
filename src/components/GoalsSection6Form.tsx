@@ -74,7 +74,7 @@ export default function GoalsSection6Form({ onContinue, onBack, canGoBack, formD
         <QuestionNumber number={questionNumber} />
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Seção 6 – Objetivos e Prioridades
+            Objetivos e Prioridades
           </h2>
           <p className="text-gray-600">
             Aqui vamos alinhar o planejamento ao que realmente importa pra você — seus sonhos e metas financeiras.
