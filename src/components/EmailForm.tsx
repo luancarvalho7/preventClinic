@@ -60,19 +60,19 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center font-inter px-6">
-      <div className="w-full max-w-2xl">
-        <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8">
+      <div className="w-full max-w-2xl mx-auto">
           {questionNumber && (
-            <div className="text-sm font-medium text-slate-500 mb-2 text-center">
+            <div className="text-sm font-medium text-slate-500 mb-2">
               Pergunta {questionNumber}
             </div>
           )}
-          <h1 className="text-2xl md:text-3xl font-funnel font-bold text-slate-900 mb-6 text-center">
+          <h1 className="text-2xl md:text-3xl font-funnel font-bold text-slate-900 mb-6">
             Suas Informações de Contato
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            <form id="contact-form" onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-lg font-medium text-slate-900 mb-3">
                 Digite seu e-mail:
@@ -115,13 +115,19 @@ export default function EmailForm({ onContinue, formData, questionNumber }: Form
 
             {error && <p className="text-red-600 text-sm">{error}</p>}
 
+          </form>
+        </div>
+        
+        <div className="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-50 to-transparent">
+          <div className="w-full max-w-2xl mx-auto">
             <button
               type="submit"
-              className="w-full py-4 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors duration-200 font-medium text-lg shadow-md hover:shadow-lg"
+              form="contact-form"
+              className="w-full py-4 bg-primary text-white rounded-full hover:bg-blue-600 transition-colors duration-200 font-medium text-lg shadow-md hover:shadow-lg"
             >
               Continuar
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
