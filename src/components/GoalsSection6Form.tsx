@@ -77,7 +77,7 @@ export default function GoalsSection6Form({ onContinue, onBack, canGoBack, formD
             Objetivos e Prioridades
           </h2>
           <p className="text-gray-600">
-            Aqui vamos alinhar o planejamento ao que realmente importa pra você — seus sonhos e metas financeiras.
+            Aqui vamos alinhar o planejamento ao que realmente importa pra você: seus sonhos e metas financeiras.
           </p>
         </div>
 
