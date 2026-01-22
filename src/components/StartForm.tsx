@@ -6,7 +6,7 @@ export default function StartForm({ onContinue, questionNumber }: FormStepProps)
   return (
     <>
       <PageHeader />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center font-inter px-6">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center font-inter px-6 pt-8">
       <div className="w-full max-w-2xl">
         <h1 className="text-3xl md:text-4xl font-funnel font-bold text-slate-900 mb-4 text-left">
           Diagnóstico Financeiro Pessoal
