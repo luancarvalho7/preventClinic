@@ -12,6 +12,9 @@ export default {
         accent: '#0960ae',
         primary: '#0052FF',
       },
+      accentColor: {
+        DEFAULT: '#2563eb',
+      },
     },
   },
   plugins: [],
