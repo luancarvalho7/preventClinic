@@ -29,7 +29,7 @@ export default function MaritalStatusForm({ onContinue, onBack, canGoBack, formD
         <form id="marital-status-form" onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-4">
-              Estado civil
+              Qual seu Estado civil
             </label>
             <div className="space-y-3">
               {options.map((option) => (
