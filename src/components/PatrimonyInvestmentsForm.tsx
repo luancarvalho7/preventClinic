@@ -9,12 +9,12 @@ export default function PatrimonyInvestmentsForm({ onContinue, onBack, canGoBack
   const [investmentTypes, setInvestmentTypes] = useState<string[]>(formData?.investmentTypes || []);
   const [monthlyInvestment, setMonthlyInvestment] = useState<number>(formData?.monthlyInvestment || 0);
 const [displayMonthlyInvestment, setDisplayMonthlyInvestment] = useState(
-  formData?.monthlyInvestment ? formatCurrency(formData.monthlyInvestment) : ''
+  formData?.monthlyInvestment ? formatCurrencyInput(formData.monthlyInvestment) : ''
 );
 
   const [totalInvested, setTotalInvested] = useState<number>(formData?.totalInvested || 0);
   const [displayTotalInvested, setDisplayTotalInvested] = useState(
-    formData?.totalInvested ? formatCurrency(formData.totalInvested) : ''
+    formData?.totalInvested ? formatCurrencyInput(formData.totalInvested) : ''
   );
 
   const [investmentGoal, setInvestmentGoal] = useState(formData?.investmentGoal || '');

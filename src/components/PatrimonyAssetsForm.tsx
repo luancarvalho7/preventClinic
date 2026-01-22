@@ -7,30 +7,42 @@ import { formatCurrencyInput, handleCurrencyInput, parseCurrency } from '../util
 export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [hasVehicle, setHasVehicle] = useState(formData?.hasVehicle || '');
   const [vehicleModels, setVehicleModels] = useState<string[]>(formData?.vehicleModels || []);
-  const [vehicleValue, setVehicleValue] = useState(formData?.vehicleValue || '');
+  const [vehicleValue, setVehicleValue] = useState<number>(
+    typeof formData?.vehicleValue === 'number' ? formData.vehicleValue :
+    typeof formData?.vehicleValue === 'string' ? Number(formData.vehicleValue) : 0
+  );
   const [displayVehicleValue, setDisplayVehicleValue] = useState(
-    formData?.vehicleValue ? formatCurrencyInput(formData.vehicleValue) : ''
+    vehicleValue > 0 ? formatCurrencyInput(vehicleValue) : ''
   );
 
   // NOVO: seguro de veículo
   const [hasVehicleInsurance, setHasVehicleInsurance] = useState(formData?.hasVehicleInsurance || ''); // 'Sim' | 'Não' | ''
-  const [vehicleInsurancePremium, setVehicleInsurancePremium] = useState(formData?.vehicleInsurancePremium || ''); // valor numérico em string
+  const [vehicleInsurancePremium, setVehicleInsurancePremium] = useState<number>(
+    typeof formData?.vehicleInsurancePremium === 'number' ? formData.vehicleInsurancePremium :
+    typeof formData?.vehicleInsurancePremium === 'string' ? Number(formData.vehicleInsurancePremium) : 0
+  );
   const [displayVehicleInsurancePremium, setDisplayVehicleInsurancePremium] = useState(
-    formData?.vehicleInsurancePremium ? formatCurrencyInput(formData.vehicleInsurancePremium) : ''
+    vehicleInsurancePremium > 0 ? formatCurrencyInput(vehicleInsurancePremium) : ''
   );
 
   const [hasProperty, setHasProperty] = useState(formData?.hasProperty || '');
   const [propertyTypes, setPropertyTypes] = useState<string[]>(formData?.propertyTypes || []);
-  const [propertyValue, setPropertyValue] = useState(formData?.propertyValue || '');
+  const [propertyValue, setPropertyValue] = useState<number>(
+    typeof formData?.propertyValue === 'number' ? formData.propertyValue :
+    typeof formData?.propertyValue === 'string' ? Number(formData.propertyValue) : 0
+  );
   const [displayPropertyValue, setDisplayPropertyValue] = useState(
-    formData?.propertyValue ? formatCurrencyInput(formData.propertyValue) : ''
+    propertyValue > 0 ? formatCurrencyInput(propertyValue) : ''
   );
 
   // NOVO: seguro de imóvel
   const [hasPropertyInsurance, setHasPropertyInsurance] = useState(formData?.hasPropertyInsurance || ''); // 'Sim' | 'Não' | ''
-  const [propertyInsurancePremium, setPropertyInsurancePremium] = useState(formData?.propertyInsurancePremium || '');
+  const [propertyInsurancePremium, setPropertyInsurancePremium] = useState<number>(
+    typeof formData?.propertyInsurancePremium === 'number' ? formData.propertyInsurancePremium :
+    typeof formData?.propertyInsurancePremium === 'string' ? Number(formData.propertyInsurancePremium) : 0
+  );
   const [displayPropertyInsurancePremium, setDisplayPropertyInsurancePremium] = useState(
-    formData?.propertyInsurancePremium ? formatCurrencyInput(formData.propertyInsurancePremium) : ''
+    propertyInsurancePremium > 0 ? formatCurrencyInput(propertyInsurancePremium) : ''
   );
 
   const [otherAssets, setOtherAssets] = useState(formData?.otherAssets || '');
@@ -43,17 +55,17 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
     onContinue({
       hasVehicle,
       vehicleModels: hasVehicle === 'Sim' ? vehicleModels : [],
-      vehicleValue: hasVehicle === 'Sim' ? vehicleValue : '',
+      vehicleValue: hasVehicle === 'Sim' ? vehicleValue : 0,
       hasVehicleInsurance: hasVehicle === 'Sim' ? hasVehicleInsurance : '',
       vehicleInsurancePremium:
-        hasVehicle === 'Sim' && hasVehicleInsurance === 'Sim' ? vehicleInsurancePremium : '',
+        hasVehicle === 'Sim' && hasVehicleInsurance === 'Sim' ? vehicleInsurancePremium : 0,
 
       hasProperty,
       propertyTypes: hasProperty === 'Sim' ? propertyTypes : [],
-      propertyValue: hasProperty === 'Sim' ? propertyValue : '',
+      propertyValue: hasProperty === 'Sim' ? propertyValue : 0,
       hasPropertyInsurance: hasProperty === 'Sim' ? hasPropertyInsurance : '',
       propertyInsurancePremium:
-        hasProperty === 'Sim' && hasPropertyInsurance === 'Sim' ? propertyInsurancePremium : '',
+        hasProperty === 'Sim' && hasPropertyInsurance === 'Sim' ? propertyInsurancePremium : 0,
 
       otherAssets: otherAssets || 'Nenhum',
     });
@@ -61,13 +73,13 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
 
   const isValid =
     hasVehicle &&
-    (hasVehicle === 'Não' || (vehicleModels.length > 0 && vehicleValue.trim() !== '')) &&
+    (hasVehicle === 'Não' || (vehicleModels.length > 0 && vehicleValue > 0)) &&
     // se informou que tem veículo, pergunta de seguro obrigatória; se Sim, exige prêmio
-    (hasVehicle !== 'Sim' || (hasVehicleInsurance && (hasVehicleInsurance === 'Não' || vehicleInsurancePremium.trim() !== ''))) &&
+    (hasVehicle !== 'Sim' || (hasVehicleInsurance && (hasVehicleInsurance === 'Não' || vehicleInsurancePremium > 0))) &&
     hasProperty &&
-    (hasProperty === 'Não' || (propertyTypes.length > 0 && propertyValue.trim() !== '')) &&
+    (hasProperty === 'Não' || (propertyTypes.length > 0 && propertyValue > 0)) &&
     // se informou que tem imóvel, pergunta de seguro obrigatória; se Sim, exige prêmio
-    (hasProperty !== 'Sim' || (hasPropertyInsurance && (hasPropertyInsurance === 'Não' || propertyInsurancePremium.trim() !== '')));
+    (hasProperty !== 'Sim' || (hasPropertyInsurance && (hasPropertyInsurance === 'Não' || propertyInsurancePremium > 0)));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8 pt-20">
@@ -164,7 +176,7 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                   value={displayVehicleValue}
                   onChange={(e) => {
                     const cents = parseCurrency(e.target.value);
-                    setVehicleValue(String(cents));
+                    setVehicleValue(cents);
                     setDisplayVehicleValue(formatCurrencyInput(cents));
                   }}
                   placeholder="R$ 0,00"
@@ -218,7 +230,7 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                     value={displayVehicleInsurancePremium}
                     onChange={(e) => {
                       const cents = parseCurrency(e.target.value);
-                      setVehicleInsurancePremium(String(cents));
+                      setVehicleInsurancePremium(cents);
                       setDisplayVehicleInsurancePremium(formatCurrencyInput(cents));
                     }}
                     placeholder="R$ 0,00"
@@ -313,7 +325,7 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                   value={displayPropertyValue}
                   onChange={(e) => {
                     const cents = parseCurrency(e.target.value);
-                    setPropertyValue(String(cents));
+                    setPropertyValue(cents);
                     setDisplayPropertyValue(formatCurrencyInput(cents));
                   }}
                   placeholder="R$ 0,00"
@@ -367,7 +379,7 @@ export default function PatrimonyAssetsForm({ onContinue, onBack, canGoBack, for
                     value={displayPropertyInsurancePremium}
                     onChange={(e) => {
                       const cents = parseCurrency(e.target.value);
-                      setPropertyInsurancePremium(String(cents));
+                      setPropertyInsurancePremium(cents);
                       setDisplayPropertyInsurancePremium(formatCurrencyInput(cents));
                     }}
                     placeholder="R$ 0,00"
