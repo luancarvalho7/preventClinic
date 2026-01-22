@@ -1,9 +1,12 @@
 import React from 'react';
 import { FormStepProps } from '../types/form';
+import PageHeader from './PageHeader';
 
 export default function StartForm({ onContinue, questionNumber }: FormStepProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center font-inter px-6">
+    <>
+      <PageHeader />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center font-inter px-6">
       <div className="w-full max-w-2xl">
         <h1 className="text-3xl md:text-4xl font-funnel font-bold text-slate-900 mb-4 text-left">
           Diagnóstico Financeiro Pessoal
@@ -28,6 +31,7 @@ export default function StartForm({ onContinue, questionNumber }: FormStepProps)
           Iniciar Diagnóstico
         </button>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

@@ -18,7 +18,7 @@ export default function ResultsPage({ formData, finalPrice }: ResultsPageProps) 
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 font-inter">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="mb-16">
-          <Logo />
+          <Logo invert height="h-5" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import PageHeader from './PageHeader';
 import QuestionNumber from './QuestionNumber';
 import BackButton from './BackButton';
 import { formatCurrencyInput, handleCurrencyInput } from '../utils/currency';
@@ -73,7 +74,9 @@ export default function SecondaryIncomeForm({ onContinue, onBack, canGoBack, for
       (!selectedSources.includes('Outros') || otherSegundaryIncomeSource.trim() !== ''));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8 pt-20">
+    <>
+      <PageHeader />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8 pt-20">
       <BackButton onClick={() => onBack?.()} show={!!canGoBack} />
       <div className="w-full max-w-2xl mx-auto">
         <QuestionNumber number={questionNumber} />
@@ -197,5 +200,6 @@ export default function SecondaryIncomeForm({ onContinue, onBack, canGoBack, for
         </form>
       </div>
     </div>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FormStepProps } from '../types/form';
+import PageHeader from './PageHeader';
 
 export default function PhoneForm({ onContinue, formData, questionNumber }: FormStepProps) {
   const [phone, setPhone] = useState(formData.phone || '');
@@ -36,7 +37,9 @@ export default function PhoneForm({ onContinue, formData, questionNumber }: Form
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8">
+    <>
+      <PageHeader />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8">
       <div className="w-full max-w-2xl mx-auto">
           {questionNumber && (
             <div className="text-sm font-medium text-slate-500 mb-2">
@@ -91,5 +94,6 @@ export default function PhoneForm({ onContinue, formData, questionNumber }: Form
           </div>
         </div>
       </div>
+    </>
   );
 }
