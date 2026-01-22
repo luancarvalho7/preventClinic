@@ -38,7 +38,7 @@ export const handleCurrencyInput = (inputValue: string, previousCents: number): 
     return 0;
   }
 
-  return Number(cleanedDigits) * 100;
+  return Number(cleanedDigits);
 };
 
 /**
