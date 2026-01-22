@@ -8,45 +8,89 @@ const months = [
   'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
 ];
 
+interface DateParts {
+  day: string;
+  month: string;
+  year: string;
+}
+
 export default function BirthDateForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
-  const [birthDate, setBirthDate] = useState(formData?.birthDate || '');
+  const parseFormattedDate = (dateStr: string): DateParts => {
+    const parts = dateStr.split(' ');
+    if (parts.length === 3) {
+      const monthIndex = months.findIndex(m => m.toLowerCase() === parts[1].toLowerCase());
+      return {
+        day: parts[0],
+        month: monthIndex >= 0 ? (monthIndex + 1).toString() : '',
+        year: parts[2]
+      };
+    }
+    return { day: '', month: '', year: '' };
+  };
+
+  const [date, setDate] = useState<DateParts>(
+    formData?.birthDate ? parseFormattedDate(formData.birthDate) : { day: '', month: '', year: '' }
+  );
   const [error, setError] = useState('');
 
-  const validateDate = (date: string): boolean => {
-    const parts = date.split(' ');
-    if (parts.length !== 3) return false;
+  const getDaysInMonth = (month: number, year: number): number => {
+    return new Date(year, month, 0).getDate();
+  };
 
-    const day = parseInt(parts[0]);
-    const monthName = parts[1];
-    const year = parseInt(parts[2]);
+  const validateDate = (): boolean => {
+    const day = parseInt(date.day);
+    const month = parseInt(date.month);
+    const year = parseInt(date.year);
 
-    const monthIndex = months.findIndex(m => m.toLowerCase() === monthName.toLowerCase());
-    if (monthIndex === -1) return false;
+    if (!date.day || !date.month || !date.year) return false;
+    if (isNaN(day) || isNaN(month) || isNaN(year)) return false;
 
-    if (day < 1 || day > 31) return false;
+    if (month < 1 || month > 12) return false;
     if (year < 1900 || year > new Date().getFullYear()) return false;
+
+    const daysInMonth = getDaysInMonth(month, year);
+    if (day < 1 || day > daysInMonth) return false;
 
     return true;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setBirthDate(value);
-    if (value && !validateDate(value)) {
-      setError('Use o formato: DD Mês YYYY (ex: 15 Janeiro 1990)');
-    } else {
-      setError('');
+  const handleDateChange = (field: keyof DateParts, value: string) => {
+    const newDate = { ...date, [field]: value };
+    setDate(newDate);
+
+    const day = parseInt(newDate.day);
+    const month = parseInt(newDate.month);
+    const year = parseInt(newDate.year);
+
+    if (field === 'day' && value) {
+      if (day < 1 || day > 31) {
+        setError('Dia deve estar entre 1 e 31');
+        return;
+      }
     }
+
+    if (field === 'year' && value) {
+      if (year < 1900 || year > new Date().getFullYear()) {
+        setError('Ano deve estar entre 1900 e ' + new Date().getFullYear());
+        return;
+      }
+    }
+
+    setError('');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (birthDate && validateDate(birthDate)) {
-      onContinue({ birthDate });
+    if (validateDate()) {
+      const monthName = months[parseInt(date.month) - 1];
+      const formattedDate = `${date.day} ${monthName} ${date.year}`;
+      onContinue({ birthDate: formattedDate });
+    } else {
+      setError('Por favor, preencha todos os campos corretamente');
     }
   };
 
-  const isValid = birthDate && validateDate(birthDate);
+  const isValid = validateDate();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 font-inter px-6 py-8">
@@ -64,21 +108,71 @@ export default function BirthDateForm({ onContinue, onBack, canGoBack, formData,
 
         <form id="birth-date-form" onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-lg font-medium text-gray-900 mb-3">
+            <label className="block text-lg font-medium text-gray-900 mb-4">
               Digite sua data de nascimento
             </label>
-            <input
-              type="text"
-              value={birthDate}
-              onChange={handleChange}
-              placeholder="DD Mês YYYY (ex: 15 Janeiro 1990)"
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent text-lg ${
-                error
-                  ? 'border-red-300 focus:ring-red-500'
-                  : 'border-gray-300 focus:ring-blue-500'
-              }`}
-            />
-            {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
+            <div className="flex gap-3 items-end">
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Dia
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  max="31"
+                  value={date.day}
+                  onChange={(e) => handleDateChange('day', e.target.value)}
+                  placeholder="DD"
+                  className={`w-full px-3 py-3 border rounded-lg focus:ring-2 focus:border-transparent text-center text-lg font-medium ${
+                    error
+                      ? 'border-red-300 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-blue-500'
+                  }`}
+                />
+              </div>
+
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Mês
+                </label>
+                <select
+                  value={date.month}
+                  onChange={(e) => handleDateChange('month', e.target.value)}
+                  className={`w-full px-3 py-3 border rounded-lg focus:ring-2 focus:border-transparent text-lg font-medium appearance-none bg-white cursor-pointer ${
+                    error
+                      ? 'border-red-300 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-blue-500'
+                  }`}
+                >
+                  <option value="">Mês</option>
+                  {months.map((month, index) => (
+                    <option key={index} value={index + 1}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Ano
+                </label>
+                <input
+                  type="number"
+                  min="1900"
+                  max={new Date().getFullYear()}
+                  value={date.year}
+                  onChange={(e) => handleDateChange('year', e.target.value)}
+                  placeholder="YYYY"
+                  className={`w-full px-3 py-3 border rounded-lg focus:ring-2 focus:border-transparent text-center text-lg font-medium ${
+                    error
+                      ? 'border-red-300 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-blue-500'
+                  }`}
+                />
+              </div>
+            </div>
+            {error && <p className="text-red-600 text-sm mt-3">{error}</p>}
           </div>
         </form>
       </div>
