@@ -1,5 +1,9 @@
 import { FormStep, FormData } from './types/form';
 import StartForm from './components/StartForm';
+import MentorIntro from './components/MentorIntro';
+import DiagnosisQuestions from './components/DiagnosisQuestions';
+import DiagnosisResult from './components/DiagnosisResult';
+import DirectedPlan from './components/DirectedPlan';
 import EmailForm from './components/EmailForm';
 import PhoneForm from './components/PhoneForm';
 import BirthDateForm from './components/BirthDateForm';
@@ -7,7 +11,6 @@ import MaritalStatusForm from './components/MaritalStatusForm';
 import DependentsForm from './components/DependentsForm';
 import LivingWithForm from './components/LivingWithForm';
 import ProfessionForm from './components/ProfessionForm';
-import MainIncomeForm from './components/MainIncomeForm';
 import WorkRegimeForm from './components/WorkRegimeForm';
 import SecondaryIncomeForm from './components/SecondaryIncomeForm';
 import IncomeAmountsForm from './components/IncomeAmountsForm';
@@ -29,6 +32,33 @@ import PatrimonyAssetsForm from './components/PatrimonyAssetsForm';
 
 
 export const formConfig: FormStep[] = [
+  {
+    id: 'mentorIntro',
+    component: MentorIntro,
+    title: 'Mentor do seu Plano',
+    nextStepLogic: () => 'diagnosisQuestions'
+  },
+  {
+    id: 'diagnosisQuestions',
+    component: DiagnosisQuestions,
+    title: 'Diagnóstico',
+    nextStepLogic: () => 'diagnosisResult',
+    prevStepId: 'mentorIntro'
+  },
+  {
+    id: 'diagnosisResult',
+    component: DiagnosisResult,
+    title: 'Resultado do Diagnóstico',
+    nextStepLogic: () => 'directedPlan',
+    prevStepId: 'diagnosisQuestions'
+  },
+  {
+    id: 'directedPlan',
+    component: DirectedPlan,
+    title: 'Plano Direcionado',
+    nextStepLogic: () => null,
+    prevStepId: 'diagnosisResult'
+  },
   {
     id: 'start',
     component: StartForm,
