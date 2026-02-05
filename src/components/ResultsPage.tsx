@@ -11,7 +11,7 @@ interface ResultsPageProps {
 
 const PRICING_TIERS = [
   { total: 5000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/66291fac-49db-4c7d-ab20-f568897f47ae' },
-  { total: 8000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/42a17c0c-421f-46c2-8fef-74bb47e00712' },
+  { total: 2500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/42a17c0c-421f-46c2-8fef-74bb47e00712' },
   { total: 10000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/7b075e4c-8893-4818-8953-b1fc3352479f' },
   { total: 12000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/3011cae9-577a-41a1-bfa7-5ffb99e608fe' },
   { total: 15000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/47b153d9-303f-4976-bc69-12faec55c14c' },
