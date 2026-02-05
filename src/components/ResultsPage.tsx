@@ -31,7 +31,7 @@ const PRICING_TIERS = [
 ];
 
 function calculatePricingTier(monthlyPrice: string) {
-  const monthly = parseFloat(monthlyPrice.replace(/\./g, '').replace(',', '.'));
+  const monthly = parseFloat(monthlyPrice);
   const annual = monthly * 12;
 
   let closestTier = PRICING_TIERS[0];
