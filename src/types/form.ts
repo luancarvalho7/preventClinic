@@ -1,5 +1,7 @@
 export interface FormData {
   // Identificação
+  name?: string;
+  consultorId?: string;
   email?: string;
   phone?: string;
   birthDate?: string;
