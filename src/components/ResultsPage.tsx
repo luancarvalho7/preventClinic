@@ -23,9 +23,9 @@ const PRICING_TIERS = [
   { total: 11500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/a0b6b549-6fe0-4ebc-8405-196ee79d6b11' },
   { total: 12500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/76cea33e-8ea2-4dbc-ac13-a2c8cf973a5f' },
   { total: 13500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/aeb55d93-9d78-4629-8432-4a3db2590e05' },
-  { total: 14500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/344e267f-a134-4dbd-9076-33fd68b2e153' },
-  { total: 15500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/80f050a2-61e7-449a-923b-0283357b40ae' },
-  { total: 16500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/23287117-efa1-491f-85a6-2dd24aaac242' },
+  { total: 15000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/344e267f-a134-4dbd-9076-33fd68b2e153' },
+  { total: 18000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/80f050a2-61e7-449a-923b-0283357b40ae' },
+  { total: 20000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/23287117-efa1-491f-85a6-2dd24aaac242' },
   { total: 30000, link: 'https://atompar.pay.nova.money/checkout/9908cfdd-25ba-4d18-b493-a62cac6d17a8' },
   { total: 40000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/4e3a3eeb-4478-42f3-ab9e-f7f5ef520903' },
 ];
