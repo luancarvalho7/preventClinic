@@ -29,9 +29,9 @@ export default function ConsultorForm({ onContinue, onBack, canGoBack, formData,
 
         const data = await response.json();
 
-        // Parse the nested response structure: [{ response: [...] }]
-        if (Array.isArray(data) && data.length > 0 && data[0].response && Array.isArray(data[0].response)) {
-          const consultoresList = data[0].response;
+        // Parse the response structure: { response: [...] }
+        if (data.response && Array.isArray(data.response)) {
+          const consultoresList = data.response;
           if (consultoresList.length > 0) {
             setConsultores(consultoresList);
             setLoading(false);
