@@ -7,6 +7,7 @@ interface ResultsPageProps {
   formData: FormData;
   onBack: () => void;
   finalPrice?: string;
+  urlParams?: string;
 }
 
 const PRICING_TIERS = [
@@ -30,7 +31,7 @@ const PRICING_TIERS = [
   { total: 40000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/4e3a3eeb-4478-42f3-ab9e-f7f5ef520903' },
 ];
 
-function calculatePricingTier(monthlyPrice: string) {
+function calculatePricingTier(monthlyPrice: string, urlParams?: string) {
   const monthly = parseFloat(monthlyPrice);
   const annual = monthly * 12;
 
@@ -47,15 +48,17 @@ function calculatePricingTier(monthlyPrice: string) {
 
   const adjustedMonthly = closestTier.total / 12;
 
+  const linkWithParams = urlParams ? `${closestTier.link}${urlParams}` : closestTier.link;
+
   return {
     monthly: adjustedMonthly.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
     total: closestTier.total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-    link: closestTier.link
+    link: linkWithParams
   };
 }
 
-export default function ResultsPage({ formData, finalPrice }: ResultsPageProps) {
-  const pricingInfo = finalPrice ? calculatePricingTier(finalPrice) : null;
+export default function ResultsPage({ formData, finalPrice, urlParams }: ResultsPageProps) {
+  const pricingInfo = finalPrice ? calculatePricingTier(finalPrice, urlParams) : null;
 
   const handleComprar = () => {
     if (pricingInfo) {

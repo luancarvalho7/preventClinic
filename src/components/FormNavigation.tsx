@@ -5,6 +5,7 @@ import ResultsPage from './ResultsPage';
 
 // sessionStorage key for form data
 const FORM_DATA_STORAGE_KEY = 'prevent-quiz-responses';
+const URL_PARAMS_STORAGE_KEY = 'prevent-quiz-url-params';
 
 // Webhook URL for form submissions
 const WEBHOOK_URL = 'https://n8nsemfila.iatom.site/webhook/finishFinanceForm';
@@ -36,6 +37,23 @@ const clearFormDataFromStorage = () => {
   }
 };
 
+const saveUrlParamsToStorage = (params: string) => {
+  try {
+    sessionStorage.setItem(URL_PARAMS_STORAGE_KEY, params);
+  } catch (error) {
+    console.warn('Failed to save URL params to sessionStorage:', error);
+  }
+};
+
+const loadUrlParamsFromStorage = (): string => {
+  try {
+    return sessionStorage.getItem(URL_PARAMS_STORAGE_KEY) || '';
+  } catch (error) {
+    console.warn('Failed to load URL params from sessionStorage:', error);
+    return '';
+  }
+};
+
 export default function FormNavigation() {
   // State management
   const [formData, setFormData] = useState<FormData>(loadFormDataFromStorage());
@@ -43,6 +61,7 @@ export default function FormNavigation() {
   const [history, setHistory] = useState<string[]>([]); // Track visited steps for back navigation
   const [isComplete, setIsComplete] = useState(false);
   const [finalPrice, setFinalPrice] = useState<string | null>(null);
+  const [urlParams, setUrlParams] = useState<string>(loadUrlParamsFromStorage());
 
   // Dynamic sub-flow state for hormone therapy
   const [isDynamicSubFlowActive, setIsDynamicSubFlowActive] = useState(false);
@@ -53,6 +72,15 @@ export default function FormNavigation() {
 
   // Development state
   const [showDevNavigation, setShowDevNavigation] = useState(false);
+
+  // Capture URL parameters on mount
+  useEffect(() => {
+    const params = window.location.search;
+    if (params) {
+      setUrlParams(params);
+      saveUrlParamsToStorage(params);
+    }
+  }, []);
 
   // Convert monetary values from cents to actual currency for JSON
   const convertMonetaryValuesToDecimal = (data: FormData): FormData => {
@@ -348,7 +376,7 @@ export default function FormNavigation() {
   // Render the current step component
   const renderCurrentStep = () => {
     if (isComplete) {
-      return <ResultsPage formData={formData} onBack={handleBack} finalPrice={finalPrice || undefined} />;
+      return <ResultsPage formData={formData} onBack={handleBack} finalPrice={finalPrice || undefined} urlParams={urlParams} />;
     }
 
     const currentStep = getCurrentStep();
