@@ -136,8 +136,8 @@ export default function FormNavigation() {
 
       if (response.ok) {
         const responseData = await response.json();
-        if (responseData && responseData[0] && responseData[0].checkoutUrl) {
-          setCheckoutUrl(responseData[0].checkoutUrl);
+        if (responseData && responseData.checkoutUrl) {
+          setCheckoutUrl(responseData.checkoutUrl);
         }
         console.log('Form data sent successfully to webhook');
       } else {
