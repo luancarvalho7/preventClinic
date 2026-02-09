@@ -6,63 +6,16 @@ import { Check } from 'lucide-react';
 interface ResultsPageProps {
   formData: FormData;
   onBack: () => void;
-  finalPrice?: string;
+  checkoutUrl?: string;
   urlParams?: string;
 }
 
-const PRICING_TIERS = [
-  { total: 2000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/66291fac-49db-4c7d-ab20-f568897f47ae' },
-  { total: 2500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/42a17c0c-421f-46c2-8fef-74bb47e00712' },
-  { total: 3500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/7b075e4c-8893-4818-8953-b1fc3352479f' },
-  { total: 4500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/3011cae9-577a-41a1-bfa7-5ffb99e608fe' },
-  { total: 5500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/47b153d9-303f-4976-bc69-12faec55c14c' },
-  { total: 6500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/2333dc52-92a9-4030-884f-fb74b29eba79' },
-  { total: 7500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/4a2f5191-bc7d-444a-a6a1-952531ff538b' },
-  { total: 8500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/28d1fb29-f94b-4dd2-88b2-ed15b7b4b342' },
-  { total: 9500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/b873bd44-e6ff-419b-8204-ab1d374a5b2f' },
-  { total: 10500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/92935835-1744-47a2-8fc3-9295e894d5c0' },
-  { total: 11500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/a0b6b549-6fe0-4ebc-8405-196ee79d6b11' },
-  { total: 12500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/76cea33e-8ea2-4dbc-ac13-a2c8cf973a5f' },
-  { total: 13500, link: 'https://atompar.pay.nova.money/pt-BR/checkout/aeb55d93-9d78-4629-8432-4a3db2590e05' },
-  { total: 15000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/344e267f-a134-4dbd-9076-33fd68b2e153' },
-  { total: 18000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/80f050a2-61e7-449a-923b-0283357b40ae' },
-  { total: 20000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/23287117-efa1-491f-85a6-2dd24aaac242' },
-  { total: 30000, link: 'https://atompar.pay.nova.money/checkout/9908cfdd-25ba-4d18-b493-a62cac6d17a8' },
-  { total: 40000, link: 'https://atompar.pay.nova.money/pt-BR/checkout/4e3a3eeb-4478-42f3-ab9e-f7f5ef520903' },
-];
-
-function calculatePricingTier(monthlyPrice: string, urlParams?: string) {
-  const monthly = parseFloat(monthlyPrice);
-  const annual = monthly * 12;
-
-  let closestTier = PRICING_TIERS[0];
-  let minDiff = Math.abs(annual - closestTier.total);
-
-  for (const tier of PRICING_TIERS) {
-    const diff = Math.abs(annual - tier.total);
-    if (diff < minDiff) {
-      minDiff = diff;
-      closestTier = tier;
-    }
-  }
-
-  const adjustedMonthly = closestTier.total / 12;
-
-  const linkWithParams = urlParams ? `${closestTier.link}${urlParams}` : closestTier.link;
-
-  return {
-    monthly: adjustedMonthly.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-    total: closestTier.total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-    link: linkWithParams
-  };
-}
-
-export default function ResultsPage({ formData, finalPrice, urlParams }: ResultsPageProps) {
-  const pricingInfo = finalPrice ? calculatePricingTier(finalPrice, urlParams) : null;
+export default function ResultsPage({ formData, checkoutUrl, urlParams }: ResultsPageProps) {
+  const finalCheckoutUrl = checkoutUrl && urlParams ? `${checkoutUrl}${urlParams}` : checkoutUrl;
 
   const handleComprar = () => {
-    if (pricingInfo) {
-      window.location.href = pricingInfo.link;
+    if (finalCheckoutUrl) {
+      window.location.href = finalCheckoutUrl;
     }
   };
 
@@ -110,7 +63,7 @@ export default function ResultsPage({ formData, finalPrice, urlParams }: Results
           </div>
 
           {/* Right Section - Consultoria */}
-          {pricingInfo && (
+          {finalCheckoutUrl && (
             <div className="lg:pt-8">
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl blur-xl opacity-75 group-hover:opacity-100 transition duration-300" />
@@ -122,17 +75,6 @@ export default function ResultsPage({ formData, finalPrice, urlParams }: Results
                     <p className="text-gray-400 text-sm">
                       Estruture seu plano financeiro com especialistas
                     </p>
-                  </div>
-
-                  <div className="space-y-3 pt-4 border-t border-slate-700">
-                    <div className="text-sm text-gray-400">Investimento mensal</div>
-                    <div className="text-5xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                      R$ {pricingInfo.monthly}
-                      <span className="text-lg text-gray-400 font-normal">/mês</span>
-                    </div>
-                    <div className="text-sm text-gray-400">
-                      Plano anual: R$ {pricingInfo.total}
-                    </div>
                   </div>
 
                   <p className="text-gray-300 text-sm leading-relaxed">
