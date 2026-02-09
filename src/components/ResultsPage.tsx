@@ -65,8 +65,8 @@ export default function ResultsPage({ formData, checkoutUrl, fullPrice, urlParam
 
           {/* Right Section - Consultoria */}
           {finalCheckoutUrl && (
-            <div className="lg:pt-8">
-              <div className="relative">
+            <div className="lg:pt-8 w-full">
+              <div className="relative w-full max-w-2xl mx-auto">
                 {/* Ambient glow effect */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-3xl blur-2xl opacity-20" />
 
@@ -103,21 +103,21 @@ export default function ResultsPage({ formData, checkoutUrl, fullPrice, urlParam
                     {fullPrice !== undefined && (
                       <div className="space-y-6">
                         {/* Main pricing card */}
-                        <div className="relative">
+                        <div className="relative w-full">
                           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-2xl blur-xl" />
-                          <div className="relative bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/20">
-                            <div className="text-center space-y-6">
+                          <div className="relative bg-slate-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-cyan-500/20">
+                            <div className="text-center space-y-4 sm:space-y-6 w-full overflow-hidden">
                               {/* Installment price - HERO */}
                               <div className="space-y-3">
                                 <p className="text-xs sm:text-sm font-semibold text-cyan-400 uppercase tracking-widest">
                                   Parcelado em
                                 </p>
-                                <div className="flex items-end justify-center gap-2 sm:gap-3">
-                                  <span className="text-3xl sm:text-4xl text-cyan-400 font-bold">
+                                <div className="flex flex-col sm:flex-row items-center sm:items-end justify-center gap-2 sm:gap-3">
+                                  <span className="text-2xl sm:text-3xl lg:text-4xl text-cyan-400 font-bold">
                                     12x
                                   </span>
-                                  <div className="pb-1">
-                                    <div className="text-5xl sm:text-6xl md:text-7xl font-bold bg-gradient-to-r from-white via-cyan-100 to-white bg-clip-text text-transparent leading-none">
+                                  <div className="pb-0 sm:pb-1">
+                                    <div className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white via-cyan-100 to-white bg-clip-text text-transparent leading-none break-words text-center">
                                       {new Intl.NumberFormat('pt-BR', {
                                         style: 'currency',
                                         currency: 'BRL',
@@ -139,8 +139,8 @@ export default function ResultsPage({ formData, checkoutUrl, fullPrice, urlParam
                                 <p className="text-xs text-slate-400 uppercase tracking-wide">
                                   Pagamento à vista
                                 </p>
-                                <div className="inline-flex items-baseline gap-2 px-5 sm:px-6 py-3 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl">
-                                  <span className="text-2xl sm:text-3xl font-bold text-cyan-400">
+                                <div className="inline-flex items-baseline gap-2 px-4 sm:px-5 lg:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl max-w-full">
+                                  <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-cyan-400 break-words">
                                     {new Intl.NumberFormat('pt-BR', {
                                       style: 'currency',
                                       currency: 'BRL',
