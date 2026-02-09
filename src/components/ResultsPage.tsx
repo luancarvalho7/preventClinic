@@ -66,74 +66,111 @@ export default function ResultsPage({ formData, checkoutUrl, fullPrice, urlParam
           {/* Right Section - Consultoria */}
           {finalCheckoutUrl && (
             <div className="lg:pt-8">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl blur-xl opacity-75 group-hover:opacity-100 transition duration-300" />
-                <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 space-y-6 border border-slate-700">
-                  <div>
-                    <h2 className="text-2xl font-semibold text-white mb-2">
-                      Consultoria Personalizada
-                    </h2>
-                    <p className="text-gray-400 text-sm">
-                      Estruture seu plano financeiro com especialistas
+              <div className="relative">
+                {/* Ambient glow effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-3xl blur-2xl opacity-20" />
+
+                {/* Main card */}
+                <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl overflow-hidden border border-slate-700/50 shadow-2xl">
+                  {/* Top accent bar */}
+                  <div className="h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500" />
+
+                  <div className="p-6 sm:p-8 lg:p-10 space-y-8">
+                    {/* Header */}
+                    <div className="text-center space-y-3">
+                      <div className="inline-block px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-2">
+                        <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">
+                          Oferta Exclusiva
+                        </span>
+                      </div>
+                      <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                        Consultoria Personalizada
+                      </h2>
+                      <p className="text-sm sm:text-base text-gray-400 max-w-md mx-auto">
+                        Estruture seu plano financeiro com especialistas
+                      </p>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent" />
+
+                    {/* Description */}
+                    <p className="text-sm sm:text-base text-gray-300 leading-relaxed text-center max-w-md mx-auto">
+                      Com base em suas respostas, preparamos uma consultoria exclusiva para estruturar seu plano financeiro e alcançar seus objetivos.
                     </p>
-                  </div>
 
-                  <p className="text-gray-300 text-sm leading-relaxed">
-                    Com base em suas respostas, preparamos uma consultoria exclusiva para estruturar seu plano financeiro e alcançar seus objetivos.
-                  </p>
+                    {/* Pricing Section */}
+                    {fullPrice !== undefined && (
+                      <div className="space-y-6">
+                        {/* Main pricing card */}
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-2xl blur-xl" />
+                          <div className="relative bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/20">
+                            <div className="text-center space-y-6">
+                              {/* Installment price - HERO */}
+                              <div className="space-y-3">
+                                <p className="text-xs sm:text-sm font-semibold text-cyan-400 uppercase tracking-widest">
+                                  Parcelado em
+                                </p>
+                                <div className="flex items-end justify-center gap-2 sm:gap-3">
+                                  <span className="text-3xl sm:text-4xl text-cyan-400 font-bold">
+                                    12x
+                                  </span>
+                                  <div className="pb-1">
+                                    <div className="text-5xl sm:text-6xl md:text-7xl font-bold bg-gradient-to-r from-white via-cyan-100 to-white bg-clip-text text-transparent leading-none">
+                                      {new Intl.NumberFormat('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL',
+                                      }).format(fullPrice / 12)}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
 
-                  {fullPrice !== undefined && (
-                    <div className="py-6 space-y-3">
-                      <div className="bg-gradient-to-br from-cyan-500/20 via-slate-700/30 to-slate-800/50 rounded-2xl p-6 sm:p-8 border border-cyan-500/30 shadow-lg shadow-cyan-500/10">
-                        <div className="text-center space-y-4">
-                          <p className="text-xs sm:text-sm text-cyan-400 uppercase tracking-widest font-semibold">
-                            Investimento Mensal
-                          </p>
+                              {/* Divider */}
+                              <div className="flex items-center justify-center gap-3 py-2">
+                                <div className="h-px w-16 bg-gradient-to-r from-transparent to-slate-600" />
+                                <span className="text-xs sm:text-sm text-slate-500 font-medium uppercase">ou</span>
+                                <div className="h-px w-16 bg-gradient-to-l from-transparent to-slate-600" />
+                              </div>
 
-                          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
-                            <span className="text-xl sm:text-2xl text-gray-400 font-light">
-                              12x
-                            </span>
-                            <span className="text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-none">
-                              {new Intl.NumberFormat('pt-BR', {
-                                style: 'currency',
-                                currency: 'BRL',
-                              }).format(fullPrice / 12)}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center justify-center gap-2 text-gray-400 py-2">
-                            <div className="h-px bg-gray-600 w-8 sm:w-12"></div>
-                            <span className="text-xs sm:text-sm">ou</span>
-                            <div className="h-px bg-gray-600 w-8 sm:w-12"></div>
-                          </div>
-
-                          <div className="inline-flex items-baseline gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-slate-800/60 rounded-full border border-slate-600/50">
-                            <span className="text-lg sm:text-2xl font-bold text-cyan-400">
-                              {new Intl.NumberFormat('pt-BR', {
-                                style: 'currency',
-                                currency: 'BRL',
-                              }).format(fullPrice)}
-                            </span>
-                            <span className="text-xs sm:text-sm text-cyan-400/80 font-medium">
-                              à vista
-                            </span>
+                              {/* Cash price */}
+                              <div className="space-y-2">
+                                <p className="text-xs text-slate-400 uppercase tracking-wide">
+                                  Pagamento à vista
+                                </p>
+                                <div className="inline-flex items-baseline gap-2 px-5 sm:px-6 py-3 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl">
+                                  <span className="text-2xl sm:text-3xl font-bold text-cyan-400">
+                                    {new Intl.NumberFormat('pt-BR', {
+                                      style: 'currency',
+                                      currency: 'BRL',
+                                    }).format(fullPrice)}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
+
+                        {/* CTA Button */}
+                        <button
+                          onClick={handleComprar}
+                          className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 p-0.5 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50 hover:scale-[1.02] active:scale-[0.98]"
+                        >
+                          <div className="relative bg-gradient-to-r from-cyan-600 to-blue-600 rounded-[14px] px-6 py-4 transition-all duration-300 group-hover:from-cyan-500 group-hover:to-blue-500">
+                            <span className="text-base sm:text-lg font-bold text-white">
+                              Comprar Agora
+                            </span>
+                          </div>
+                        </button>
+
+                        {/* Footer text */}
+                        <p className="text-xs text-center text-slate-500">
+                          🔒 Acesso imediato após o pagamento
+                        </p>
                       </div>
-                    </div>
-                  )}
-
-                  <button
-                    onClick={handleComprar}
-                    className="w-full mt-8 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-4 px-6 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
-                  >
-                    Comprar Agora
-                  </button>
-
-                  <p className="text-xs text-gray-500 text-center pt-2">
-                    Acesso imediato após o pagamento
-                  </p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
