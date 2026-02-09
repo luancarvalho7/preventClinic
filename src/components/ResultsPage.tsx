@@ -83,15 +83,38 @@ export default function ResultsPage({ formData, checkoutUrl, fullPrice, urlParam
                   </p>
 
                   {fullPrice !== undefined && (
-                    <div className="py-4 border-t border-b border-slate-700">
-                      <div className="flex items-baseline justify-center gap-2">
-                        <span className="text-gray-400 text-sm">Valor:</span>
-                        <span className="text-3xl font-bold text-white">
-                          {new Intl.NumberFormat('pt-BR', {
-                            style: 'currency',
-                            currency: 'BRL',
-                          }).format(fullPrice)}
-                        </span>
+                    <div className="py-6 space-y-4">
+                      <div className="bg-gradient-to-r from-slate-700/50 to-slate-800/50 rounded-xl p-6 border border-slate-600/50">
+                        <div className="flex items-end justify-between">
+                          <div>
+                            <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+                              Parcelado em 12x
+                            </p>
+                            <div className="flex items-baseline gap-1">
+                              <span className="text-4xl font-bold text-white">
+                                {new Intl.NumberFormat('pt-BR', {
+                                  style: 'currency',
+                                  currency: 'BRL',
+                                }).format(fullPrice / 12)}
+                              </span>
+                              <span className="text-lg text-gray-400 font-medium">
+                                /mês
+                              </span>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-xs text-gray-400 mb-1">ou</p>
+                            <p className="text-xl font-bold text-cyan-400">
+                              {new Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL',
+                              }).format(fullPrice)}
+                            </p>
+                            <p className="text-xs text-cyan-400/80 font-medium">
+                              à vista
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}
