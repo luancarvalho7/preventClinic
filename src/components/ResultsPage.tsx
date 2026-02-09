@@ -87,7 +87,7 @@ export default function ResultsPage({ formData, checkoutUrl, fullPrice, urlParam
                       <div className="bg-gradient-to-br from-cyan-500/20 via-slate-700/30 to-slate-800/50 rounded-2xl p-6 sm:p-8 border border-cyan-500/30 shadow-lg shadow-cyan-500/10">
                         <div className="text-center space-y-4">
                           <p className="text-xs sm:text-sm text-cyan-400 uppercase tracking-widest font-semibold">
-                            Investimento Parcelado
+                            Investimento Mensal
                           </p>
 
                           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
