@@ -83,36 +83,41 @@ export default function ResultsPage({ formData, checkoutUrl, fullPrice, urlParam
                   </p>
 
                   {fullPrice !== undefined && (
-                    <div className="py-6 space-y-4">
-                      <div className="bg-gradient-to-r from-slate-700/50 to-slate-800/50 rounded-xl p-6 border border-slate-600/50">
-                        <div className="flex items-end justify-between">
-                          <div>
-                            <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
-                              Parcelado em 12x
-                            </p>
-                            <div className="flex items-baseline gap-1">
-                              <span className="text-4xl font-bold text-white">
-                                {new Intl.NumberFormat('pt-BR', {
-                                  style: 'currency',
-                                  currency: 'BRL',
-                                }).format(fullPrice / 12)}
-                              </span>
-                              <span className="text-lg text-gray-400 font-medium">
-                                /mês
-                              </span>
-                            </div>
+                    <div className="py-6 space-y-3">
+                      <div className="bg-gradient-to-br from-cyan-500/20 via-slate-700/30 to-slate-800/50 rounded-2xl p-6 sm:p-8 border border-cyan-500/30 shadow-lg shadow-cyan-500/10">
+                        <div className="text-center space-y-4">
+                          <p className="text-xs sm:text-sm text-cyan-400 uppercase tracking-widest font-semibold">
+                            Investimento Parcelado
+                          </p>
+
+                          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
+                            <span className="text-xl sm:text-2xl text-gray-400 font-light">
+                              12x
+                            </span>
+                            <span className="text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-none">
+                              {new Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL',
+                              }).format(fullPrice / 12)}
+                            </span>
                           </div>
-                          <div className="text-right">
-                            <p className="text-xs text-gray-400 mb-1">ou</p>
-                            <p className="text-xl font-bold text-cyan-400">
+
+                          <div className="flex items-center justify-center gap-2 text-gray-400 py-2">
+                            <div className="h-px bg-gray-600 w-8 sm:w-12"></div>
+                            <span className="text-xs sm:text-sm">ou</span>
+                            <div className="h-px bg-gray-600 w-8 sm:w-12"></div>
+                          </div>
+
+                          <div className="inline-flex items-baseline gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-slate-800/60 rounded-full border border-slate-600/50">
+                            <span className="text-lg sm:text-2xl font-bold text-cyan-400">
                               {new Intl.NumberFormat('pt-BR', {
                                 style: 'currency',
                                 currency: 'BRL',
                               }).format(fullPrice)}
-                            </p>
-                            <p className="text-xs text-cyan-400/80 font-medium">
+                            </span>
+                            <span className="text-xs sm:text-sm text-cyan-400/80 font-medium">
                               à vista
-                            </p>
+                            </span>
                           </div>
                         </div>
                       </div>
