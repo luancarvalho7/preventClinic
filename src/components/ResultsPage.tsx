@@ -7,10 +7,11 @@ interface ResultsPageProps {
   formData: FormData;
   onBack: () => void;
   checkoutUrl?: string;
+  fullPrice?: number;
   urlParams?: string;
 }
 
-export default function ResultsPage({ formData, checkoutUrl, urlParams }: ResultsPageProps) {
+export default function ResultsPage({ formData, checkoutUrl, fullPrice, urlParams }: ResultsPageProps) {
   const finalCheckoutUrl = checkoutUrl && urlParams ? `${checkoutUrl}${urlParams}` : checkoutUrl;
 
   const handleComprar = () => {
@@ -80,6 +81,20 @@ export default function ResultsPage({ formData, checkoutUrl, urlParams }: Result
                   <p className="text-gray-300 text-sm leading-relaxed">
                     Com base em suas respostas, preparamos uma consultoria exclusiva para estruturar seu plano financeiro e alcançar seus objetivos.
                   </p>
+
+                  {fullPrice !== undefined && (
+                    <div className="py-4 border-t border-b border-slate-700">
+                      <div className="flex items-baseline justify-center gap-2">
+                        <span className="text-gray-400 text-sm">Valor:</span>
+                        <span className="text-3xl font-bold text-white">
+                          {new Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          }).format(fullPrice)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
 
                   <button
                     onClick={handleComprar}
