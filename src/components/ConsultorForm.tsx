@@ -21,15 +21,31 @@ export default function ConsultorForm({ onContinue, onBack, canGoBack, formData,
   useEffect(() => {
     const fetchConsultores = async () => {
       try {
-        const response = await fetch('https://n8nsemfila.iatom.site/webhook/getConsultores');
+        const urlParams = new URLSearchParams(window.location.search);
+        const consultorCode = urlParams.get('c');
+
+        let url = 'https://n8nsemfila.iatom.site/webhook/getConsultores';
+        if (consultorCode) {
+          url += `?c=${encodeURIComponent(consultorCode)}`;
+        }
+
+        const response = await fetch(url);
 
         if (!response.ok) {
           throw new Error('Failed to fetch');
         }
 
-        const data = await response.json();
+        let data = await response.json();
 
-        // Parse the response structure: { response: [...] }
+        if (Array.isArray(data) && data.length > 0) {
+          data = data[0];
+        }
+
+        if (consultorCode && data.found === true && data.consultantId) {
+          onContinue({ consultorId: data.consultantId });
+          return;
+        }
+
         if (data.response && Array.isArray(data.response)) {
           const consultoresList = data.response;
           if (consultoresList.length > 0) {
