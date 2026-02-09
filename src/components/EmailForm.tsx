@@ -2,10 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PageHeader from './PageHeader';
 import { FormStepProps } from '../types/form';
 import BackButton from './BackButton';
+import { AlertCircle, Loader } from 'lucide-react';
 
 export default function EmailForm({ onContinue, onBack, canGoBack, formData, questionNumber }: FormStepProps) {
   const [email, setEmail] = useState(formData.email || '');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   const validateEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
@@ -24,7 +27,29 @@ export default function EmailForm({ onContinue, onBack, canGoBack, formData, que
 
   const isValid = email.trim() && validateEmail(email.trim());
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const checkEmailExists = async (emailToCheck: string): Promise<boolean> => {
+    try {
+      const response = await fetch('https://n8nsemfila.iatom.site/webhook/formCheckEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: emailToCheck })
+      });
+
+      if (!response.ok) {
+        return false;
+      }
+
+      const data = await response.json();
+      return data.existentEmail === true;
+    } catch (err) {
+      console.error('Error checking email:', err);
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const val = email.trim();
@@ -37,7 +62,26 @@ export default function EmailForm({ onContinue, onBack, canGoBack, formData, que
       return;
     }
 
-    onContinue({ email: val });
+    setLoading(true);
+    setError('');
+
+    const emailExists = await checkEmailExists(val);
+    setLoading(false);
+
+    if (emailExists) {
+      setShowWarning(true);
+    } else {
+      onContinue({ email: val });
+    }
+  };
+
+  const handleContinueWithExistingEmail = () => {
+    setShowWarning(false);
+    onContinue({ email: email.trim() });
+  };
+
+  const handleChangeEmail = () => {
+    setShowWarning(false);
   };
 
   return (
@@ -72,6 +116,7 @@ export default function EmailForm({ onContinue, onBack, canGoBack, formData, que
                 placeholder="seu@email.com"
                 autoComplete="email"
                 inputMode="email"
+                disabled={loading}
               />
             </div>
 
@@ -85,18 +130,54 @@ export default function EmailForm({ onContinue, onBack, canGoBack, formData, que
             <button
               type="submit"
               form="email-form"
-              disabled={!isValid}
-              className={`w-full py-4 text-white rounded-full transition-colors duration-200 font-medium text-lg shadow-md ${
-                isValid
+              disabled={!isValid || loading}
+              className={`w-full py-4 text-white rounded-full transition-colors duration-200 font-medium text-lg shadow-md flex items-center justify-center gap-2 ${
+                isValid && !loading
                   ? 'bg-blue-600 hover:bg-blue-700 hover:shadow-lg cursor-pointer'
                   : 'bg-black cursor-not-allowed'
               }`}
             >
+              {loading && <Loader className="w-5 h-5 animate-spin" />}
               Continuar
             </button>
           </div>
         </div>
       </div>
+
+      {showWarning && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-in fade-in zoom-in duration-200">
+            <div className="flex items-start gap-4 mb-6">
+              <div className="flex-shrink-0 w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                <AlertCircle className="w-6 h-6 text-amber-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-xl font-bold text-slate-900 mb-2">
+                  E-mail já cadastrado
+                </h3>
+                <p className="text-slate-600 text-base leading-relaxed">
+                  Esse e-mail já está cadastrado em nossa base, deseja seguir e fazer novo raio X?
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={handleContinueWithExistingEmail}
+                className="w-full py-3 bg-blue-600 text-white rounded-lg font-medium text-base hover:bg-blue-700 transition-colors"
+              >
+                Sim
+              </button>
+              <button
+                onClick={handleChangeEmail}
+                className="w-full py-3 bg-slate-100 text-slate-900 rounded-lg font-medium text-base hover:bg-slate-200 transition-colors"
+              >
+                Não, quero alterar meu e-mail
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
