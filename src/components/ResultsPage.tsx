@@ -126,7 +126,7 @@ export default function ResultsPage({ formData, checkoutUrl, fullPrice, urlParam
 
                   <button
                     onClick={handleComprar}
-                    className="w-full mt-8 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+                    className="w-full mt-8 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-4 px-6 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
                   >
                     Comprar Agora
                   </button>
