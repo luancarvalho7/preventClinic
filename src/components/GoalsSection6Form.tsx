@@ -18,15 +18,6 @@ export default function GoalsSection6Form({ onContinue, onBack, canGoBack, formD
   const [goalsSelection, setGoalsSelection] = useState<GoalOption[]>(formData?.goalsSelection || []);
   const [goalsOtherText, setGoalsOtherText] = useState<string>(formData?.goalsOtherText || '');
 
-  // NOVOS CAMPOS – Hábito de investir (condicional para valor médio)
-  type InvestsMonthly = 'Sim' | 'Não' | '';
-  const [investsMonthly, setInvestsMonthly] = useState<InvestsMonthly>(formData?.investsMonthly || '');
-  const [averageMonthlyInvestment, setAverageMonthlyInvestment] = useState<string>(
-    formData?.averageMonthlyInvestment !== undefined && formData?.averageMonthlyInvestment !== null
-      ? String(formData.averageMonthlyInvestment)
-      : ''
-  );
-
   const toggleGoal = (opt: GoalOption) => {
     setGoalsSelection((prev) =>
       prev.includes(opt) ? prev.filter((o) => o !== opt) : [...prev, opt]
@@ -34,37 +25,24 @@ export default function GoalsSection6Form({ onContinue, onBack, canGoBack, formD
   };
 
   const canSubmit =
-    // mantém obrigatoriedade das perguntas originais
     !!goals12Months &&
     !!goals5Years &&
     !!topPriority &&
     !!goalImpact &&
-    !!changeCommitment &&
-    // exige resposta para “Tem o hábito de investir mensalmente?”
-    !!investsMonthly &&
-    // se Sim, exige valor; se Não, libera sem valor
-    (investsMonthly === 'Não' || averageMonthlyInvestment.trim() !== '');
+    !!changeCommitment;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!canSubmit) return;
 
-    const avgValue = investsMonthly === 'Sim' && averageMonthlyInvestment.trim() !== ''
-      ? Number(averageMonthlyInvestment)
-      : undefined;
-
     onContinue({
-      // campos existentes (inalterados)
       goals12Months,
       goals5Years,
       topPriority,
       goalImpact,
       changeCommitment,
-      // novos campos adicionados
       goalsSelection,
       goalsOtherText: goalsSelection.includes('Outros') ? goalsOtherText : undefined,
-      investsMonthly,
-      averageMonthlyInvestment: avgValue,
     });
   };
 
@@ -207,48 +185,6 @@ export default function GoalsSection6Form({ onContinue, onBack, canGoBack, formD
             </div>
           </div>
 
-          {/* NOVA PERGUNTA: Hábito de investir + valor médio condicional */}
-          <div>
-            <label className="block text-lg font-medium text-gray-900 mb-4">
-              Tem o hábito de investir mensalmente?
-            </label>
-            <div className="flex gap-4">
-              {(['Sim', 'Não'] as InvestsMonthly[]).map((opt) => (
-                <label key={opt} className="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-                  <input
-                    type="radio"
-                    name="investsMonthly"
-                    value={opt}
-                    checked={investsMonthly === opt}
-                    onChange={(e) => setInvestsMonthly(e.target.value as InvestsMonthly)}
-                    className="w-4 h-4 text-blue-600 focus:ring-blue-600"
-                  />
-                  <span className="ml-2 text-gray-900">{opt}</span>
-                </label>
-              ))}
-            </div>
-
-            {investsMonthly === 'Sim' && (
-              <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Valor médio mensal (R$)
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  step="0.01"
-                  inputMode="decimal"
-                  value={averageMonthlyInvestment}
-                  onChange={(e) => setAverageMonthlyInvestment(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
-                  placeholder="Ex: 300, 500, 1000"
-                  // intencionalmente SEM required — pedido do cliente
-                />
-                <p className="text-xs text-gray-500 mt-1">Se não souber o valor exato, pode deixar em branco.</p>
-              </div>
-            )}
-          </div>
-
           <div className="pb-16">
             <button
               type="submit"
@@ -263,8 +199,6 @@ export default function GoalsSection6Form({ onContinue, onBack, canGoBack, formD
             </button>
           </div>
         </form>
-
-        {/*\n  NOVAS CHAVES adicionadas ao payload:\n  - goalsSelection: string[]\n  - goalsOtherText?: string\n  - investsMonthly: 'Sim' | 'Não'\n  - averageMonthlyInvestment?: number\n  Campos antigos NÃO foram renomeados nem removidos.\n*/}
       </div>
     </div>
     </>
