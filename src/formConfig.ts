@@ -1,9 +1,7 @@
 import { FormStep, FormData } from './types/form';
 import StartForm from './components/StartForm';
-import NameForm from './components/NameForm';
 import ConsultorForm from './components/ConsultorForm';
-import EmailForm from './components/EmailForm';
-import PhoneForm from './components/PhoneForm';
+import ContactInfoForm from './components/ContactInfoForm';
 import BirthDateForm from './components/BirthDateForm';
 import MaritalStatusForm from './components/MaritalStatusForm';
 import DependentsForm from './components/DependentsForm';
@@ -35,42 +33,28 @@ export const formConfig: FormStep[] = [
     id: 'start',
     component: StartForm,
     title: 'Início',
-    nextStepLogic: () => 'name'
-  },
-  {
-    id: 'name',
-    component: NameForm,
-    title: 'Nome',
-    nextStepLogic: () => 'consultor',
-    prevStepId: 'start'
+    nextStepLogic: () => 'consultor'
   },
   {
     id: 'consultor',
     component: ConsultorForm,
     title: 'Consultor',
-    nextStepLogic: () => 'email',
-    prevStepId: 'name'
+    nextStepLogic: () => 'contactInfo',
+    prevStepId: 'start'
   },
   {
-    id: 'email',
-    component: EmailForm,
-    title: 'E-mail',
-    nextStepLogic: () => 'phone',
-    prevStepId: 'consultor'
-  },
-  {
-    id: 'phone',
-    component: PhoneForm,
-    title: 'Telefone',
+    id: 'contactInfo',
+    component: ContactInfoForm,
+    title: 'Informações de Contato',
     nextStepLogic: () => 'birthDate',
-    prevStepId: 'email'
+    prevStepId: 'consultor'
   },
   {
     id: 'birthDate',
     component: BirthDateForm,
     title: 'Data de Nascimento',
     nextStepLogic: () => 'maritalStatus',
-    prevStepId: 'phone'
+    prevStepId: 'contactInfo'
   },
   {
     id: 'maritalStatus',
